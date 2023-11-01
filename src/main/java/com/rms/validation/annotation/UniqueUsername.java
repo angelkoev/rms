@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueUsername {
-    String message() default "Username is already taken! Please use another Username";
+    String message() default "Потребителското име е вече заето. Моля изберете друго потребителско име!";
 
     Class<?>[] groups() default {};
 

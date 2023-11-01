@@ -8,26 +8,30 @@
     <link rel="stylesheet" href="/css/reset-css.css"/>
     <link rel="stylesheet" href="/css/bootstrap.css"/>
     <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="icon" type="image/ico" th:href="@{../static/favicon.png}">
+    <link rel="shortcut icon" type="image/png" th:href="@{favicon.png}"/>
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-lg bg-nav rounded " >
-        <a class="nav-link my-text-color active h5 " href="/home">Dictionary App</a>
+        <a class="nav-link my-text-color active h5 " href="/">Начало</a>
 
-        <a class="nav-link my-text-color active h5  " href="/word/add">Add Word</a>
+        <a class="nav-link my-text-color active h5  " href="/users/add">Добави служител</a>
+        <a class="nav-link my-text-color active h5  " href="/users/view-all">виж всички служители</a>
+        <a class="nav-link my-text-color active h5  " href="/view/reviews">отзиви</a>
 
         <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
             <ul class="navbar-nav row">
                      <li class="nav-item col-md-4">
-                    <a class="nav-link active h5 my-text-color" href="/users/login">Login</a>
+                    <a class="nav-link active h5 my-text-color" href="/users/login">Вход</a>
                 </li>
 
                 <li class="nav-item col-md-4">
-                    <a class="nav-link my-text-color active h5 " href="/users/register">Register</a>
+                    <a class="nav-link my-text-color active h5 " href="/users/register">Регистрация</a>
                 </li>
-                    <a class="nav-link h5 my-text-color" >Welcome, *{username}</a>
+                    <a class="nav-link h5 my-text-color" >Добре дошъл, *{username}</a>
                     <li class="nav-item col-md-4">
-                        <a class="nav-link my-text-color active h5 " href="/users/logout">Logout</a>
+                        <a class="nav-link my-text-color active h5 " href="/users/logout">Изход</a>
                     </li>
             </ul>
         </div>

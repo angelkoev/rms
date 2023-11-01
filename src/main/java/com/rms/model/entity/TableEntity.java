@@ -19,10 +19,10 @@ public class TableEntity extends BaseEntity {
     private boolean isReserved;
 
     @OneToMany (mappedBy = "table")
-    private Set<Order> order;
+    private Set<OrderEntity> order;
 
     @OneToOne
-    private User waiter;
+    private UserEntity waiter;
 
     public TableEntity() {
     }
@@ -59,19 +59,19 @@ public class TableEntity extends BaseEntity {
         isReserved = reserved;
     }
 
-    public Set<Order> getOrder() {
+    public Set<OrderEntity> getOrder() {
         return order;
     }
 
-    public void setOrder(Set<Order> order) {
+    public void setOrder(Set<OrderEntity> order) {
         this.order = order;
     }
 
-    public User getWaiter() {
+    public UserEntity getWaiter() {
         return waiter;
     }
 
-    public void setWaiter(User waiter) {
+    public void setWaiter(UserEntity waiter) {
         this.waiter = waiter;
     }
 }

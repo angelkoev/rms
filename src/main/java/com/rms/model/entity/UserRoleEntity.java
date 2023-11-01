@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "user_roles")
-public class UserRole extends BaseEntity {
+public class UserRoleEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
@@ -12,7 +12,7 @@ public class UserRole extends BaseEntity {
     @Column(nullable = false)
     private String description;
 
-    public UserRole() {
+    public UserRoleEntity() {
     }
 
     public UserRoleEnum getName() {

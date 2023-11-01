@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reviews")
-public class Review extends BaseEntity {
+public class ReviewEntity extends BaseEntity {
 
     @ManyToOne
-    private User writtenBy;
+    private UserEntity writtenBy;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
@@ -20,14 +20,14 @@ public class Review extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime postedOn;
 
-    public Review() {
+    public ReviewEntity() {
     }
 
-    public User getWrittenBy() {
+    public UserEntity getWrittenBy() {
         return writtenBy;
     }
 
-    public void setWrittenBy(User writtenBy) {
+    public void setWrittenBy(UserEntity writtenBy) {
         this.writtenBy = writtenBy;
     }
 

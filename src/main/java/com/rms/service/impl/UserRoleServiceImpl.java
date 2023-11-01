@@ -1,6 +1,6 @@
 package com.rms.service.impl;
 
-import com.rms.model.entity.UserRole;
+import com.rms.model.entity.UserRoleEntity;
 import com.rms.model.entity.UserRoleEnum;
 import com.rms.repositiry.UserRoleRepository;
 import com.rms.service.interfaces.UserRoleService;
@@ -25,7 +25,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
         Arrays.stream(UserRoleEnum.values())
                 .forEach(userRoleEnum -> {
-                    UserRole userRole = new UserRole();
+                    UserRoleEntity userRole = new UserRoleEntity();
                     userRole.setName(userRoleEnum);
 
                     switch (userRoleEnum) {
@@ -40,6 +40,12 @@ public class UserRoleServiceImpl implements UserRoleService {
                     userRoleRepository.save(userRole);
                 });
     }
+
+    @Override
+    public UserRoleEntity findUserRoleEntityByName(UserRoleEnum userRoleEnum) {
+        return userRoleRepository.findUserRoleEntityByName(userRoleEnum);
+    }
+
 
 }
 

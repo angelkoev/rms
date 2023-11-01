@@ -5,31 +5,33 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "drinks")
-public class Drink extends BaseEntity {
+@Table(name = "foods")
+public class FoodEntity extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String name;
-
     @Column(nullable = false)
     private BigDecimal price;
-    @Column(nullable = false)
-    private int volume; //in ml
 
     @ManyToOne
 //    @Enumerated(EnumType.STRING)
 //    @Column(nullable = false)
-    private DrinkType type;
+    private FoodType type;
+    @Column(nullable = false)
+    private BigDecimal size; //serving size
+    @Column(nullable = false)
+    private BigDecimal kcal; // calories
+
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+    private OrderEntity order;
     @Column(nullable = false)
     private int preparationTime;
     @Column(nullable = false)
     private boolean completed;
     private boolean isPaid; // may be not needed, because Order had the same field
 
-    public Drink() {
+    public FoodEntity() {
     }
 
     public String getName() {
@@ -48,27 +50,35 @@ public class Drink extends BaseEntity {
         this.price = price;
     }
 
-    public int getVolume() {
-        return volume;
-    }
-
-    public void setVolume(int volume) {
-        this.volume = volume;
-    }
-
-    public DrinkType getType() {
+    public FoodType getType() {
         return type;
     }
 
-    public void setType(DrinkType type) {
+    public void setType(FoodType type) {
         this.type = type;
     }
 
-    public Order getOrder() {
+    public BigDecimal getSize() {
+        return size;
+    }
+
+    public void setSize(BigDecimal size) {
+        this.size = size;
+    }
+
+    public BigDecimal getKcal() {
+        return kcal;
+    }
+
+    public void setKcal(BigDecimal kcal) {
+        this.kcal = kcal;
+    }
+
+    public OrderEntity getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(OrderEntity order) {
         this.order = order;
     }
 

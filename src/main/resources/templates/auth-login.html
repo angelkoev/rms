@@ -5,7 +5,7 @@
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
-    <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Login</span></h1>
+    <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Вход</span></h1>
     <hr class="hr-3 w-25 bg-white"/>
     <form class="mx-auto w-25 bg-blur"
           th:method="POST"
@@ -23,7 +23,7 @@
 
         <div class="form-group">
             <div class="label-holder text-white d-flex justify-content-center">
-                <label for="username" class="h3 mb-2">Username</label>
+                <label for="username" class="h3 mb-2">Потребителско име</label>
             </div>
             <input th:field="*{username}"
                    th:errorclass="bg-danger"
@@ -32,7 +32,7 @@
 
         <div class="form-group">
             <div class="label-holder text-white d-flex justify-content-center">
-                <label for="password" class="h3 mb-2">Password</label>
+                <label for="password" class="h3 mb-2">Парола</label>
             </div>
             <input th:field="*{password}"
                    th:errorclass="bg-danger"
@@ -40,7 +40,7 @@
         </div>
 
         <div class="button-holder d-flex justify-content-center">
-            <button type="submit" class="btn btn-warning  mb-3">Login</button>
+            <button type="submit" class="btn btn-warning  mb-3">Вход</button>
         </div>
 
     </form>

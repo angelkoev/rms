@@ -2,18 +2,17 @@ package com.rms.model.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
-public class Order extends BaseEntity {
+public class OrderEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "order")
-    private List<Food> foods;
+    private List<FoodEntity> foods;
     @OneToMany(mappedBy = "order")
-    private List<Drink> drinks;
+    private List<DrinkEntity> drinks;
     @ManyToOne
     private TableEntity table;
 
@@ -26,22 +25,22 @@ public class Order extends BaseEntity {
     @Column(nullable = false)
     private boolean isPaid;
 
-    public Order() {
+    public OrderEntity() {
     }
 
-    public List<Food> getFoods() {
+    public List<FoodEntity> getFoods() {
         return foods;
     }
 
-    public void setFoods(List<Food> foods) {
+    public void setFoods(List<FoodEntity> foods) {
         this.foods = foods;
     }
 
-    public List<Drink> getDrinks() {
+    public List<DrinkEntity> getDrinks() {
         return drinks;
     }
 
-    public void setDrinks(List<Drink> drinks) {
+    public void setDrinks(List<DrinkEntity> drinks) {
         this.drinks = drinks;
     }
 

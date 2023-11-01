@@ -1,12 +1,15 @@
 package com.rms.service.interfaces;
 
-import com.rms.model.entity.User;
+import com.rms.model.entity.UserEntity;
 
 import java.util.Optional;
 
 public interface UserService {
-    Optional<User> findById(Long id);
+    Optional<UserEntity> findById(Long id);
 
+    void addAdmin();
+
+    void addEmployees();
 
 
 //    Optional<User> findById(Long id);

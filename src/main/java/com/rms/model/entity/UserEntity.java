@@ -8,14 +8,14 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity {
+public class UserEntity extends BaseEntity {
 
-    @UniqueUsername
+//    @UniqueUsername // FIXME
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
     private String password;
-    @UniqueEmail
+//    @UniqueEmail // FIXME
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -30,9 +30,9 @@ public class User extends BaseEntity {
 
     @ManyToOne
 //    @Column(nullable = false)
-    private UserRole role;
+    private UserRoleEntity role;
 
-    public User() {
+    public UserEntity() {
     }
 
     public String getUsername() {
@@ -99,11 +99,11 @@ public class User extends BaseEntity {
         this.registrationDate = registrationDate;
     }
 
-    public UserRole getRole() {
+    public UserRoleEntity getRole() {
         return role;
     }
 
-    public void setRole(UserRole role) {
+    public void setRole(UserRoleEntity role) {
         this.role = role;
     }
 }
