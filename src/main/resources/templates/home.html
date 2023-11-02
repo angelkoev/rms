@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{fragments/commons::head}"></head>
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 
     <div class="container bg-blur rounded mt-3 mb-4">
+        <th:block sec:authorize="isAuthenticated()">
+            <h3 class="text-center text-white" th:text="${name}"></h3>
+            <h3 class="text-center text-white"></h3>
+
+        </th:block>
         <h1>All words</h1>
         <div class="row mt-3 mb-3">
 

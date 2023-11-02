@@ -4,14 +4,13 @@ import com.rms.model.dto.LoginDTO;
 import com.rms.model.dto.RegisterDTO;
 import com.rms.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -21,38 +20,38 @@ public class UserController {
 
     private final UserServiceImpl userService;
 
+
     public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String showLoginForm() {
 
         return "auth-login";
     }
 
-    @PostMapping("/login-error")
+    @GetMapping("/login-error")
+    public String onFailure(Model model) {
 
-    public String onFailure(
-            @ModelAttribute("username") String username,
-            Model model) {
+        model.addAttribute("errorMessage", "Invalid username or password");
 
-        model.addAttribute("username", username);
-        model.addAttribute("bad_credentials", "true");
-
+//        this.userService.login(loginDTO.getUsername());
         return "auth-login";
     }
 
-//        String onFailure(@Valid LoginDTO loginDTO,
-//                        BindingResult bindingResult,
-//                        RedirectAttributes redirectAttributes) {
 
-
+//    @PostMapping("/login")
+//    public String onFailure(@Valid LoginDTO loginDTO,
+//                     BindingResult bindingResult,
+//                     RedirectAttributes redirectAttributes) {
+//
+//
 //        if (bindingResult.hasErrors()) {
 //            redirectAttributes.addFlashAttribute("loginDTO", loginDTO);
 //            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.loginDTO", bindingResult);
 //
-//            return "redirect:/login";
+//            return "redirect:/auth-login";
 //        }
 //
 //        boolean validCredentials = this.userService.checkCredentials(loginDTO.getUsername(), loginDTO.getPassword());
@@ -63,22 +62,22 @@ public class UserController {
 //            bindingResult.addError(new FieldError("loginDTO", "validCredentials", "Incorrect username or password!"));
 //            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.loginDTO", bindingResult);
 ////            redirectAttributes.addFlashAttribute("validCredentials", false);
-//            return "redirect:/login";
+//            return "redirect:/auth-login";
 //        }
 //
-//        this.userService.login(loginDTO.getUsername());
-//
-//        return "redirect:/home";
+////        this.userService.login(loginDTO.getUsername());
+//        return "/home";
 //    }
+
 
     @GetMapping("/register")
     String register() {
 
-        return "register";
+        return "auth-register";
     }
 
     @PostMapping("/register")
-    String registerConfirm(@Valid RegisterDTO registerDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    String registerNewUser(@Valid RegisterDTO registerDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         boolean equalPasswords = registerDTO.getPassword().equals(registerDTO.getConfirmPassword());
 

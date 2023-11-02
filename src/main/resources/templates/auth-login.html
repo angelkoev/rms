@@ -18,8 +18,12 @@
             <small th:text="${e}" class="text-danger">Error messages</small>
             <br>
         </th:block>
-        <!--        <small th:if="!${validCredentials}"-->
-        <!--                class="text-danger">Incorrect username or password!</small>-->
+        <th:block th:each="e : ${#fields.errors()}" th:object="${e}">
+            <small th:text="${e}" class="text-danger">Error messages</small>
+            <br>
+        </th:block>
+                <small th:if="${errorMessage}"
+                        class="text-danger h2">Incorrect username or password!</small>
 
         <div class="form-group">
             <div class="label-holder text-white d-flex justify-content-center">

@@ -12,7 +12,7 @@
 
 
 body {
-    background-image: url(/images/background.jpg);
+    background-image: url("/images/background.jpg");
     background-position: center;
     background-attachment: fixed;
     background-size: cover;
@@ -75,4 +75,8 @@ footer {
 
 .badge-secondary{
     background-color: #720a75;
+}
+
+#navbarNav > ul > li:nth-child(4) > form > button{
+    cursor: pointer;
 }

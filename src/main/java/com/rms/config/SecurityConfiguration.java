@@ -55,12 +55,14 @@ public class SecurityConfiguration {
                                         .usernameParameter("username")
                                         .passwordParameter("password")
                                         .defaultSuccessUrl("/")
-                                        .failureForwardUrl("/users/login-error")
+                                        .failureUrl("/users/login-error")
                 )
                 .logout((logout) ->
-                        logout.logoutUrl("/users/logout").
-                                logoutSuccessUrl("/").//go to homepage after logout
-                                invalidateHttpSession(true)
+                        logout
+                                .logoutUrl("/users/logout") // The URL to trigger the logout process
+                                .logoutSuccessUrl("/") // Redirect to the homepage after logout
+                                .invalidateHttpSession(true) // Invalidate the user's session
+                                .deleteCookies("JSESSIONID") // Optionally, delete cookies, e.g., JSESSIONID
                 );
 //                    .rememberMe(
 //                rememberMe -> {
