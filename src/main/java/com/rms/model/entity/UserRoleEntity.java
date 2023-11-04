@@ -3,7 +3,7 @@ package com.rms.model.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user_roles")
+@Table(name = "roles")
 public class UserRoleEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
