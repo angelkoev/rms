@@ -26,7 +26,7 @@ public class UserRoleServiceImpl implements UserRoleService {
         Arrays.stream(UserRoleEnum.values())
                 .forEach(userRoleEnum -> {
                     UserRoleEntity userRole = new UserRoleEntity();
-                    userRole.setName(userRoleEnum);
+                    userRole.setRole(userRoleEnum);
 
                     switch (userRoleEnum) {
                         case ADMIN -> userRole.setDescription("The owner of the company");

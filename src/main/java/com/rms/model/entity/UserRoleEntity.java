@@ -8,19 +8,19 @@ public class UserRoleEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
-    private UserRoleEnum name;
+    private UserRoleEnum role;
     @Column(nullable = false)
     private String description;
 
     public UserRoleEntity() {
     }
 
-    public UserRoleEnum getName() {
-        return name;
+    public UserRoleEnum getRole() {
+        return role;
     }
 
-    public void setName(UserRoleEnum name) {
-        this.name = name;
+    public void setRole(UserRoleEnum name) {
+        this.role = name;
     }
 
     public String getDescription() {

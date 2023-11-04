@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ApplicationUserDetailsService implements UserDetailsService {
@@ -40,13 +39,25 @@ public class ApplicationUserDetailsService implements UserDetailsService {
     }
 
     private List<GrantedAuthority> extractAuthorities(UserEntity userEntity) {
-        List<GrantedAuthority> grantedAuthorities= new ArrayList<>();
-        for (UserRoleEntity u : userEntity.getRoles()) {
-            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + u.getName().name()));
-        }
-        return grantedAuthorities; // FIXME only names of the roles or ??
-//        return List.of(new SimpleGrantedAuthority("ROLE_" + userEntity.getRole().getName().name()));
+        return userEntity
+                .getRoles()
+                .stream()
+                .map(this::mapRole)
+                .toList();
     }
+
+    private GrantedAuthority mapRole(UserRoleEntity userRoleEntity) {
+        return new SimpleGrantedAuthority("ROLE_" + userRoleEntity.getRole().name());
+    }
+
+//    private List<GrantedAuthority> extractAuthorities(UserEntity userEntity) {
+//        List<GrantedAuthority> grantedAuthorities= new ArrayList<>();
+//        for (UserRoleEntity u : userEntity.getRoles()) {
+//            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + u.getName().name()));
+//        }
+//        return grantedAuthorities; // FIXME only names of the roles or ??
+////        return List.of(new SimpleGrantedAuthority("ROLE_" + userEntity.getRole().getName().name()));
+//    }
 
 
 }
