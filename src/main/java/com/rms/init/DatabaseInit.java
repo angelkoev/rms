@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 public class DatabaseInit implements CommandLineRunner {
 
     private final UserRoleService userRoleService;
-
     private final UserService userService;
     private final DrinkTypeService drinkTypeService;
     private final FoodTypeService foodTypeService;
@@ -32,8 +31,8 @@ public class DatabaseInit implements CommandLineRunner {
         drinkTypeService.initDrinkTypes();
         foodTypeService.initFoodTypes();
 
-//        userService.addAdmin();
-//        userService.addEmployees();
+        userService.addAdmin();
+        userService.addEmployees();
 
         // TODO -> add some test data for users and menu !!!
 

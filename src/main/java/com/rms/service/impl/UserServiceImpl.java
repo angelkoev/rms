@@ -103,6 +103,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addAdmin() {
+
+        if (userRepository.count() != 0) {
+            return;
+        }
+
         UserEntity admin = new UserEntity();
         admin.setUsername("pesho");
         admin.setEmail("pesho@pripesho.com");
@@ -113,9 +118,8 @@ public class UserServiceImpl implements UserService {
         admin.setAddress("Tabadupkovo");
         admin.setPhone("123456");
         admin.setRegistrationDate(LocalDate.of(1991, 2, 3));
-        UserRoleEntity userRole = new UserRoleEntity();
-        userRole.setName(UserRoleEnum.ADMIN);
-        admin.setRole(userRole);
+        UserRoleEntity roleAdmin = userRoleService.findUserRoleEntityByName(UserRoleEnum.ADMIN);
+        admin.getRoles().add(roleAdmin);
 
         userRepository.save(admin);
     }
@@ -123,6 +127,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addEmployees() {
 
+        if (userRepository.count() > 1) {
+            return;
+        }
         UserRoleEntity userRoleWaiter = userRoleService.findUserRoleEntityByName(UserRoleEnum.WAITER);
         UserRoleEntity userRoleCook = userRoleService.findUserRoleEntityByName(UserRoleEnum.COOK);
         UserRoleEntity userRoleBartender = userRoleService.findUserRoleEntityByName(UserRoleEnum.BARTENDER);
@@ -153,7 +160,7 @@ public class UserServiceImpl implements UserService {
         user.setAddress(username +" address");
         user.setPhone(username + " phone");
         user.setRegistrationDate(LocalDate.of(1991, 2, 3));
-        user.setRole(userRole);
+        user.getRoles().add(userRole);
 
         userRepository.save(user);
     }

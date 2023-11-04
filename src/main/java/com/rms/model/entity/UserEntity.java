@@ -1,10 +1,10 @@
 package com.rms.model.entity;
 
-import com.rms.validation.annotation.UniqueEmail;
-import com.rms.validation.annotation.UniqueUsername;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -28,11 +28,12 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private LocalDate registrationDate;
 
-    @ManyToOne
+    @ManyToMany(fetch = FetchType.EAGER)
 //    @Column(nullable = false)
-    private UserRoleEntity role;
+    private List<UserRoleEntity> roles;
 
     public UserEntity() {
+        this.roles = new ArrayList<>();
     }
 
     public String getUsername() {
@@ -99,11 +100,11 @@ public class UserEntity extends BaseEntity {
         this.registrationDate = registrationDate;
     }
 
-    public UserRoleEntity getRole() {
-        return role;
+    public List<UserRoleEntity> getRoles() {
+        return roles;
     }
 
-    public void setRole(UserRoleEntity role) {
-        this.role = role;
+    public void setRoles(List<UserRoleEntity> roles) {
+        this.roles = roles;
     }
 }

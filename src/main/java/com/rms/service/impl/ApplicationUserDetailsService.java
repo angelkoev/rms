@@ -2,6 +2,7 @@ package com.rms.service.impl;
 
 import com.rms.model.AppUserDetails;
 import com.rms.model.entity.UserEntity;
+import com.rms.model.entity.UserRoleEntity;
 import com.rms.repositiry.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ApplicationUserDetailsService implements UserDetailsService {
@@ -38,7 +40,12 @@ public class ApplicationUserDetailsService implements UserDetailsService {
     }
 
     private List<GrantedAuthority> extractAuthorities(UserEntity userEntity) {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + userEntity.getRole().getName().name()));
+        List<GrantedAuthority> grantedAuthorities= new ArrayList<>();
+        for (UserRoleEntity u : userEntity.getRoles()) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(u.getName().name()));
+        }
+        return grantedAuthorities;
+//        return List.of(new SimpleGrantedAuthority("ROLE_" + userEntity.getRole().getName().name()));
     }
 
 
