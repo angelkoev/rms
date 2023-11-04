@@ -42,9 +42,9 @@ public class ApplicationUserDetailsService implements UserDetailsService {
     private List<GrantedAuthority> extractAuthorities(UserEntity userEntity) {
         List<GrantedAuthority> grantedAuthorities= new ArrayList<>();
         for (UserRoleEntity u : userEntity.getRoles()) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(u.getName().name()));
+            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + u.getName().name()));
         }
-        return grantedAuthorities;
+        return grantedAuthorities; // FIXME only names of the roles or ??
 //        return List.of(new SimpleGrantedAuthority("ROLE_" + userEntity.getRole().getName().name()));
     }
 
