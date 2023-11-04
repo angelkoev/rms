@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
         admin.setAddress("Tabadupkovo");
         admin.setPhone("123456");
         admin.setRegistrationDate(LocalDate.of(1991, 2, 3));
-        UserRoleEntity roleAdmin = userRoleService.findUserRoleEntityByName(UserRoleEnum.ADMIN);
+        UserRoleEntity roleAdmin = userRoleService.findUserRoleEntityByRole(UserRoleEnum.ADMIN);
         admin.getRoles().add(roleAdmin);
 
         userRepository.save(admin);
@@ -130,10 +130,10 @@ public class UserServiceImpl implements UserService {
         if (userRepository.count() > 1) {
             return;
         }
-        UserRoleEntity userRoleWaiter = userRoleService.findUserRoleEntityByName(UserRoleEnum.WAITER);
-        UserRoleEntity userRoleCook = userRoleService.findUserRoleEntityByName(UserRoleEnum.COOK);
-        UserRoleEntity userRoleBartender = userRoleService.findUserRoleEntityByName(UserRoleEnum.BARTENDER);
-        UserRoleEntity userRoleClient = userRoleService.findUserRoleEntityByName(UserRoleEnum.CLIENT);
+        UserRoleEntity userRoleWaiter = userRoleService.findUserRoleEntityByRole(UserRoleEnum.WAITER);
+        UserRoleEntity userRoleCook = userRoleService.findUserRoleEntityByRole(UserRoleEnum.COOK);
+        UserRoleEntity userRoleBartender = userRoleService.findUserRoleEntityByRole(UserRoleEnum.BARTENDER);
+        UserRoleEntity userRoleClient = userRoleService.findUserRoleEntityByRole(UserRoleEnum.CLIENT);
 
         addUser("waiter1", userRoleWaiter);
         addUser("waiter2", userRoleWaiter);

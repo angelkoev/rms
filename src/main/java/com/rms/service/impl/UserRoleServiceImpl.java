@@ -42,8 +42,8 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public UserRoleEntity findUserRoleEntityByName(UserRoleEnum userRoleEnum) {
-        return userRoleRepository.findUserRoleEntityByName(userRoleEnum);
+    public UserRoleEntity findUserRoleEntityByRole(UserRoleEnum userRoleEnum) {
+        return userRoleRepository.findUserRoleEntityByRole(userRoleEnum);
     }
 
 
