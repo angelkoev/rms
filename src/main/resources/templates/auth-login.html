@@ -12,11 +12,29 @@
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
-                        <form id="login-form" class="form" action="" method="post">
-                            <h3 class="text-center text-info">Login</h3>
+
+<!--                        <th:block th:each="e : ${#fields.errors()}" th:object="${e}">-->
+<!--                            <small th:text="${e}" class="text-danger">Error messages</small>-->
+<!--                            <br>-->
+<!--                        </th:block>-->
+<!--                        <th:block th:each="e : ${#fields.errors()}" th:object="${e}">-->
+<!--                            <small th:text="${e}" class="text-danger">Error messages</small>-->
+<!--                            <br>-->
+<!--                        </th:block>-->
+                        <small th:if="${errorMessage}"
+                               id="login-error-msg"
+                               class="text-danger h2 justify-content-center align-items-center">Въведени са невалидно потребителско име или парола!</small>
+
+                        <form id="login-form" class="form"
+                                  th:method="POST"
+                                  th:action="@{/users/login}"
+                                  th:object="${loginDTO}">
+                            <h3 class="text-center text-info">Моля въведете</h3>
                             <div class="form-group">
-                                <label for="username" class="text-info">Username:</label><br>
-                                <input type="text" name="username" id="username" class="form-control">
+                                <label for="username" class="text-info">Потребителско име:</label><br>
+                                <input th:field="*{username}"
+                                       th:errorclass="bg-danger"
+                                       type="text" name="username" id="username" class="form-control">
                             </div>
 <!--                            <div class="form-group">-->
 <!--                                <label for="username" class="text-info">First Name:</label><br>-->
@@ -27,12 +45,14 @@
 <!--                                <input type="text" name="username" id="secondName" class="form-control">-->
 <!--                            </div>-->
                             <div class="form-group">
-                                <label for="password" class="text-info">Password:</label><br>
-                                <input type="text" name="password" id="password" class="form-control">
+                                <label for="password" class="text-info">Парола:</label><br>
+                                <input th:field="*{password}"
+                                       th:errorclass="bg-danger"
+                                       type="password" name="password" id="password" class="form-control">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group justify-content-center">
 <!--                                <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>-->
-                                <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                                <input type="submit" name="submit" class="btn btn-info btn-md justify-content-center" value="вход">
                             </div>
 <!--                            <div id="register-link" class="text-right">-->
 <!--                                <a href="#" class="text-info">Register here</a>-->
