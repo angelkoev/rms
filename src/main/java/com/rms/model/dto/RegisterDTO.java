@@ -3,10 +3,8 @@ package com.rms.model.dto;
 import com.rms.validation.annotation.UniqueEmail;
 import com.rms.validation.annotation.UniqueUsername;
 import jakarta.persistence.Column;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.NumberFormat;
 
 import java.time.LocalDate;
 
@@ -27,7 +25,8 @@ public class RegisterDTO {
     private String lastName;
     private String address;
 
-    @NotBlank(message = "моля, въведете телефон")
+    @NotBlank(message = "моля, въведете телефонен номер")
+    @Pattern(regexp="|(\\+?[0-9 ]{6,})", message = "моля, въведете валиден телефонен номер (минимум 6 цифри)")
     private String phone;
     private LocalDate registrationDate;
 

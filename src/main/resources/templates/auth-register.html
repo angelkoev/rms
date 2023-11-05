@@ -60,7 +60,7 @@
                                 <label for="phone" class="text-info">Телефон: <span>(задължително поле)</label><br>
                                 <input th:field="*{phone}"
                                        th:errorclass="bg-danger"
-                                       type="text" name="phone" id="phone" class="form-control">
+                                       type="tel" name="phone" id="phone" class="form-control">
                             </div>
                             <small th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"
                                    class="text-danger">Phone error message</small>

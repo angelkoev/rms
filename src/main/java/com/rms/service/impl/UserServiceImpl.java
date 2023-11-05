@@ -83,8 +83,11 @@ public class UserServiceImpl implements UserService {
         user.setUsername(registerDTO.getUsername());
         user.setEmail(registerDTO.getEmail());
         user.setPassword(encoder.encode(registerDTO.getPassword()));
+        user.setFirstName(registerDTO.getFirstName());
+        user.setLastName(registerDTO.getLastName());
         user.setPhone(registerDTO.getPhone());
         user.setRegistrationDate(LocalDate.now());
+        user.setAddress(registerDTO.getAddress());
         UserRoleEntity clientRole = userRoleService.findUserRoleEntityByRole(UserRoleEnum.CLIENT);
         user.getRoles().add(clientRole);
         return user;
