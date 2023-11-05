@@ -5,26 +5,122 @@
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
-    <div class="container bg-blur rounded mt-5 ">
-        <h3>Който от храна разбира,</h3>
-        <h1 class="text-success" >"при бай Пешо"</h1>
-        <h3> се спира</h3>
-        <hr class="my-3 bg-white w-50"/>
-        <p class="h4">
-            Моля
-            <a class="text-primary" href="/users/login">Влезте</a>
-            в профила си или се
-            <a class="text-primary" href="/users/register">Регистрирайте</a>
-            , за да достъпите менюто, да резервирате маса и да направите поръчка
-            <br>
-        <hr class="my-3 bg-white w-75"/>
-        <h3>
-            Също така можете да прочетете
-            <a class="text-primary" href="/reviews">отзиви</a>
-            от нашите клиенти!
-            </p>
-        </h3>
-    </div>
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="hero d-flex align-items-center section-bg">
+        <div class="container">
+            <div class="row justify-content-between gy-5">
+                <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
+                    <h2>Който от храна разбира, <br><span>при Пешо</span><br> се спира!</h2>
+                    <p class="h4">
+                        Моля
+                        <a class="text-primary" href="/users/login">Влезте</a>
+                        в профила си или се
+                        <a class="text-primary" href="/users/register">Регистрирайте</a>
+                        , за да достъпите менюто, да резервирате маса и да направите поръчка
+                        <br>
+                    <hr class="my-3 bg-white w-75"/>
+                    <h3>
+                        Също така можете да прочетете
+                        <a class="text-primary" href="/reviews">отзиви</a>
+                        от нашите клиенти!
+                        </p>
+                    </h3>
+                </div>
+                <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
+                    <img src="/images/hero-img.png" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300">
+                </div>
+            </div>
+        </div>
+    </section><!-- End Hero Section -->
+    <section id="menu" class="menu">
+        <div class="container" data-aos="fade-up">
+            <div class="section-header">
+                <p>част от нашето меню</p>
+            </div>
+
+            <div class="tab-content" data-aos="fade-up" data-aos-delay="300">
+
+                <div class="tab-pane fade active show" id="menu-starters">
+
+                    <div class="row gy-5">
+
+                        <div class="col-lg-4 menu-item">
+                            <a href="/images/menu/menu-item-1.png" class="glightbox"><img
+                                    src="/images/menu/menu-item-1.png" class="menu-img img-fluid" alt=""></a>
+                            <h4>манджа 1</h4>
+                            <p class="ingredients">
+                                Lorem, deren, trataro, filede, nerada
+                            </p>
+                            <p class="price">
+                                5.95лв
+                            </p>
+                        </div><!-- Menu Item -->
+
+                        <div class="col-lg-4 menu-item">
+                            <a href="/images/menu/menu-item-2.png" class="glightbox"><img
+                                    src="/images/menu/menu-item-2.png" class="menu-img img-fluid" alt=""></a>
+                            <h4>манджа 2</h4>
+                            <p class="ingredients">
+                                Lorem, deren, trataro, filede, nerada
+                            </p>
+                            <p class="price">
+                                14.95лв
+                            </p>
+                        </div><!-- Menu Item -->
+
+                        <div class="col-lg-4 menu-item">
+                            <a href="/images/menu/menu-item-3.png" class="glightbox"><img
+                                    src="/images/menu/menu-item-3.png" class="menu-img img-fluid" alt=""></a>
+                            <h4>манджа 3</h4>
+                            <p class="ingredients">
+                                Lorem, deren, trataro, filede, nerada
+                            </p>
+                            <p class="price">
+                                8.95лв
+                            </p>
+                        </div><!-- Menu Item -->
+
+                        <div class="col-lg-4 menu-item">
+                            <a href="/images/menu/menu-item-4.png" class="glightbox"><img
+                                    src="/images/menu/menu-item-4.png" class="menu-img img-fluid" alt=""></a>
+                            <h4>манджа 4</h4>
+                            <p class="ingredients">
+                                Lorem, deren, trataro, filede, nerada
+                            </p>
+                            <p class="price">
+                                12.95лв
+                            </p>
+                        </div><!-- Menu Item -->
+
+                        <div class="col-lg-4 menu-item">
+                            <a href="/images/menu/menu-item-5.png" class="glightbox"><img
+                                    src="/images/menu/menu-item-5.png" class="menu-img img-fluid" alt=""></a>
+                            <h4>манджа 5</h4>
+                            <p class="ingredients">
+                                Lorem, deren, trataro, filede, nerada
+                            </p>
+                            <p class="price">
+                                12.95лв
+                            </p>
+                        </div><!-- Menu Item -->
+
+                        <div class="col-lg-4 menu-item">
+                            <a href="/images/menu/menu-item-6.png" class="glightbox"><img
+                                    src="/images/menu/menu-item-6.png" class="menu-img img-fluid" alt=""></a>
+                            <h4>манджа 6</h4>
+                            <p class="ingredients">
+                                Lorem, deren, trataro, filede, nerada
+                            </p>
+                            <p class="price">
+                                9.95лв
+                            </p>
+                        </div><!-- Menu Item -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
 <footer th:replace="~{fragments/commons::footer}"></footer>
 </body>

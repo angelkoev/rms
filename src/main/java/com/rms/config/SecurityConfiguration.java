@@ -55,7 +55,7 @@ public class SecurityConfiguration {
 //                                                UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
                                         .usernameParameter("username")
                                         .passwordParameter("password")
-                                        .defaultSuccessUrl("/")
+                                        .defaultSuccessUrl("/", true)
                                         .failureUrl("/users/login-error")
                 )
                 .logout((logout) ->

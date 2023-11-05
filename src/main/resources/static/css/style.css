@@ -12,7 +12,7 @@
 
 
 body {
-    background-image: url("/images/background.jpg");
+    /*background-image: url("/images/background.jpg");*/
     background-position: center;
     background-attachment: fixed;
     background-size: cover;
@@ -24,7 +24,7 @@ textarea {
 }
 
 footer {
-    position: fixed;
+    /*position: fixed;*/
     bottom: 0;
     width: 100%;
 }
