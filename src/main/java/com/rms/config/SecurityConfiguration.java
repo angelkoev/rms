@@ -69,8 +69,8 @@ public class SecurityConfiguration {
 //                rememberMe -> {
 //                    rememberMe
 //                            .key(rememberMeKey)
-//                            .rememberMeParameter("rememberme")
-//                            .rememberMeCookieName("rememberme");
+//                            .rememberMeParameter("remember-me")
+//                            .rememberMeCookieName("remember-me");
 //                });
 
         return http.build();
