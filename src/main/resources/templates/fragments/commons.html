@@ -19,32 +19,34 @@
     <nav id="navbar" class="navbar navbar-expand-lg bg-nav rounded fixed-top">
         <div class="container">
             <ul class="navbar navbar-left">
-                <li><a href="#hero">Начало</a></li>
-                <!--            <li><a href="#about">About</a></li>-->
-                <!--            <li><a href="#menu">Menu</a></li>-->
-                <!--            <li><a href="#events">Events</a></li>-->
+                <li><a href="/">Начало</a></li>
+<!--                <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/users/add">Добави служител</a></li>-->
+<!--                <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/users/view-all">виж всички служители</a></li>-->
+<!--                // по-добре да е някакъв admin panel...-->
                 <li><a href="#chefs">Chefs</a></li>
+                <li><a href="/view/reviews">отзиви</a></li>
             </ul>
             <ul class="navbar navbar-right">
                 <li>
-                <div sec:authorize="isAuthenticated()"
-                    class="welcome"
-                    style="color: #1a1ac9;
+                    <div sec:authorize="isAuthenticated()"
+                         class="welcome"
+                         style="color: #1a1ac9;
                     font-size: 16px;
                     font-weight: 700"
-                     >
-                    Добре дошъл,
-                    <th:block sec:authentication="name"></th:block>
-                </div>
+                    >
+                        Добре дошъл,
+                        <th:block sec:authentication="name"></th:block>
+                    </div>
                 </li>
-                <li><a href="#gallery">Вход</a></li>
+                <li sec:authorize="!isAuthenticated()"><a href="/users/login">Вход</a></li>
                 </li>
-                <li><a href="#contact">Регистрация</a></li>
-                <li>
+                <li sec:authorize="!isAuthenticated()"><a href="/users/register">Регистрация</a></li>
+                <li sec:authorize="isAuthenticated()">
                     <form th:action="@{/users/logout}" method="post">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <button id="logout-btn" type="submit" class="nav-link bg-transparent border-0 h5">
-                            Изход</button>
+                            Изход
+                        </button>
                     </form>
                 </li>
             </ul>

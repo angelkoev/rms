@@ -82,7 +82,7 @@ public class UserController {
         boolean equalPasswords = registerDTO.getPassword().equals(registerDTO.getConfirmPassword());
 
         if (!equalPasswords) {
-            bindingResult.addError(new FieldError("registerDTO", "confirmPassword", "Passwords NOT match !!!"));
+            bindingResult.addError(new FieldError("registerDTO", "confirmPassword", "Паролите НЕ съвпадат !!!"));
         }
 
         if (bindingResult.hasErrors() || !equalPasswords) {
@@ -93,6 +93,8 @@ public class UserController {
         }
 
         this.userService.register(registerDTO);
+
+        // FIXME message that user is registered and to go to login page to Login !!!
         return "redirect:/home";
     }
 

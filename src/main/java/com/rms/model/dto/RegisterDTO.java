@@ -2,29 +2,40 @@ package com.rms.model.dto;
 
 import com.rms.validation.annotation.UniqueEmail;
 import com.rms.validation.annotation.UniqueUsername;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDate;
+
 public class RegisterDTO {
     private Long id;
 
     @UniqueUsername
-    @Size(min = 3, max = 20, message = "Username length must be between 3 and 20 characters!")
-    @NotNull
+//    @Size(min = 3, max = 20, message = "Username length must be between 3 and 20 characters!")
+    @NotBlank(message = "моля, въведете потребителско име")
     private String username;
 
     @UniqueEmail
-    @Email
-    @NotBlank(message = "Email cannot be empty!")
+    @Email (message = "въведете валиден email")
+    @NotBlank(message = "моля, въведете email")
     private String email;
 
-    @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
+    private String firstName;
+    private String lastName;
+    private String address;
+
+    @NotBlank(message = "моля, въведете телефон")
+    private String phone;
+    private LocalDate registrationDate;
+
+    @Size(min = 3, max = 20, message = "Паролата трябва да е между 3 и 20 символа")
     @NotNull
     private String password;
 
-    @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
+//    @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
     @NotNull
     private String confirmPassword;
 
@@ -53,6 +64,46 @@ public class RegisterDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public LocalDate getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(LocalDate registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public String getPassword() {

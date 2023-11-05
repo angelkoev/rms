@@ -23,13 +23,13 @@
 <!--                        </th:block>-->
                         <small th:if="${errorMessage}"
                                id="login-error-msg"
-                               class="text-danger h2 justify-content-center align-items-center">Въведени са невалидно потребителско име или парола!</small>
+                               class="text-danger h2 d-flex justify-content-center align-items-center">Въведени са невалидно потребителско име или парола!</small>
 
                         <form id="login-form" class="form"
                                   th:method="POST"
                                   th:action="@{/users/login}"
                                   th:object="${loginDTO}">
-                            <h3 class="text-center text-info">Моля въведете</h3>
+                            <h3 class="text-center text-info">За вход, моля въведете</h3>
                             <div class="form-group">
                                 <label for="username" class="text-info">Потребителско име:</label><br>
                                 <input th:field="*{username}"
@@ -50,9 +50,9 @@
                                        th:errorclass="bg-danger"
                                        type="password" name="password" id="password" class="form-control">
                             </div>
-                            <div class="form-group justify-content-center">
+                            <div class="form-group button-holder d-flex justify-content-center">
 <!--                                <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>-->
-                                <input type="submit" name="submit" class="btn btn-info btn-md justify-content-center" value="вход">
+                                <input type="submit" name="submit" class="btn btn-info btn-md justify-content-center" value="Вход">
                             </div>
 <!--                            <div id="register-link" class="text-right">-->
 <!--                                <a href="#" class="text-info">Register here</a>-->

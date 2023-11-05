@@ -8,7 +8,6 @@ import com.rms.model.entity.UserRoleEnum;
 import com.rms.repositiry.UserRepository;
 import com.rms.service.interfaces.UserRoleService;
 import com.rms.service.interfaces.UserService;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -84,6 +83,10 @@ public class UserServiceImpl implements UserService {
         user.setUsername(registerDTO.getUsername());
         user.setEmail(registerDTO.getEmail());
         user.setPassword(encoder.encode(registerDTO.getPassword()));
+        user.setPhone(registerDTO.getPhone());
+        user.setRegistrationDate(LocalDate.now());
+        UserRoleEntity clientRole = userRoleService.findUserRoleEntityByRole(UserRoleEnum.CLIENT);
+        user.getRoles().add(clientRole);
         return user;
     }
 

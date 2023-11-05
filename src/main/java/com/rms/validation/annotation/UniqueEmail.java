@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueEmail {
-    String message() default "Email-а е вече зает. Моля изберете друг Email!";
+    String message() default "Email адреса е вече зает. Моля изберете друг Email";
 
     Class<?>[] groups() default {};
 
