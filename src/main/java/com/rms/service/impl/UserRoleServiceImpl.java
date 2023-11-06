@@ -33,7 +33,7 @@ public class UserRoleServiceImpl implements UserRoleService {
                         case WAITER -> userRole.setDescription("handle the order from the client");
                         case COOK -> userRole.setDescription("cook the food");
                         case BARTENDER -> userRole.setDescription("make the drinks/cocktails");
-                        case CLIENT -> userRole.setDescription("client make order from the menu");
+                        case USER -> userRole.setDescription("client make order from the menu");
                         case CLEANER -> userRole.setDescription("clean the place from the mess");
                     }
 

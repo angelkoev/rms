@@ -5,7 +5,7 @@ public enum UserRoleEnum {
     WAITER ("handle the order from the client"),
     COOK ("cook the food"),
     BARTENDER ("make the drinks/cocktails"),
-    CLIENT ("client - can make order from the menu"),
+    USER("client - can make order from the menu"),
     CLEANER ("clean the place from the mess");
 
     private final String description;

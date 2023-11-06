@@ -41,7 +41,7 @@ public class SecurityConfiguration {
                                         .requestMatchers("/pages/waiters").hasRole(UserRoleEnum.WAITER.name())
                                         .requestMatchers("/pages/cooks").hasRole(UserRoleEnum.COOK.name())
                                         .requestMatchers("/pages/bartenders").hasRole(UserRoleEnum.BARTENDER.name())
-                                        .requestMatchers("/pages/clients").hasRole(UserRoleEnum.CLIENT.name())
+                                        .requestMatchers("/pages/clients").hasRole(UserRoleEnum.USER.name())
                                         .anyRequest().authenticated()
 
                 )

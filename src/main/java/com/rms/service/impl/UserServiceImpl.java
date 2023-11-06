@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(registerDTO.getPhone());
         user.setRegistrationDate(LocalDate.now());
         user.setAddress(registerDTO.getAddress());
-        UserRoleEntity clientRole = userRoleService.findUserRoleEntityByRole(UserRoleEnum.CLIENT);
+        UserRoleEntity clientRole = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
         user.getRoles().add(clientRole);
         return user;
     }
@@ -126,6 +126,8 @@ public class UserServiceImpl implements UserService {
         admin.setRegistrationDate(LocalDate.of(1991, 2, 3));
         UserRoleEntity roleAdmin = userRoleService.findUserRoleEntityByRole(UserRoleEnum.ADMIN);
         admin.getRoles().add(roleAdmin);
+        UserRoleEntity roleUser = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
+        admin.getRoles().add(roleUser);
 
         userRepository.save(admin);
     }
@@ -139,7 +141,7 @@ public class UserServiceImpl implements UserService {
         UserRoleEntity userRoleWaiter = userRoleService.findUserRoleEntityByRole(UserRoleEnum.WAITER);
         UserRoleEntity userRoleCook = userRoleService.findUserRoleEntityByRole(UserRoleEnum.COOK);
         UserRoleEntity userRoleBartender = userRoleService.findUserRoleEntityByRole(UserRoleEnum.BARTENDER);
-        UserRoleEntity userRoleClient = userRoleService.findUserRoleEntityByRole(UserRoleEnum.CLIENT);
+        UserRoleEntity userRoleClient = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
 
         addUser("waiter1", userRoleWaiter);
         addUser("waiter2", userRoleWaiter);
@@ -162,7 +164,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encoder.encode("123"));
 //        System.out.println(encoder.encode("123"));
         user.setFirstName(username + "Fname");
-        user.setLastName(username + "1Lname");
+        user.setLastName(username + "Lname");
         user.setAddress(username +" address");
         user.setPhone(username + " phone");
         user.setRegistrationDate(LocalDate.of(1991, 2, 3));
