@@ -30,10 +30,11 @@ public class UserRoleServiceImpl implements UserRoleService {
 
                     switch (userRoleEnum) {
                         case ADMIN -> userRole.setDescription("The owner of the company");
+                        case USER -> userRole.setDescription("general user");
                         case WAITER -> userRole.setDescription("handle the order from the client");
                         case COOK -> userRole.setDescription("cook the food");
                         case BARTENDER -> userRole.setDescription("make the drinks/cocktails");
-                        case USER -> userRole.setDescription("client make order from the menu");
+                        case CLIENT -> userRole.setDescription("client - make order from the menu");
                         case CLEANER -> userRole.setDescription("clean the place from the mess");
                     }
 

@@ -33,6 +33,7 @@ public class DatabaseInit implements CommandLineRunner {
 
         userService.addAdmin();
         userService.addEmployees();
+        userService.AddClients();
 
         // TODO -> add some test data for users and menu !!!
 

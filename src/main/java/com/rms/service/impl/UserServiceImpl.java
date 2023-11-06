@@ -88,7 +88,9 @@ public class UserServiceImpl implements UserService {
         user.setPhone(registerDTO.getPhone());
         user.setRegistrationDate(LocalDate.now());
         user.setAddress(registerDTO.getAddress());
-        UserRoleEntity clientRole = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
+        UserRoleEntity userRole = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
+        user.getRoles().add(userRole);
+        UserRoleEntity clientRole = userRoleService.findUserRoleEntityByRole(UserRoleEnum.CLIENT);
         user.getRoles().add(clientRole);
         return user;
     }
@@ -138,26 +140,32 @@ public class UserServiceImpl implements UserService {
         if (userRepository.count() > 1) {
             return;
         }
+//        UserRoleEntity userRoleUser = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
         UserRoleEntity userRoleWaiter = userRoleService.findUserRoleEntityByRole(UserRoleEnum.WAITER);
         UserRoleEntity userRoleCook = userRoleService.findUserRoleEntityByRole(UserRoleEnum.COOK);
         UserRoleEntity userRoleBartender = userRoleService.findUserRoleEntityByRole(UserRoleEnum.BARTENDER);
-        UserRoleEntity userRoleClient = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
+        UserRoleEntity userRoleClient = userRoleService.findUserRoleEntityByRole(UserRoleEnum.CLIENT);
 
         addUser("waiter1", userRoleWaiter);
         addUser("waiter2", userRoleWaiter);
 
         addUser("cook1", userRoleCook);
-        addUser("cook2", userRoleCook);
+//        addUser("cook2", userRoleCook);
 
         addUser("bartender1", userRoleBartender);
-        addUser("bartender2", userRoleBartender);
+//        addUser("bartender2", userRoleBartender);
 
         addUser("client1", userRoleClient);
         addUser("client2", userRoleClient);
 
     }
 
-    private void addUser(String username, UserRoleEntity userRole) {
+    @Override
+    public void AddClients() {
+        // TODO !!!
+    }
+
+    private void addUser(String username, UserRoleEntity specificUserRole) {
         UserEntity user = new UserEntity();
         user.setUsername(username);
         user.setEmail(username + "@pripesho.com");
@@ -168,7 +176,10 @@ public class UserServiceImpl implements UserService {
         user.setAddress(username +" address");
         user.setPhone(username + " phone");
         user.setRegistrationDate(LocalDate.of(1991, 2, 3));
-        user.getRoles().add(userRole);
+
+        UserRoleEntity userRoleUser = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
+        user.getRoles().add(userRoleUser);
+        user.getRoles().add(specificUserRole);
 
         userRepository.save(user);
     }

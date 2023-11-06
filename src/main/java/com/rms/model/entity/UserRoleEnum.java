@@ -2,10 +2,11 @@ package com.rms.model.entity;
 
 public enum UserRoleEnum {
     ADMIN ("The owner of the company"),
+    USER("general user role"),
     WAITER ("handle the order from the client"),
     COOK ("cook the food"),
     BARTENDER ("make the drinks/cocktails"),
-    USER("client - can make order from the menu"),
+    CLIENT("client - can make order from the menu"),
     CLEANER ("clean the place from the mess");
 
     private final String description;

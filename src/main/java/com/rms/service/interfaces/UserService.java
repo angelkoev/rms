@@ -11,6 +11,8 @@ public interface UserService {
 
     void addEmployees();
 
+    void AddClients();
+
 
 //    Optional<User> findById(Long id);
 //
