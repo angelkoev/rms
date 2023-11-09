@@ -1,14 +1,16 @@
-package com.rms.service.impl;
+package com.rms.service;
 
 import com.rms.model.entity.*;
 import com.rms.repositiry.FoodTypeRepository;
-import com.rms.service.interfaces.FoodTypeService;
+//import com.rms.service.interfaces.FoodTypeService;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
 @Service
-public class FoodTypeServiceImpl implements FoodTypeService {
+public class FoodTypeServiceImpl
+//        implements FoodTypeService
+{
 
     private final FoodTypeRepository foodTypeRepository;
 
@@ -16,7 +18,7 @@ public class FoodTypeServiceImpl implements FoodTypeService {
         this.foodTypeRepository = foodTypeRepository;
     }
 
-    @Override
+//    @Override
     public void initFoodTypes() {
         if (foodTypeRepository.count() != 0) {
             return;

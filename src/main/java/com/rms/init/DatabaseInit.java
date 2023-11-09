@@ -1,27 +1,31 @@
 package com.rms.init;
 
-import com.rms.service.interfaces.DrinkTypeService;
-import com.rms.service.interfaces.FoodTypeService;
-import com.rms.service.interfaces.UserRoleService;
-import com.rms.service.interfaces.UserService;
+import com.rms.service.DrinkTypeServiceImpl;
+import com.rms.service.FoodTypeServiceImpl;
+import com.rms.service.UserRoleServiceImpl;
+import com.rms.service.UserService;
+//import com.rms.service.interfaces.DrinkTypeService;
+//import com.rms.service.interfaces.FoodTypeService;
+//import com.rms.service.interfaces.UserRoleService;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+@Order(0)
 @Component
 public class DatabaseInit implements CommandLineRunner {
 
-    private final UserRoleService userRoleService;
+    private final UserRoleServiceImpl userRoleService;
     private final UserService userService;
-    private final DrinkTypeService drinkTypeService;
-    private final FoodTypeService foodTypeService;
+    private final DrinkTypeServiceImpl drinkTypeService;
+    private final FoodTypeServiceImpl foodTypeService;
 
-    public DatabaseInit(UserRoleService userRoleService, UserService userService, DrinkTypeService drinkTypeService, FoodTypeService foodTypeService) {
+    public DatabaseInit(UserRoleServiceImpl userRoleService, UserService userService, DrinkTypeServiceImpl drinkTypeService, FoodTypeServiceImpl foodTypeService) {
         this.userRoleService = userRoleService;
         this.userService = userService;
         this.drinkTypeService = drinkTypeService;
         this.foodTypeService = foodTypeService;
     }
-
 
     @Override
     public void run(String... args) throws Exception {

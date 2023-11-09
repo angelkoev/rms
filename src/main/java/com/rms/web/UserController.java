@@ -2,10 +2,8 @@ package com.rms.web;
 
 import com.rms.model.dto.LoginDTO;
 import com.rms.model.dto.RegisterDTO;
-import com.rms.service.impl.UserServiceImpl;
+import com.rms.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,10 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
 
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 

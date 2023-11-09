@@ -1,4 +1,4 @@
-package com.rms.service.impl;
+package com.rms.service;
 
 import com.rms.model.dto.RegisterDTO;
 import com.rms.model.dto.UserDTO;
@@ -6,8 +6,9 @@ import com.rms.model.entity.UserEntity;
 import com.rms.model.entity.UserRoleEntity;
 import com.rms.model.entity.UserRoleEnum;
 import com.rms.repositiry.UserRepository;
-import com.rms.service.interfaces.UserRoleService;
-import com.rms.service.interfaces.UserService;
+import com.rms.service.UserRoleServiceImpl;
+//import com.rms.service.interfaces.UserRoleService;
+//import com.rms.service.interfaces.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +16,21 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserService
+//        implements UserService
+{
 
     private final UserRepository userRepository;
     //    private final LoggedUser loggedUser;
 //    private final HttpSession session;
     private final PasswordEncoder encoder;
-    private final UserRoleService userRoleService;
+    private final UserRoleServiceImpl userRoleService;
 
-    public UserServiceImpl(UserRepository userRepository,
+    public UserService(UserRepository userRepository,
 //                           LoggedUser loggedUser,
 //                           HttpSession session,
-                           PasswordEncoder encoder,
-                           UserRoleService userRoleService) {
+                       PasswordEncoder encoder,
+                       UserRoleServiceImpl userRoleService) {
         this.userRepository = userRepository;
 //        this.loggedUser = loggedUser;
 //        this.session = session;
@@ -104,12 +107,12 @@ public class UserServiceImpl implements UserService {
         return userDTO;
     }
 
-    @Override
+//    @Override
     public Optional<UserEntity> findById(Long id) {
         return userRepository.findById(id);
     }
 
-    @Override
+//    @Override
     public void addAdmin() {
 
         if (userRepository.count() != 0) {
@@ -134,7 +137,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(admin);
     }
 
-    @Override
+//    @Override
     public void addEmployees() {
 
         if (userRepository.count() > 1) {
@@ -160,7 +163,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
+//    @Override
     public void AddClients() {
         // TODO !!!
     }

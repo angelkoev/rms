@@ -1,6 +1,6 @@
 package com.rms.validation;
 
-import com.rms.service.impl.UserServiceImpl;
+import com.rms.service.UserService;
 import com.rms.validation.annotation.UniqueEmail;
 
 import jakarta.validation.ConstraintValidator;
@@ -8,9 +8,9 @@ import jakarta.validation.ConstraintValidatorContext;
 
 public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
-    public UniqueEmailValidator(UserServiceImpl userService) {
+    public UniqueEmailValidator(UserService userService) {
         this.userService = userService;
     }
 

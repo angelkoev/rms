@@ -1,15 +1,17 @@
-package com.rms.service.impl;
+package com.rms.service;
 
 import com.rms.model.entity.DrinkType;
 import com.rms.model.entity.DrinkTypeEnum;
 import com.rms.repositiry.DrinkTypeRepository;
-import com.rms.service.interfaces.DrinkTypeService;
+//import com.rms.service.interfaces.DrinkTypeService;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
 @Service
-public class DrinkTypeServiceImpl implements DrinkTypeService {
+public class DrinkTypeServiceImpl
+//        implements DrinkTypeService
+{
 
     private final DrinkTypeRepository drinkTypeRepository;
 
@@ -17,7 +19,7 @@ public class DrinkTypeServiceImpl implements DrinkTypeService {
         this.drinkTypeRepository = drinkTypeRepository;
     }
 
-    @Override
+//    @Override
     public void initDrinkTypes() {
         if (drinkTypeRepository.count() != 0) {
             return;

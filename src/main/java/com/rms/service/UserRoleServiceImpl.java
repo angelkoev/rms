@@ -1,15 +1,17 @@
-package com.rms.service.impl;
+package com.rms.service;
 
 import com.rms.model.entity.UserRoleEntity;
 import com.rms.model.entity.UserRoleEnum;
 import com.rms.repositiry.UserRoleRepository;
-import com.rms.service.interfaces.UserRoleService;
+//import com.rms.service.interfaces.UserRoleService;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
 @Service
-public class UserRoleServiceImpl implements UserRoleService {
+public class UserRoleServiceImpl
+//        implements UserRoleService
+{
 
     private final UserRoleRepository userRoleRepository;
 
@@ -17,7 +19,7 @@ public class UserRoleServiceImpl implements UserRoleService {
         this.userRoleRepository = userRoleRepository;
     }
 
-    @Override
+//    @Override
     public void initUserRoles() {
         if (userRoleRepository.count() != 0) {
             return;
@@ -42,7 +44,7 @@ public class UserRoleServiceImpl implements UserRoleService {
                 });
     }
 
-    @Override
+//    @Override
     public UserRoleEntity findUserRoleEntityByRole(UserRoleEnum userRoleEnum) {
         return userRoleRepository.findUserRoleEntityByRole(userRoleEnum);
     }

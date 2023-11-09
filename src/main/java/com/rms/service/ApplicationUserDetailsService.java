@@ -1,4 +1,4 @@
-package com.rms.service.impl;
+package com.rms.service;
 
 import com.rms.model.AppUserDetails;
 import com.rms.model.entity.UserEntity;
