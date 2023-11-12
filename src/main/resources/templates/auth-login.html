@@ -23,7 +23,7 @@
 <!--                        </th:block>-->
                         <small th:if="${errorMessage}"
                                id="login-error-msg"
-                               class="text-danger h2 d-flex justify-content-center align-items-center">Въведени са невалидно потребителско име или парола!</small>
+                               class="text-danger h2 d-flex justify-content-center align-items-center">Въведена е невалидна комбинация от потребителско име и парола!</small>
 
                         <form id="login-form" class="form"
                                   th:method="POST"
@@ -33,6 +33,7 @@
                             <div class="form-group">
                                 <label for="username" class="text-info">Потребителско име:</label><br>
                                 <input th:field="*{username}"
+                                       required minlength="3" maxlength="20"
                                        th:errorclass="bg-danger"
                                        type="text" name="username" id="username" class="form-control">
                             </div>
@@ -47,6 +48,7 @@
                             <div class="form-group">
                                 <label for="password" class="text-info">Парола:</label><br>
                                 <input th:field="*{password}"
+                                       required minlength="3" maxlength="20"
                                        th:errorclass="bg-danger"
                                        type="password" name="password" id="password" class="form-control">
                             </div>

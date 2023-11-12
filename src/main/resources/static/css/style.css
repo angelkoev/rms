@@ -80,3 +80,11 @@ footer {
 #navbarNav > ul > li:nth-child(4) > form > button{
     cursor: pointer;
 }
+
+input:valid {
+    border: lawngreen solid 2px;
+}
+
+input:invalid {
+    border: red solid 2px;
+}

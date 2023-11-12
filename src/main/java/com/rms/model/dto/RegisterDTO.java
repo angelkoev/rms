@@ -12,7 +12,7 @@ public class RegisterDTO {
     private Long id;
 
     @UniqueUsername
-//    @Size(min = 3, max = 20, message = "Username length must be between 3 and 20 characters!")
+    @Size(min = 3, max = 20, message = "Потребителското име трябва да е между 3 и 20 символа!")
     @NotBlank(message = "моля, въведете потребителско име")
     private String username;
 
