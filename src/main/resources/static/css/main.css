@@ -380,7 +380,7 @@ section {
         left: 100%;
         visibility: visible;
     }
-}
+
 
 @media (min-width: 1280px) and (max-width: 1366px) {
     .navbar .dropdown .dropdown ul {
@@ -852,7 +852,7 @@ section {
     font-weight: 500;
     color: var(--color-secondary);
     font-family: var(--font-secondary);
-    font-weight: 30px;
+    /*font-weight: 30px;*/
     margin-bottom: 5px;
 }
 
