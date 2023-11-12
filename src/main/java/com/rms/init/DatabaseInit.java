@@ -39,6 +39,11 @@ public class DatabaseInit implements CommandLineRunner {
         userService.addEmployees();
         userService.AddClients();
 
+        // TODO -> initTables - > 10 tables with 2 waiters
+        // TODO -> init comments -> 3-5 comments from "users"
+        // TODO -> init menu -> put initial food and drinks in the menu !!!
+
+
         // TODO -> add some test data for users and menu !!!
 
     }
