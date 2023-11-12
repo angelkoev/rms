@@ -29,13 +29,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(
                         authorizeHttpRequests ->
                                 authorizeHttpRequests
-//                                        .requestMatchers("/resources/**", "/resources/public/favicon.png",
-//                                                "/static/**", "/css/**", "/js/**", "/img/**", "/images/**",
-//                                                "/icon/**").permitAll()
-                                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-                                        .permitAll()
-//                                        .requestMatchers(String.valueOf(PathRequest.toStaticResources().atCommonLocations())).permitAll()
-//                                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                         .requestMatchers("/", "/index", "/users/login", "/users/register", "/users/login-error").permitAll()
                                         .requestMatchers("/views/admins").hasRole(UserRoleEnum.ADMIN.name())
                                         .requestMatchers("/views/waiters").hasRole(UserRoleEnum.WAITER.name())
