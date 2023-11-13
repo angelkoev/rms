@@ -3,16 +3,18 @@ package com.rms.model.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
 public class OrderEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "order")
-    private List<FoodEntity> foods;
+    private Set<FoodEntity> foods;
     @OneToMany(mappedBy = "order")
-    private List<DrinkEntity> drinks;
+    private Set<DrinkEntity> drinks;
     @ManyToOne
     private TableEntity table;
 
@@ -26,21 +28,23 @@ public class OrderEntity extends BaseEntity {
     private boolean isPaid;
 
     public OrderEntity() {
+        this.foods = new HashSet<>();
+        this.drinks = new HashSet<>();
     }
 
-    public List<FoodEntity> getFoods() {
+    public Set<FoodEntity> getFoods() {
         return foods;
     }
 
-    public void setFoods(List<FoodEntity> foods) {
+    public void setFoods(Set<FoodEntity> foods) {
         this.foods = foods;
     }
 
-    public List<DrinkEntity> getDrinks() {
+    public Set<DrinkEntity> getDrinks() {
         return drinks;
     }
 
-    public void setDrinks(List<DrinkEntity> drinks) {
+    public void setDrinks(Set<DrinkEntity> drinks) {
         this.drinks = drinks;
     }
 

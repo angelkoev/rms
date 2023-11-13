@@ -15,11 +15,11 @@ public class FoodEntity extends BaseEntity {
 
 //    @ManyToOne
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private FoodTypeEnum type;
 //    private FoodType type;
     @Column(nullable = false)
-    private BigDecimal size; //serving size
+    private int size; //serving size
     @Column(nullable = false)
     private BigDecimal kcal; // calories
 
@@ -62,11 +62,11 @@ public class FoodEntity extends BaseEntity {
         this.type = type;
     }
 
-    public BigDecimal getSize() {
+    public int getSize() {
         return size;
     }
 
-    public void setSize(BigDecimal size) {
+    public void setSize(int size) {
         this.size = size;
     }
 

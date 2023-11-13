@@ -5,6 +5,8 @@ import com.rms.model.entity.UserEntity;
 import com.rms.repositiry.TableRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TableService {
 
@@ -17,7 +19,11 @@ public class TableService {
         this.userService = userService;
     }
 
-    public void addTables() {
+    public TableEntity findById(Long id) {
+        return this.tableRepository.findTableEntitiesById(id).orElse(null);
+    }
+
+    public void initTables() {
 
         if (tableRepository.count() != 0) {
             return;
@@ -25,18 +31,20 @@ public class TableService {
 
         UserEntity waiter1 = userService.findUserEntityByUsername("waiter1");
         UserEntity waiter2 = userService.findUserEntityByUsername("waiter2");
+//        UserEntity waiter1 = new UserEntity();
+//        UserEntity waiter2 = new UserEntity();
 
         for (int i = 0; i < 10; i++) {
             if (i % 2 == 0) {
-                addTable(waiter1);
+                initTable(waiter1);
             } else {
-                addTable(waiter2);
+                initTable(waiter2);
             }
         }
 
     }
 
-    private void addTable(UserEntity waiter) {
+    private void initTable(UserEntity waiter) {
         TableEntity table = new TableEntity();
         table.setCapacity(10);
         table.isReserved(false);

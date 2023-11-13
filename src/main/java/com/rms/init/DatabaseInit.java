@@ -3,9 +3,7 @@ package com.rms.init;
 //import com.rms.service.DrinkTypeServiceImpl;
 //import com.rms.service.FoodTypeServiceImpl;
 
-import com.rms.service.TableService;
-import com.rms.service.UserRoleService;
-import com.rms.service.UserService;
+import com.rms.service.*;
 //import com.rms.service.interfaces.DrinkTypeService;
 //import com.rms.service.interfaces.FoodTypeService;
 //import com.rms.service.interfaces.UserRoleService;
@@ -19,17 +17,27 @@ public class DatabaseInit implements CommandLineRunner {
     private final UserRoleService userRoleService;
     private final UserService userService;
     private final TableService tableService;
+    private final ReviewService reviewService;
+    private final FoodService foodService;
+    private final DrinkService drinkService;
+    private final OrderService orderService;
 //    private final DrinkTypeServiceImpl drinkTypeService;
 //    private final FoodTypeServiceImpl foodTypeService;
 
     public DatabaseInit(UserRoleService userRoleService, UserService userService,
 //            , DrinkTypeServiceImpl drinkTypeService, FoodTypeServiceImpl foodTypeService
-                        TableService tableService) {
+                        TableService tableService, ReviewService reviewService, FoodService foodService, DrinkService drinkService, OrderService orderService) {
         this.userRoleService = userRoleService;
         this.userService = userService;
 //        this.drinkTypeService = drinkTypeService;
 //        this.foodTypeService = foodTypeService;
         this.tableService = tableService;
+        this.reviewService = reviewService;
+
+        this.orderService = orderService;
+
+        this.foodService = foodService;
+        this.drinkService = drinkService;
     }
 
     @Override
@@ -40,14 +48,19 @@ public class DatabaseInit implements CommandLineRunner {
 //        drinkTypeService.initDrinkTypes();
 //        foodTypeService.initFoodTypes();
 
-        userService.addAdmin();
-        userService.addEmployees();
-        userService.AddClients();
+        userService.initAdmin();
+        userService.initUsers();
+//        userService.initClients();
 
-        tableService.addTables();
+        tableService.initTables();
+        reviewService.initReviews();
 
-        // TODO -> initTables - > 10 tables with 2 waiters
-        // TODO -> init comments -> 3-5 comments from "users"
+        orderService.initMenu();
+
+        foodService.initFoods();
+        drinkService.initDrinks();
+
+
         // TODO -> init menu -> put initial food and drinks in the menu !!!
 
 

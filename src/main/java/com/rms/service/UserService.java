@@ -16,23 +16,17 @@ import java.util.Optional;
 
 @Service
 public class UserService
-//        implements UserService
 {
 
     private final UserRepository userRepository;
-    //    private final LoggedUser loggedUser;
-//    private final HttpSession session;
+
     private final PasswordEncoder encoder;
     private final UserRoleService userRoleService;
 
     public UserService(UserRepository userRepository,
-//                           LoggedUser loggedUser,
-//                           HttpSession session,
                        PasswordEncoder encoder,
                        UserRoleService userRoleService) {
         this.userRepository = userRepository;
-//        this.loggedUser = loggedUser;
-//        this.session = session;
         this.encoder = encoder;
         this.userRoleService = userRoleService;
     }
@@ -116,7 +110,7 @@ public class UserService
     }
 
 //    @Override
-    public void addAdmin() {
+    public void initAdmin() {
 
         if (userRepository.count() != 0) {
             return;
@@ -141,7 +135,7 @@ public class UserService
     }
 
 //    @Override
-    public void addEmployees() {
+    public void initUsers() {
 
         if (userRepository.count() > 1) {
             return;
@@ -152,26 +146,26 @@ public class UserService
         UserRoleEntity userRoleBartender = userRoleService.findUserRoleEntityByRole(UserRoleEnum.BARTENDER);
         UserRoleEntity userRoleClient = userRoleService.findUserRoleEntityByRole(UserRoleEnum.CLIENT);
 
-        addUser("waiter1", userRoleWaiter);
-        addUser("waiter2", userRoleWaiter);
+        initUser("waiter1", userRoleWaiter);
+        initUser("waiter2", userRoleWaiter);
 
-        addUser("cook1", userRoleCook);
+        initUser("cook1", userRoleCook);
 //        addUser("cook2", userRoleCook);
 
-        addUser("bartender1", userRoleBartender);
+        initUser("bartender1", userRoleBartender);
 //        addUser("bartender2", userRoleBartender);
 
-        addUser("client1", userRoleClient);
-        addUser("client2", userRoleClient);
+        initUser("client1", userRoleClient);
+        initUser("client2", userRoleClient);
 
     }
 
 //    @Override
-    public void AddClients() {
-        // TODO !!!
-    }
+//    public void initClients() {
+//        //
+//    }
 
-    private void addUser(String username, UserRoleEntity specificUserRole) {
+    private void initUser(String username, UserRoleEntity specificUserRole) {
         UserEntity user = new UserEntity();
         user.setUsername(username);
         user.setEmail(username + "@pripesho.com");
