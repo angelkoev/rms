@@ -2,6 +2,7 @@ package com.rms.model.entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,18 +14,19 @@ public class TableEntity extends BaseEntity {
 //    @Enumerated(EnumType.STRING)
 //    @Column(nullable = false)
 //    private LocationEnum location;
-    @Column(nullable = false)
-    private boolean isForSmoking;
+//    @Column(nullable = false)
+//    private boolean isForSmoking;
     @Column(nullable = false)
     private boolean isReserved;
 
     @OneToMany (mappedBy = "table")
-    private Set<OrderEntity> order;
+    private Set<OrderEntity> orders;
 
-    @OneToOne
+    @ManyToOne
     private UserEntity waiter;
 
     public TableEntity() {
+        this.orders = new HashSet<>();
     }
 
     public int getCapacity() {
@@ -43,15 +45,15 @@ public class TableEntity extends BaseEntity {
 //        this.location = location;
 //    }
 
-    public boolean isForSmoking() {
-        return isForSmoking;
-    }
+//    public boolean isForSmoking() {
+//        return isForSmoking;
+//    }
+//
+//    public void setForSmoking(boolean forSmoking) {
+//        isForSmoking = forSmoking;
+//    }
 
-    public void setForSmoking(boolean forSmoking) {
-        isForSmoking = forSmoking;
-    }
-
-    public boolean isReserved() {
+    public boolean isReserved(boolean b) {
         return isReserved;
     }
 
@@ -59,12 +61,12 @@ public class TableEntity extends BaseEntity {
         isReserved = reserved;
     }
 
-    public Set<OrderEntity> getOrder() {
-        return order;
+    public Set<OrderEntity> getOrders() {
+        return orders;
     }
 
-    public void setOrder(Set<OrderEntity> order) {
-        this.order = order;
+    public void setOrders(Set<OrderEntity> order) {
+        this.orders = order;
     }
 
     public UserEntity getWaiter() {

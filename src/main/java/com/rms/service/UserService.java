@@ -6,7 +6,6 @@ import com.rms.model.entity.UserEntity;
 import com.rms.model.entity.UserRoleEntity;
 import com.rms.model.entity.UserRoleEnum;
 import com.rms.repositiry.UserRepository;
-import com.rms.service.UserRoleServiceImpl;
 //import com.rms.service.interfaces.UserRoleService;
 //import com.rms.service.interfaces.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,13 +23,13 @@ public class UserService
     //    private final LoggedUser loggedUser;
 //    private final HttpSession session;
     private final PasswordEncoder encoder;
-    private final UserRoleServiceImpl userRoleService;
+    private final UserRoleService userRoleService;
 
     public UserService(UserRepository userRepository,
 //                           LoggedUser loggedUser,
 //                           HttpSession session,
                        PasswordEncoder encoder,
-                       UserRoleServiceImpl userRoleService) {
+                       UserRoleService userRoleService) {
         this.userRepository = userRepository;
 //        this.loggedUser = loggedUser;
 //        this.session = session;
@@ -45,6 +44,10 @@ public class UserService
         }
 
         return this.mapUserDTO(user);
+    }
+
+    public UserEntity findUserEntityByUsername(String username) {
+        return this.getUserByUsername(username);
     }
 
     public UserDTO findUserByEmail(String email) { // for validation for unique email

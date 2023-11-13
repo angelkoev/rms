@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 
 @Service
-public class UserRoleServiceImpl
+public class UserRoleService
 //        implements UserRoleService
 {
 
     private final UserRoleRepository userRoleRepository;
 
-    public UserRoleServiceImpl(UserRoleRepository userRoleRepository) {
+    public UserRoleService(UserRoleRepository userRoleRepository) {
         this.userRoleRepository = userRoleRepository;
     }
 
