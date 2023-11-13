@@ -1,7 +1,8 @@
 package com.rms.init;
 
-import com.rms.service.DrinkTypeServiceImpl;
-import com.rms.service.FoodTypeServiceImpl;
+//import com.rms.service.DrinkTypeServiceImpl;
+//import com.rms.service.FoodTypeServiceImpl;
+
 import com.rms.service.UserRoleServiceImpl;
 import com.rms.service.UserService;
 //import com.rms.service.interfaces.DrinkTypeService;
@@ -17,14 +18,16 @@ public class DatabaseInit implements CommandLineRunner {
 
     private final UserRoleServiceImpl userRoleService;
     private final UserService userService;
-    private final DrinkTypeServiceImpl drinkTypeService;
-    private final FoodTypeServiceImpl foodTypeService;
+//    private final DrinkTypeServiceImpl drinkTypeService;
+//    private final FoodTypeServiceImpl foodTypeService;
 
-    public DatabaseInit(UserRoleServiceImpl userRoleService, UserService userService, DrinkTypeServiceImpl drinkTypeService, FoodTypeServiceImpl foodTypeService) {
+    public DatabaseInit(UserRoleServiceImpl userRoleService, UserService userService
+//            , DrinkTypeServiceImpl drinkTypeService, FoodTypeServiceImpl foodTypeService
+    ) {
         this.userRoleService = userRoleService;
         this.userService = userService;
-        this.drinkTypeService = drinkTypeService;
-        this.foodTypeService = foodTypeService;
+//        this.drinkTypeService = drinkTypeService;
+//        this.foodTypeService = foodTypeService;
     }
 
     @Override
@@ -32,8 +35,8 @@ public class DatabaseInit implements CommandLineRunner {
 
 
         userRoleService.initUserRoles();
-        drinkTypeService.initDrinkTypes();
-        foodTypeService.initFoodTypes();
+//        drinkTypeService.initDrinkTypes();
+//        foodTypeService.initFoodTypes();
 
         userService.addAdmin();
         userService.addEmployees();

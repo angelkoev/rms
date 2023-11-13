@@ -16,10 +16,11 @@ public class DrinkEntity extends BaseEntity {
     @Column(nullable = false)
     private int volume; //in ml
 
-    @ManyToOne
-//    @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
-    private DrinkType type;
+    //    @ManyToOne
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private DrinkTypeEnum type;
+//    private DrinkType type;
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     private OrderEntity order;
@@ -59,11 +60,11 @@ public class DrinkEntity extends BaseEntity {
         this.volume = volume;
     }
 
-    public DrinkType getType() {
+    public DrinkTypeEnum getType() {
         return type;
     }
 
-    public void setType(DrinkType type) {
+    public void setType(DrinkTypeEnum type) {
         this.type = type;
     }
 

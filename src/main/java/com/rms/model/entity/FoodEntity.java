@@ -13,10 +13,11 @@ public class FoodEntity extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @ManyToOne
-//    @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
-    private FoodType type;
+//    @ManyToOne
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, unique = true)
+    private FoodTypeEnum type;
+//    private FoodType type;
     @Column(nullable = false)
     private BigDecimal size; //serving size
     @Column(nullable = false)
@@ -53,11 +54,11 @@ public class FoodEntity extends BaseEntity {
         this.price = price;
     }
 
-    public FoodType getType() {
+    public FoodTypeEnum getType() {
         return type;
     }
 
-    public void setType(FoodType type) {
+    public void setType(FoodTypeEnum type) {
         this.type = type;
     }
 

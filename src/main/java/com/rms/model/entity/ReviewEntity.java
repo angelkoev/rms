@@ -20,6 +20,9 @@ public class ReviewEntity extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime postedOn;
 
+    @Column(nullable = false)
+    private int score;
+
     public ReviewEntity() {
     }
 
