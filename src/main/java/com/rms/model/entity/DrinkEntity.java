@@ -27,6 +27,9 @@ public class DrinkEntity extends BaseEntity {
     private int preparationTime;
     @Column(nullable = false)
     private boolean completed;
+
+    @Column(nullable = false)
+    private boolean delivered;
     private boolean isPaid; // may be not needed, because Order had the same field
 
     public DrinkEntity() {
@@ -86,6 +89,14 @@ public class DrinkEntity extends BaseEntity {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public boolean isDelivered() {
+        return delivered;
+    }
+
+    public void setDelivered(boolean delivered) {
+        this.delivered = delivered;
     }
 
     public boolean isPaid() {
