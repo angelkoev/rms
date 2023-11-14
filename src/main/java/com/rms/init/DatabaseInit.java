@@ -55,10 +55,12 @@ public class DatabaseInit implements CommandLineRunner {
         tableService.initTables();
         reviewService.initReviews();
 
-        orderService.initMenu();
+        orderService.initMenuOrder();
 
         foodService.initFoods();
         drinkService.initDrinks();
+
+        orderService.initMenu();
 
 
         // TODO -> init menu -> put initial food and drinks in the menu !!!

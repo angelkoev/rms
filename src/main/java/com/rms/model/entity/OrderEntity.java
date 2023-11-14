@@ -11,9 +11,9 @@ import java.util.Set;
 @Table(name = "orders")
 public class OrderEntity extends BaseEntity {
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<FoodEntity> foods;
-    @OneToMany(mappedBy = "order")
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<DrinkEntity> drinks;
     @ManyToOne
     private TableEntity table;

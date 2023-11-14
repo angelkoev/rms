@@ -23,9 +23,10 @@ public class FoodEntity extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal kcal; // calories
 
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private OrderEntity order;
+//    @ManyToOne
+//    @JoinColumn(name = "order_id", nullable = false)
+//    private OrderEntity order;
+    private int orderId;
     @Column(nullable = false)
     private int preparationTime;
     @Column(nullable = false)
@@ -78,12 +79,12 @@ public class FoodEntity extends BaseEntity {
         this.kcal = kcal;
     }
 
-    public OrderEntity getOrder() {
-        return order;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setOrder(OrderEntity order) {
-        this.order = order;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public int getPreparationTime() {
