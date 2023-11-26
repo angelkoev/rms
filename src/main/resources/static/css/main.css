@@ -48,6 +48,35 @@ body {
 /*}*/
 
 /*--------------------------------------------------------------
+# add review form
+--------------------------------------------------------------*/
+
+body {
+    margin: 0;
+    padding: 0;
+    /*background-color: #17a2b8;*/
+    height: 100vh;
+}
+#review .container #review-row #review-column #review-box {
+    margin-top: 120px;
+    margin-bottom: 120px;
+    /*max-width: 600px;*/
+    /*height: 320px;*/
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+}
+#review .container #review-row #review-column #review-box #review-form {
+    padding: 20px;
+}
+/*#login .container #login-row #login-column #login-box #login-form #register-link {*/
+/*    margin-top: -85px;*/
+/*}*/
+
+/*#login-error-msg {*/
+/*    text-align: center;*/
+/*}*/
+
+/*--------------------------------------------------------------
 # Register form
 --------------------------------------------------------------*/
 
@@ -1440,7 +1469,8 @@ section {
     background-size: cover;
     position: relative;
     min-height: 60vh;
-    padding: 160px 0 60px 0;
+    /*padding: 160px 0 60px 0;*/
+    padding: 60px 0 60px 0;
 }
 
 .hero h2 {

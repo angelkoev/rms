@@ -19,7 +19,7 @@
     <nav id="navbar" class="navbar navbar-expand-lg bg-nav rounded fixed-top">
         <div class="container">
             <ul class="navbar navbar-left">
-                <li><a href="/">Начало</a></li>
+<!--                <li><a href="/">Начало</a></li>-->
                 <!--                <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/users/add">Добави служител</a></li>-->
                 <!--                <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/users/view-all">виж всички служители</a></li>-->
                 <!--                // по-добре да е някакъв admin panel...-->
@@ -62,7 +62,9 @@
                 </li>
                 <!--                <li><a href="#chefs">Chefs</a></li>-->
                 <li><a href="/reviews/all">Отзиви от клиенти</a></li>
-                <li><a href="/orders">Направи поръчка</a></li>
+                <li sec:authorize="hasRole('ROLE_CLIENT')"><a href="/reviews/add">Остави отзив</a></li>
+                <li sec:authorize="hasRole('ROLE_CLIENT')"><a href="/orders/new">Направи поръчка</a></li>
+
             </ul>
             <ul class="navbar navbar-right">
                 <li>

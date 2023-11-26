@@ -1,12 +1,15 @@
 package com.rms.service;
 
+import com.rms.model.dto.ReviewDTO;
 import com.rms.model.entity.ReviewEntity;
 import com.rms.model.entity.UserEntity;
 import com.rms.model.views.ReviewView;
 import com.rms.repositiry.ReviewRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -27,6 +30,17 @@ public class ReviewService {
         this.reviewRepository = reviewRepository;
         this.userService = userService;
         this.modelMapper = modelMapper;
+    }
+
+    public void addReview (ReviewDTO reviewDTO) {
+
+        ReviewEntity review = modelMapper.map(reviewDTO, ReviewEntity.class);
+
+        UserEntity user = userService.findUserEntityByUsername(reviewDTO.getUsername());
+        review.setWrittenBy(user);
+        review.setPostedOn(LocalDate.now());
+
+        reviewRepository.save(review);
     }
 
     public List<ReviewView> getAllReviews() {
