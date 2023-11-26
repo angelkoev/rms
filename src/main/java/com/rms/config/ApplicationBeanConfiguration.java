@@ -20,28 +20,6 @@ public class ApplicationBeanConfiguration {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
 
-//        modelMapper.addConverter(new Converter<String, LocalDate>() {
-//            @Override
-//            public LocalDate convert(MappingContext<String, LocalDate> mappingContext) {
-//
-//                LocalDate parse = LocalDate
-//                        .parse(mappingContext.getSource(),
-//                                DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-//
-//                return parse;
-//            }
-//        });
-
-//        Converter<LocalDate, String> localDateToStringConverter = new Converter<LocalDate, String>() {
-//            @Override
-//            public String convert(MappingContext<LocalDate, String> context) {
-//                LocalDate source = context.getSource();
-//                return source != null ? source.format(DateTimeFormatter.ISO_LOCAL_DATE) : null;
-//            }
-//        };
-
-//        modelMapper.addConverter(localDateToStringConverter);
-
         return modelMapper;
     }
 }

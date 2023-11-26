@@ -37,11 +37,13 @@ public class ReviewService {
                 .map(reviewEntity -> {
                     ReviewView currentReview = modelMapper.map(reviewEntity, ReviewView.class);
 
+//                    System.out.println();
+
                     String writtenBy = reviewEntity.getWrittenBy().getFirstName() + " " + reviewEntity.getWrittenBy().getLastName();
                     currentReview.setAuthor(writtenBy);
 
-                    String postedOnd = reviewEntity.getPostedOn().toString();
-                    currentReview.setDate(postedOnd);
+//                    String postedOnd = reviewEntity.getPostedOn().toString();
+//                    currentReview.setDate(postedOnd);
 
                     return currentReview;
 

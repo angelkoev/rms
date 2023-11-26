@@ -4,7 +4,7 @@ public class ReviewView {
 
     private String author;
     private String content;
-    private String date;
+    private String postedOn;
     private int score;
 
     public ReviewView() {
@@ -26,12 +26,12 @@ public class ReviewView {
         this.content = content;
     }
 
-    public String getDate() {
-        return date;
+    public String getPostedOn() {
+        return postedOn;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setPostedOn(String postedOn) {
+        this.postedOn = postedOn;
     }
 
     public int getScore() {
