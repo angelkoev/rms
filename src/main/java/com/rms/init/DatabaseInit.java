@@ -16,7 +16,7 @@ public class DatabaseInit implements CommandLineRunner {
 
     private final UserRoleService userRoleService;
     private final UserService userService;
-    private final TableService tableService;
+//    private final TableService tableService;
     private final ReviewService reviewService;
     private final FoodService foodService;
     private final DrinkService drinkService;
@@ -26,12 +26,12 @@ public class DatabaseInit implements CommandLineRunner {
 
     public DatabaseInit(UserRoleService userRoleService, UserService userService,
 //            , DrinkTypeServiceImpl drinkTypeService, FoodTypeServiceImpl foodTypeService
-                        TableService tableService, ReviewService reviewService, FoodService foodService, DrinkService drinkService, OrderService orderService) {
+                      ReviewService reviewService, FoodService foodService, DrinkService drinkService, OrderService orderService) {
         this.userRoleService = userRoleService;
         this.userService = userService;
 //        this.drinkTypeService = drinkTypeService;
 //        this.foodTypeService = foodTypeService;
-        this.tableService = tableService;
+//        this.tableService = tableService;
         this.reviewService = reviewService;
 
         this.orderService = orderService;
@@ -52,7 +52,7 @@ public class DatabaseInit implements CommandLineRunner {
         userService.initUsers();
 //        userService.initClients();
 
-        tableService.initTables();
+//        tableService.initTables();
         reviewService.initReviews();
 
         orderService.initMenuOrder();

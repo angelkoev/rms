@@ -30,7 +30,7 @@ public class SecurityConfiguration {
                         authorizeHttpRequests ->
                                 authorizeHttpRequests
                                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                        .requestMatchers("/", "/index", "/users/login", "/users/register", "/users/login-error").permitAll()
+                                        .requestMatchers("/", "/index", "/users/login", "/users/register", "/users/login-error", "/reviews/all", "/api/reviews", "/orders").permitAll()
                                         .requestMatchers("/views/admins").hasRole(UserRoleEnum.ADMIN.name())
                                         .requestMatchers("/views/waiters").hasRole(UserRoleEnum.WAITER.name())
                                         .requestMatchers("/views/cooks").hasRole(UserRoleEnum.COOK.name())

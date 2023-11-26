@@ -134,6 +134,10 @@ public class UserService
         userRepository.save(admin);
     }
 
+    public Long usersCount() {
+        return userRepository.count();
+    }
+
 //    @Override
     public void initUsers() {
 
@@ -141,13 +145,13 @@ public class UserService
             return;
         }
 //        UserRoleEntity userRoleUser = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
-        UserRoleEntity userRoleWaiter = userRoleService.findUserRoleEntityByRole(UserRoleEnum.WAITER);
+//        UserRoleEntity userRoleWaiter = userRoleService.findUserRoleEntityByRole(UserRoleEnum.WAITER);
         UserRoleEntity userRoleCook = userRoleService.findUserRoleEntityByRole(UserRoleEnum.COOK);
         UserRoleEntity userRoleBartender = userRoleService.findUserRoleEntityByRole(UserRoleEnum.BARTENDER);
         UserRoleEntity userRoleClient = userRoleService.findUserRoleEntityByRole(UserRoleEnum.CLIENT);
 
-        initUser("waiter1", userRoleWaiter);
-        initUser("waiter2", userRoleWaiter);
+//        initUser("waiter1", userRoleWaiter);
+//        initUser("waiter2", userRoleWaiter);
 
         initUser("cook1", userRoleCook);
 //        addUser("cook2", userRoleCook);
@@ -157,6 +161,14 @@ public class UserService
 
         initUser("client1", userRoleClient);
         initUser("client2", userRoleClient);
+        initUser("client3", userRoleClient);
+        initUser("client4", userRoleClient);
+        initUser("client5", userRoleClient);
+        initUser("client6", userRoleClient);
+        initUser("client7", userRoleClient);
+        initUser("client8", userRoleClient);
+        initUser("client9", userRoleClient);
+        initUser("client10", userRoleClient);
 
     }
 

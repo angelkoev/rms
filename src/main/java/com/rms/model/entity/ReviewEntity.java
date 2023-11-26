@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,7 +21,7 @@ public class ReviewEntity extends BaseEntity {
     private String content;
 
     @Column(nullable = false)
-    private LocalDateTime postedOn;
+    private LocalDate postedOn;
 
     @Column(nullable = false)
     private int score;
@@ -44,11 +45,11 @@ public class ReviewEntity extends BaseEntity {
         this.content = content;
     }
 
-    public LocalDateTime getPostedOn() {
+    public LocalDate getPostedOn() {
         return postedOn;
     }
 
-    public void setPostedOn(LocalDateTime postedOn) {
+    public void setPostedOn(LocalDate postedOn) {
         this.postedOn = postedOn;
     }
 

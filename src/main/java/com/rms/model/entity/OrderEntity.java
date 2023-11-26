@@ -15,8 +15,8 @@ public class OrderEntity extends BaseEntity {
     private Set<FoodEntity> foods;
     @OneToMany(fetch = FetchType.EAGER)
     private Set<DrinkEntity> drinks;
-    @ManyToOne
-    private TableEntity table;
+//    @ManyToOne
+//    private TableEntity table;
 
     @Column(nullable = false)
     private LocalDateTime dateTime;
@@ -48,13 +48,13 @@ public class OrderEntity extends BaseEntity {
         this.drinks = drinks;
     }
 
-    public TableEntity getTable() {
-        return table;
-    }
-
-    public void setTable(TableEntity table) {
-        this.table = table;
-    }
+//    public TableEntity getTable() {
+//        return table;
+//    }
+//
+//    public void setTable(TableEntity table) {
+//        this.table = table;
+//    }
 
     public LocalDateTime getDateTime() {
         return dateTime;
