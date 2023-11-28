@@ -1,9 +1,6 @@
 package com.rms.service;
 
-import com.rms.model.entity.DrinkEntity;
-import com.rms.model.entity.FoodEntity;
-import com.rms.model.entity.FoodTypeEnum;
-import com.rms.model.entity.OrderEntity;
+import com.rms.model.entity.*;
 import com.rms.repositiry.FoodRepository;
 import org.springframework.stereotype.Service;
 
@@ -34,14 +31,14 @@ public class FoodService {
         initFood(random, "Овчарска", FoodTypeEnum.SALAD);
         initFood(random, "Зеле с моркови", FoodTypeEnum.SALAD);
         initFood(random, "Гръцка", FoodTypeEnum.SALAD);
-        initFood(random, "Мусака", FoodTypeEnum.MAIN_COURSE);
-        initFood(random, "Боб яхния", FoodTypeEnum.MAIN_COURSE);
-        initFood(random, "Пиле с картофи", FoodTypeEnum.MAIN_COURSE);
-        initFood(random, "Свинско със злее", FoodTypeEnum.MAIN_COURSE);
-        initFood(random, "Свинска кавърма", FoodTypeEnum.MAIN_COURSE);
-        initFood(random, "Сандвич 1", FoodTypeEnum.SANDWICH);
-        initFood(random, "Сандвич 2", FoodTypeEnum.SANDWICH);
-        initFood(random, "Сандвич 3", FoodTypeEnum.SANDWICH);
+        initFood(random, "Мусака", FoodTypeEnum.MAIN_DISH);
+        initFood(random, "Боб яхния", FoodTypeEnum.MAIN_DISH);
+        initFood(random, "Пиле с картофи", FoodTypeEnum.MAIN_DISH);
+        initFood(random, "Свинско със злее", FoodTypeEnum.MAIN_DISH);
+        initFood(random, "Свинска кавърма", FoodTypeEnum.MAIN_DISH);
+        initFood(random, "Сандвич с шунка", FoodTypeEnum.SANDWICH);
+        initFood(random, "Сандвич с кашкавал", FoodTypeEnum.SANDWICH);
+        initFood(random, "Сандвич веган", FoodTypeEnum.SANDWICH);
         initFood(random, "Сицилиана", FoodTypeEnum.PIZZA);
         initFood(random, "Вегетариана", FoodTypeEnum.PIZZA);
         initFood(random, "Неаполитанска", FoodTypeEnum.PIZZA);
@@ -50,25 +47,25 @@ public class FoodService {
         initFood(random, "Ребра", FoodTypeEnum.BBQ);
         initFood(random, "Вратна пържола", FoodTypeEnum.BBQ);
         initFood(random, "Свински сач", FoodTypeEnum.BBQ);
-        initFood(random, "кюфте", FoodTypeEnum.BBQ);
-        initFood(random, "кебапче", FoodTypeEnum.BBQ);
-        initFood(random, "наденичка", FoodTypeEnum.BBQ);
-        initFood(random, "пилешко шишче", FoodTypeEnum.BBQ);
+        initFood(random, "Кюфте", FoodTypeEnum.BBQ);
+        initFood(random, "Кебапче", FoodTypeEnum.BBQ);
+        initFood(random, "Наденичка", FoodTypeEnum.BBQ);
+        initFood(random, "Пилешко шишче", FoodTypeEnum.BBQ);
         initFood(random, "Пилешка", FoodTypeEnum.SOUP);
         initFood(random, "Топчета", FoodTypeEnum.SOUP);
         initFood(random, "Картофена", FoodTypeEnum.SOUP);
         initFood(random, "Крем супа", FoodTypeEnum.SOUP);
-        initFood(random, "крем карамел", FoodTypeEnum.DESSERT);
-        initFood(random, "суфле", FoodTypeEnum.DESSERT);
-        initFood(random, "сладолед", FoodTypeEnum.DESSERT);
-        initFood(random, "торта", FoodTypeEnum.DESSERT);
-        initFood(random, "питка", FoodTypeEnum.BREAD);
-        initFood(random, "бял хляб", FoodTypeEnum.BREAD);
-        initFood(random, "пърленка", FoodTypeEnum.BREAD);
-        initFood(random, "леща", FoodTypeEnum.VEGETARIAN);
-        initFood(random, "спанак", FoodTypeEnum.VEGETARIAN);
-        initFood(random, "картофи", FoodTypeEnum.VEGETARIAN);
-        initFood(random, "ориз", FoodTypeEnum.VEGETARIAN);
+        initFood(random, "Крем карамел", FoodTypeEnum.DESSERT);
+        initFood(random, "Суфле", FoodTypeEnum.DESSERT);
+        initFood(random, "Сладолед", FoodTypeEnum.DESSERT);
+        initFood(random, "Торта", FoodTypeEnum.DESSERT);
+        initFood(random, "Питка", FoodTypeEnum.BREAD);
+        initFood(random, "Бял хляб", FoodTypeEnum.BREAD);
+        initFood(random, "Пърленка", FoodTypeEnum.BREAD);
+        initFood(random, "Леща", FoodTypeEnum.VEGETARIAN);
+        initFood(random, "Спанак", FoodTypeEnum.VEGETARIAN);
+        initFood(random, "Картофи", FoodTypeEnum.VEGETARIAN);
+        initFood(random, "Ориз", FoodTypeEnum.VEGETARIAN);
 
     }
 
@@ -95,5 +92,9 @@ public class FoodService {
 
     public Set<FoodEntity> findAllByOrderId (int id) {
         return foodRepository.findAllByOrderId(id);
+    }
+
+    public Set<FoodEntity> findAllByTypeAndOrderId(FoodTypeEnum foodTypeEnum, int orderId) {
+        return foodRepository.findAllByTypeEqualsAndOrderId(foodTypeEnum, orderId);
     }
 }

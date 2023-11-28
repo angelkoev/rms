@@ -1,5 +1,23 @@
 package com.rms.model.entity;
 
 public enum FoodTypeEnum {
-    SALAD, SOUP, DESSERT, MAIN_COURSE, SANDWICH, PIZZA, BBQ, VEGETARIAN, BREAD
-}
+    SALAD("Салати"),
+    SOUP("Супи"),
+    DESSERT("Десерти"),
+    MAIN_DISH("Основни"),
+    SANDWICH("Сандиви"),
+    PIZZA("Пици"),
+    BBQ("Скара"),
+    VEGETARIAN("Вегетариански"),
+    BREAD("Тестени");
+
+    private final String name;
+
+    FoodTypeEnum(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+    }

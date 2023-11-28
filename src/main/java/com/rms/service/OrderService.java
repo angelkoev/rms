@@ -1,12 +1,14 @@
 package com.rms.service;
 
 import com.rms.model.entity.DrinkEntity;
+import com.rms.model.entity.DrinkTypeEnum;
 import com.rms.model.entity.FoodEntity;
 import com.rms.model.entity.OrderEntity;
 import com.rms.repositiry.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -63,4 +65,10 @@ public class OrderService {
     public OrderEntity findById (Long id) {
         return orderRepository.findOrderEntitiesById(id).orElse(null);
     }
+
+    public OrderEntity getMenu() {
+        return orderRepository.findById(1L).orElse(null);
+    }
+
+
 }

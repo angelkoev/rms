@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/commons::head}"></head>
+<!--&lt;!&ndash; Bootstrap v4.0.0 CSS &ndash;&gt;-->
+<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+
+<!--&lt;!&ndash; Bootstrap v4.0.0 JS &ndash;&gt;-->
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
+<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<body>
+<header th:replace="~{fragments/commons::nav}"></header>
+<main>
+    <!--    <div class="dropdown">-->
+    <!--        <button class="btn btn-secondary dropdown-toggle" type="button" id="drinkDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+    <!--            Drink Options-->
+    <!--        </button>-->
+    <!--        <div class="dropdown-menu" aria-labelledby="drinkDropdown">-->
+    <!--            &lt;!&ndash; Dropdown content here &ndash;&gt;-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--    <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--        <h3 th:text="'Кафе Напитки: ' + ${coffeeBasedDrinksView.size()}" class="mySticky bg-gray text-dark rounded"></h3>-->
+
+    <!--        <div class="dropdown mt-3">-->
+    <!--            <button class="btn btn-warning dropdown-toggle" type="button" id="drinkDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+    <!--                Избери Кафе напитка:-->
+    <!--            </button>-->
+    <!--            <div class="dropdown-menu" aria-labelledby="drinkDropdown">-->
+    <!--                <div th:each="d : ${coffeeBasedDrinksView}" th:object="${d}">-->
+    <!--                    <a class="dropdown-item" th:href="@{/menu/order/drink/{id}(id=${d.id})}">-->
+    <!--                        <span th:text="|${d.name} (${d.volume}мл)    Цена: ${d.price}лв| "></span>-->
+    <!--                    </a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--    <div class="col-5 bg-dark rounded m-auto" style="height: 30vh">-->
+    <!--        <h3 th:text="'Кафе Напитки: ' + ${coffeeBasedDrinksView.size()}" class="mySticky bg-gray text-dark rounded"></h3>-->
+
+    <!--        <div class="dropdown mt-3">-->
+    <!--            <button class="btn btn-warning dropdown-toggle" type="button" id="drinkDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+    <!--                Избери напитка-->
+    <!--            </button>-->
+    <!--            <div class="dropdown-menu" aria-labelledby="drinkDropdown">-->
+
+    <!--                &lt;!&ndash; First Level &ndash;&gt;-->
+    <!--                <div th:each="category : ${drinkCategories}">-->
+    <!--                    <div class="dropdown-submenu">-->
+    <!--                        <a class="dropdown-item dropdown-toggle" th:text="${category.name}" href="#"></a>-->
+
+    <!--                        &lt;!&ndash; Second Level &ndash;&gt;-->
+    <!--                        <div class="dropdown-menu">-->
+    <!--                            <div th:each="drink : ${juiceDrinksView}" th:object="${drink}">-->
+    <!--&lt;!&ndash;                                <div th:if="${'JUICE' == category.name}">&ndash;&gt;-->
+    <!--                                    <a class="dropdown-item" th:href="@{/menu/order/drink/{id}(id=${drink.id})}">-->
+    <!--                                        <span th:text="|${drink.name} (${drink.volume}мл)    Цена: ${drink.price}лв| "></span>-->
+    <!--                                    </a>-->
+    <!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <br>
+    <br>
+    <br>
+<div>
+    <div class="col-5 bg-dark rounded m-auto" style="height: 50vh">
+        <h3 class="mySticky bg-gray text-dark rounded"> ала бала напитки</h3>
+
+        <div class="dropdown mt-3">
+            <button class="btn btn-warning dropdown-toggle" type="button" id="drinkDropdown" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                Избери нещо за пийване
+            </button>
+            <div class="dropdown-menu" aria-labelledby="drinkDropdown">
+
+                <!-- Iterate over each drink type -->
+                <div th:each="drinkType : ${T(com.rms.model.entity.DrinkTypeEnum).values()}">
+                    <div class="dropdown-submenu">
+                        <a class="dropdown-item dropdown-toggle" th:text="${drinkType.getName()}" href="#"></a>
+
+                        <!-- Iterate over drinks for the current type -->
+                        <div class="dropdown-menu">
+                            <div th:each="drink : ${allDrinksView}" th:object="${drink}">
+                                <div th:if="${drink.type == drinkType}">
+                                    <a class="dropdown-item" th:href="@{/menu/order/drink/{id}(id=${drink.id})}">
+                                        <span th:text="|${drink.name} (${drink.volume}мл)    Цена: ${drink.price}лв| "></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-5 bg-dark rounded m-auto" style="height: 50vh">
+        <h3 class="mySticky bg-gray text-dark rounded"> ала бала храни</h3>
+
+        <div class="dropdown mt-3">
+            <button class="btn btn-warning dropdown-toggle" type="button" id="foodDropdown" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                Избери нещо за хапване
+            </button>
+            <div class="dropdown-menu dropdown-menu-food" aria-labelledby="foodDropdown">
+
+                <!-- Iterate over each drink type -->
+                <div th:each="foodType : ${T(com.rms.model.entity.FoodTypeEnum).values()}">
+                    <div class="dropdown-submenu">
+                        <a class="dropdown-item dropdown-toggle" th:text="${foodType.getName()}" href="#"></a>
+
+                        <!-- Iterate over drinks for the current type -->
+                        <div class="dropdown-menu dropdown-menu-food">
+                            <div th:each="food : ${allFoodsView}" th:object="${food}">
+                                <div th:if="${food.type == foodType}">
+                                    <a class="dropdown-item" th:href="@{/menu/order/food/{id}(id=${food.id})}">
+                                        <span th:text="|${food.name} (${food.size}гр - ${food.kcal}kcal)    Цена: ${food.price}лв| "></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        // Add custom script for multi-level dropdown
+        $('.dropdown-submenu a.dropdown-toggle').on('click', function (e) {
+            $(this).next('.dropdown-menu').toggle();
+            $('.dropdown-submenu .dropdown-menu').not($(this).next()).hide(); // Close other submenus
+            e.stopPropagation();
+        });
+    </script>
+
+
+    <!--    <style>-->
+<!--        .dropdown-menu-right {-->
+<!--            right: 0 !important;-->
+<!--            left: auto !important;-->
+<!--        }-->
+<!--    </style>-->
+
+<!--    <script>-->
+<!--        // Add custom script for multi-level dropdown-->
+<!--        $('.dropdown-submenu a.dropdown-toggle').on('click', function (e) {-->
+<!--            $(this).next('.dropdown-menu').toggleClass('dropdown-menu-right');-->
+<!--            $('.dropdown-submenu .dropdown-menu').not($(this).next()).removeClass('dropdown-menu-right'); // Remove the class from other submenus-->
+<!--            e.stopPropagation();-->
+<!--        });-->
+<!--    </script>-->
+
+
+    <!--    <div class="col-5 bg-dark rounded m-auto" style="height: 30vh">-->
+    <!--        <h3 th:text="'Кафе Напитки: ' + ${coffeeBasedDrinksView.size()}" class="mySticky bg-gray text-dark rounded"></h3>-->
+
+    <!--        <div class="dropdown mt-3">-->
+    <!--            <button class="btn btn-warning dropdown-toggle" type="button" id="drinkDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+    <!--                Select a Drink-->
+    <!--            </button>-->
+    <!--            <div class="dropdown-menu" aria-labelledby="drinkDropdown">-->
+
+    <!--                &lt;!&ndash; Iterate over each drink type &ndash;&gt;-->
+    <!--                <div th:each="drinkType : ${T(com.rms.model.entity.DrinkTypeEnum).values()}">-->
+    <!--                    <div class="dropdown-submenu">-->
+    <!--                        <a class="dropdown-item dropdown-toggle" th:text="${drinkType}" href="#"></a>-->
+
+    <!--                        &lt;!&ndash; Iterate over drinks for the current type &ndash;&gt;-->
+    <!--                        <div class="dropdown-menu">-->
+    <!--                            <div th:each="drink : ${coffeeBasedDrinksView}" th:object="${drink}">-->
+    <!--                                <div th:if="${drink.type == drinkType}">-->
+    <!--                                    <a class="dropdown-item" th:href="@{/menu/order/drink/{id}(id=${drink.id})}">-->
+    <!--                                        <span th:text="|${drink.name} (${drink.volume}мл)    Цена: ${drink.price}лв| "></span>-->
+    <!--                                    </a>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+
+    <!--            </div>-->
+    <!--        </div>-->
+
+    <!--        <script>-->
+    <!--            // Add custom script for multi-level dropdown-->
+    <!--            $('.dropdown-submenu a.dropdown-toggle').on('click', function(e) {-->
+    <!--                $(this).next('.dropdown-menu').toggleClass('dropdown-menu-right');-->
+    <!--                $('.dropdown-submenu .dropdown-menu').not($(this).next()).removeClass('dropdown-menu-right'); // Remove the class from other submenus-->
+    <!--                e.stopPropagation();-->
+    <!--            });-->
+    <!--        </script>-->
+    <!--    </div>-->
+
+
+    <!--    <div class="col-5 bg-dark rounded m-auto" style="height: 30vh">-->
+    <!--        <h3 th:text="'Кафе Напитки: ' + ${coffeeBasedDrinksView.size()}" class="mySticky bg-gray text-dark rounded"></h3>-->
+
+    <!--        <div class="dropdown mt-3">-->
+    <!--            <button class="btn btn-warning dropdown-toggle" type="button" id="drinkDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+    <!--                Select a Drink-->
+    <!--            </button>-->
+    <!--            <div class="dropdown-menu" aria-labelledby="drinkDropdown">-->
+
+    <!--                &lt;!&ndash; Iterate over each drink type &ndash;&gt;-->
+    <!--                <div th:each="drinkType : ${T(com.rms.model.entity.DrinkTypeEnum).values()}">-->
+    <!--                    <div class="dropdown-submenu dropdown-menu-right">-->
+    <!--                        <a class="dropdown-item dropdown-toggle" th:text="${drinkType}" href="#"></a>-->
+
+    <!--                        &lt;!&ndash; Iterate over drinks for the current type &ndash;&gt;-->
+    <!--                        <div class="dropdown-menu">-->
+    <!--                            <div th:each="drink : ${coffeeBasedDrinksView}" th:object="${drink}">-->
+    <!--                                <div th:if="${drink.type == drinkType}">-->
+    <!--                                    <a class="dropdown-item" th:href="@{/menu/order/drink/{id}(id=${drink.id})}">-->
+    <!--                                        <span th:text="|${drink.name} (${drink.volume}мл)    Цена: ${drink.price}лв| "></span>-->
+    <!--                                    </a>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+
+    <!--            </div>-->
+    <!--        </div>-->
+
+    <!--        <script>-->
+    <!--            // Add custom script for multi-level dropdown-->
+    <!--            $('.dropdown-submenu a.dropdown-toggle').on('click', function(e) {-->
+    <!--                $(this).next('.dropdown-menu').toggle();-->
+    <!--                $('.dropdown-submenu .dropdown-menu').not($(this).next()).hide(); // Close other submenus-->
+    <!--                e.stopPropagation();-->
+    <!--            });-->
+    <!--        </script>-->
+    <!--    </div>-->
+
+
+    <!--    <script>-->
+    <!--        // Add custom script for multi-level dropdown-->
+    <!--        $('.dropdown-submenu a.dropdown-toggle').on('click', function(e) {-->
+    <!--            $(this).next('.dropdown-menu').toggle();-->
+    <!--            e.stopPropagation();-->
+    <!--        });-->
+    <!--    </script>-->
+
+    <!--    <ul>-->
+    <!--        <li class="dropdown"><a href="#"><span>Потребители</span> <i-->
+    <!--                class="bi bi-chevron-down dropdown-indicator"></i></a>-->
+    <!--            <ul>-->
+    <!--                <li><a href="#">Виж всички клиенти</a></li>-->
+    <!--                <li><a href="#">Виж служителите</a></li>-->
+    <!--                &lt;!&ndash;                                <li><a href="#">Намери служител</a></li>&ndash;&gt;-->
+    <!--            </ul>-->
+    <!--        </li>-->
+    <!--        <li><a href="#">Статистика</a></li>-->
+    <!--        <li class="dropdown"><a href="#"><span>Поддръжка</span> <i-->
+    <!--                class="bi bi-chevron-down dropdown-indicator"></i></a>-->
+    <!--            <ul>-->
+    <!--                <li><a href="#">Освободи всички маси</a></li>-->
+    <!--                <li><a href="#">Добави нова маса</a></li>-->
+    <!--                <li><a href="#">Спри сайта за 1 час</a></li>-->
+    <!--                <li><a href="#">Пусни сайта</a></li>-->
+    <!--            </ul>-->
+    <!--        </li>-->
+    <!--        &lt;!&ndash;                        <li><a href="#">Drop Down 4</a></li>&ndash;&gt;-->
+    <!--    </ul>-->
+
+
+    <!--    <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--        <h3 th:text="'Храни: ' + ${coffeeBasedDrinksView.size()}" class="mySticky bg-gray text-dark rounded"></h3>-->
+
+    <!--        <div class="dropdown mt-3">-->
+    <!--            <button class="btn btn-warning dropdown-toggle" type="button" id="drinkDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+    <!--                Select a Food-->
+    <!--            </button>-->
+    <!--            <div class="dropdown-menu" aria-labelledby="drinkDropdown">-->
+
+    <!--                &lt;!&ndash; First Level &ndash;&gt;-->
+    <!--                <div th:each="category : ${foodCategories}">-->
+    <!--                    <div class="dropdown-submenu">-->
+    <!--                        <a class="dropdown-item dropdown-toggle" th:text="${category.name}" href="#"></a>-->
+
+    <!--                        &lt;!&ndash; Second Level &ndash;&gt;-->
+    <!--                        <div class="dropdown-menu">-->
+    <!--                            <div th:each="drink : ${saladFoodsView}" th:object="${drink}">-->
+    <!--                                &lt;!&ndash;                                <div th:if="${drink.category.id == category.id}">&ndash;&gt;-->
+    <!--                                <a class="dropdown-item" th:href="@{/menu/order/drink/{id}(id=${drink.id})}">-->
+    <!--                                    <span th:text="|${drink.name} (${drink.size}гр)    Цена: ${drink.price}лв| "></span>-->
+    <!--                                </a>-->
+    <!--                                &lt;!&ndash;                                </div>&ndash;&gt;-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+
+    <!--            </div>-->
+    <!--        </div>-->
+
+
+    <!--    <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--        <h3 th:text="'Кафе Напитки: ' + ${coffeeBasedDrinksView.size()}" class="mySticky bg-gray text-dark rounded"></h3>-->
+
+    <!--        <div th:each="d : ${coffeeBasedDrinksView}" th:object="${d}" class="mt-3 rounded badge-warning">-->
+    <!--            &lt;!&ndash; You can add an image if needed &ndash;&gt;-->
+    <!--            &lt;!&ndash; <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px"> &ndash;&gt;-->
+
+    <!--            <span th:text="|${d.name} (${d.volume}мл)    Цена: ${d.price}лв| "></span>-->
+
+    <!--            &lt;!&ndash; Adjust the URL based on your controller mapping &ndash;&gt;-->
+    <!--            <a class="ml-3 text-danger" th:href="@{/menu/order/drink/{id}(id=${d.id})}">Поръчай</a>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--    <div class="container bg-blur rounded mt-3 mb-4">-->
+    <!--&lt;!&ndash;        <th:block sec:authorize="isAuthenticated()">&ndash;&gt;-->
+    <!--&lt;!&ndash;            &lt;!&ndash;            <h3 class="text-center text-white" th:text="${name}"></h3>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;            <h3 class="text-center text-white"></h3>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;        </th:block>&ndash;&gt;-->
+    <!--        <h1>Меню напитки</h1>-->
+    <!--        <div class="row mt-3 mb-3">-->
+
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Кафе Напитки: ${coffeeBasedDrinksView.size()}|"-->
+    <!--                    class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="d : ${coffeeBasedDrinksView}"-->
+    <!--                     th:object="${d}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{volume}мл)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/drink/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+
+
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Вина: ${wineDrinksView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>-->
+
+    <!--                <div th:each="d : ${wineDrinksView}" th:object="${d}" class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash; Dropdown button &ndash;&gt;-->
+    <!--                    <div class="dropdown">-->
+    <!--                        <button class="btn btn-secondary dropdown-toggle" type="button" id="drinkDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+    <!--                            <span th:text="|*{name} (*{volume}мл) Цена: *{price}лв|"></span>-->
+    <!--                        </button>-->
+    <!--                        &lt;!&ndash; Dropdown menu &ndash;&gt;-->
+    <!--                        <div class="dropdown-menu" aria-labelledby="drinkDropdown">-->
+    <!--                            &lt;!&ndash; Quantity input &ndash;&gt;-->
+    <!--                            <div class="input-group mb-3">-->
+    <!--                                <div class="input-group-prepend">-->
+    <!--                                    <label class="input-group-text" for="quantityInput">Quantity</label>-->
+    <!--                                </div>-->
+    <!--                                <input type="number" class="form-control" id="quantityInput" th:id="${'quantityInput-' + d.id}" name="quantity" value="1" min="1">-->
+    <!--                            </div>-->
+    <!--                            &lt;!&ndash; Order button &ndash;&gt;-->
+    <!--                            <a class="dropdown-item text-danger" th:href="@{/order/drink/{id}(id=${d.id}, quantity=${'${quantityInput-' + d.id + '}'})}">Поръчай</a>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+
+
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Вина: ${wineDrinksView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="d : ${wineDrinksView}"-->
+    <!--                     th:object="${d}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{volume}мл)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/drink/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Топли напитки: ${hotBeverageDrinksView.size()}|"-->
+    <!--                    class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="d : ${hotBeverageDrinksView}"-->
+    <!--                     th:object="${d}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{volume}мл)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/drink/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Сокове: ${juiceDrinksView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="d : ${juiceDrinksView}"-->
+    <!--                     th:object="${d}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{volume}мл)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/drink/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Бира: ${beerDrinksView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="d : ${beerDrinksView}"-->
+    <!--                     th:object="${d}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{volume}мл)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/drink/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Безалкохолни: ${sodaDrinksView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="d : ${sodaDrinksView}"-->
+    <!--                     th:object="${d}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{volume}мл)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/drink/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Коктейли: ${cocktailDrinksView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="d : ${cocktailDrinksView}"-->
+    <!--                     th:object="${d}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{volume}мл)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/drink/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Алкохолни: ${alcoholicDrinksView.size()}|"-->
+    <!--                    class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="d : ${alcoholicDrinksView}"-->
+    <!--                     th:object="${d}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{volume}мл)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/drink/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+
+    <!--            &lt;!&ndash;            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                <h3 th:text="|Вина: ${wineDrinksView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                <div    th:each="d : ${wineDrinksView}"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                        th:object="${d}"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                        class="mt-3 rounded badge-warning">&ndash;&gt;-->
+    <!--            &lt;!&ndash;&lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    <span th:text="|Име: *{name}    Цена*{price} обем: *{volume}| ">{germanTerm}: {translation}</span>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    <a class="ml-3 text-danger" th:href="@{/order/food/{id}(id = *{id})}">Поръчай</a>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                </div>&ndash;&gt;-->
+    <!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+
+
+    <!--        </div>-->
+    <!--        <h1>Меню храни</h1>-->
+    <!--        <div class="row mt-3 mb-3">-->
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Салати: ${saladFoodsView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="f : ${saladFoodsView}"-->
+    <!--                     th:object="${f}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{size}гр - *{kcal}kcal)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/food/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+
+
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Вина: ${wineDrinksView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="d : ${wineDrinksView}"-->
+    <!--                     th:object="${d}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{volume}мл)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/drink/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Супи: ${soupFoodsView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="f : ${soupFoodsView}"-->
+    <!--                     th:object="${f}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{size}гр - *{kcal}kcal)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/food/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Десерти: ${dessertFoodsView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="f : ${dessertFoodsView}"-->
+    <!--                     th:object="${f}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{size}гр - *{kcal}kcal)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/food/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Основни: ${mainCourseFoodsView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="f : ${mainCourseFoodsView}"-->
+    <!--                     th:object="${f}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{size}гр - *{kcal}kcal)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/food/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Сандвичи: ${sandwichFoodsView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="f : ${sandwichFoodsView}"-->
+    <!--                     th:object="${f}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{size}гр - *{kcal}kcal)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/food/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Пици: ${pizzaFoodsView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="f : ${pizzaFoodsView}"-->
+    <!--                     th:object="${f}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{size}гр - *{kcal}kcal)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/food/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Скара: ${bbqFoodsView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="f : ${bbqFoodsView}"-->
+    <!--                     th:object="${f}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{size}гр - *{kcal}kcal)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/food/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Вегетариански: ${vegetarianFoodsView.size()}|"-->
+    <!--                    class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="f : ${vegetarianFoodsView}"-->
+    <!--                     th:object="${f}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{size}гр - *{kcal}kcal)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/food/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">-->
+    <!--                <h3 th:text="|Тестени: ${breadFoodsView.size()}|" class="mySticky bg-gray text-dark rounded"></h3>-->
+    <!--                <div th:each="f : ${breadFoodsView}"-->
+    <!--                     th:object="${f}"-->
+    <!--                     class="mt-3 rounded badge-warning">-->
+    <!--                    &lt;!&ndash;                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">&ndash;&gt;-->
+    <!--                    <span th:text="|*{name} (*{size}гр - *{kcal}kcal)    Цена: *{price}лв| "></span>-->
+    <!--                    <a class="ml-3 text-danger" th:href="@{/order/food/{id}(id = *{id})}">Поръчай</a>-->
+    <!--                </div>-->
+    <!--            </div>-->
+
+    <!--        </div>-->
+    <!--        &lt;!&ndash;        <a th:text="|Remove all ${totalWordsCount} words|" href="/word/remove/all" class="btn btn-danger">Remove all {allWordsCount} words</a>&ndash;&gt;-->
+    <!--    </div>-->
+</main>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

@@ -28,39 +28,39 @@ public class DrinkService {
 //        OrderEntity order = orderService.findById(1L);
 
 //  ,   ALCOHOLIC
-        initDrink(random, "Coffee", DrinkTypeEnum.COFFEE_BASED);
-        initDrink(random, "Cappuccino", DrinkTypeEnum.COFFEE_BASED);
-        initDrink(random, "Latte", DrinkTypeEnum.COFFEE_BASED);
-        initDrink(random, "Frappe", DrinkTypeEnum.COFFEE_BASED);
-        initDrink(random, "Red Wine", DrinkTypeEnum.WINE);
-        initDrink(random, "White Wine", DrinkTypeEnum.WINE);
-        initDrink(random, "Rose", DrinkTypeEnum.WINE);
-        initDrink(random, "Champagne", DrinkTypeEnum.WINE);
-        initDrink(random, "Tea", DrinkTypeEnum.HOT_BEVERAGE);
-        initDrink(random, "Hot Chocolate", DrinkTypeEnum.HOT_BEVERAGE);
-        initDrink(random, "Green Tea", DrinkTypeEnum.HOT_BEVERAGE);
-        initDrink(random, "Black Tea", DrinkTypeEnum.HOT_BEVERAGE);
-        initDrink(random, "Apple Juice", DrinkTypeEnum.JUICE);
-        initDrink(random, "Orange Juice", DrinkTypeEnum.JUICE);
-        initDrink(random, "Grape Juice", DrinkTypeEnum.JUICE);
-        initDrink(random, "Carrot Juice", DrinkTypeEnum.JUICE);
-        initDrink(random, "Lager", DrinkTypeEnum.BEER);
-        initDrink(random, "Ale", DrinkTypeEnum.BEER);
-        initDrink(random, "Pilsner", DrinkTypeEnum.BEER);
-        initDrink(random, "Bock", DrinkTypeEnum.BEER);
-        initDrink(random, "Coca cola", DrinkTypeEnum.SODA);
-        initDrink(random, "Fanta", DrinkTypeEnum.SODA);
-        initDrink(random, "Sprite", DrinkTypeEnum.SODA);
-        initDrink(random, "Tonic", DrinkTypeEnum.SODA);
-        initDrink(random, "Margarita", DrinkTypeEnum.COCKTAIL);
-        initDrink(random, "Daiquiri", DrinkTypeEnum.COCKTAIL);
-        initDrink(random, "Manhattan", DrinkTypeEnum.COCKTAIL);
-        initDrink(random, "Sex on the Beach", DrinkTypeEnum.COCKTAIL);
-        initDrink(random, "Rum", DrinkTypeEnum.ALCOHOLIC);
-        initDrink(random, "Vodka", DrinkTypeEnum.ALCOHOLIC);
-        initDrink(random, "Whisky", DrinkTypeEnum.ALCOHOLIC);
-        initDrink(random, "Jin", DrinkTypeEnum.ALCOHOLIC);
-        initDrink(random, "Tequila", DrinkTypeEnum.ALCOHOLIC);
+        initDrink(random, "Кафе", DrinkTypeEnum.COFFEE_BASED);
+        initDrink(random, "Капучино", DrinkTypeEnum.COFFEE_BASED);
+        initDrink(random, "Лате", DrinkTypeEnum.COFFEE_BASED);
+        initDrink(random, "Фрапе", DrinkTypeEnum.COFFEE_BASED);
+        initDrink(random, "Червено вино", DrinkTypeEnum.WINE);
+        initDrink(random, "Бяло вино", DrinkTypeEnum.WINE);
+        initDrink(random, "Розе", DrinkTypeEnum.WINE);
+        initDrink(random, "Шампанско", DrinkTypeEnum.WINE);
+        initDrink(random, "Плодов чай", DrinkTypeEnum.HOT_BEVERAGE);
+        initDrink(random, "Горещ шоколад", DrinkTypeEnum.HOT_BEVERAGE);
+        initDrink(random, "Зелен чай", DrinkTypeEnum.HOT_BEVERAGE);
+        initDrink(random, "Черен чай", DrinkTypeEnum.HOT_BEVERAGE);
+        initDrink(random, "Ябълков сок", DrinkTypeEnum.JUICE);
+        initDrink(random, "Портокалов сок", DrinkTypeEnum.JUICE);
+        initDrink(random, "Сок от ананас", DrinkTypeEnum.JUICE);
+        initDrink(random, "Сок от моркови", DrinkTypeEnum.JUICE);
+        initDrink(random, "Лагер", DrinkTypeEnum.BEER);
+        initDrink(random, "Ейл", DrinkTypeEnum.BEER);
+        initDrink(random, "Пилснер", DrinkTypeEnum.BEER);
+        initDrink(random, "Тъмна", DrinkTypeEnum.BEER);
+        initDrink(random, "Кока кола", DrinkTypeEnum.SODA);
+        initDrink(random, "Фанта", DrinkTypeEnum.SODA);
+        initDrink(random, "Спрайт", DrinkTypeEnum.SODA);
+        initDrink(random, "Тоник", DrinkTypeEnum.SODA);
+        initDrink(random, "Маргарита", DrinkTypeEnum.COCKTAIL);
+        initDrink(random, "Дайкири", DrinkTypeEnum.COCKTAIL);
+        initDrink(random, "Манхатън", DrinkTypeEnum.COCKTAIL);
+        initDrink(random, "Секс на плажа", DrinkTypeEnum.COCKTAIL);
+        initDrink(random, "Ром", DrinkTypeEnum.ALCOHOLIC);
+        initDrink(random, "Водка", DrinkTypeEnum.ALCOHOLIC);
+        initDrink(random, "Уиски", DrinkTypeEnum.ALCOHOLIC);
+        initDrink(random, "Джин", DrinkTypeEnum.ALCOHOLIC);
+        initDrink(random, "Текила", DrinkTypeEnum.ALCOHOLIC);
 
     }
 
@@ -84,5 +84,9 @@ public class DrinkService {
 
     public Set<DrinkEntity> findAllByOrderId (int id) {
         return drinkRepository.findAllByOrderId(id);
+    }
+
+    public Set<DrinkEntity> findAllByTypeAndOrderId(DrinkTypeEnum drinkTypeEnum, int orderId) {
+        return drinkRepository.findAllByTypeEqualsAndOrderId(drinkTypeEnum, orderId);
     }
 }
