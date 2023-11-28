@@ -2,13 +2,13 @@ package com.rms.model.entity;
 
 public enum DrinkTypeEnum {
     COFFEE_BASED("Кафе напитки"),
-    WINE("Вино"),
+    WINE("Вина"),
     HOT_BEVERAGE("Горещи напитки"),
-    JUICE("Сок"),
-    BEER("Бира"),
+    JUICE("Сокове"),
+    BEER("Бири"),
     SODA("Безалкохолни"),
     COCKTAIL("Коктейли"),
-    ALCOHOLIC("Алкохол");
+    ALCOHOLIC("Алкохолни");
 
     private final String name;
 
