@@ -34,9 +34,16 @@ public class UserEntity extends BaseEntity {
 //    @Column(nullable = false)
     private Set<UserRoleEntity> roles;
 
+    @OneToMany(mappedBy = "madeBy")
+    private List<OrderEntity> orders;
+
+    @OneToOne
+    private OrderEntity lastOrder;
+
     public UserEntity() {
         this.roles = new HashSet<>();
-    }
+        this.orders = new ArrayList<>();
+        };
 
     public String getUsername() {
         return username;

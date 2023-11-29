@@ -13,7 +13,7 @@ import java.util.Set;
 public interface FoodRepository extends JpaRepository<FoodEntity, Long> {
 
 //    Set<FoodEntity> findAllByOrderById (Long id);
-    Set<FoodEntity> findAllByOrderId (int id);
+    Set<FoodEntity> findAllBy();
 
-    Set<FoodEntity> findAllByTypeEqualsAndOrderId(FoodTypeEnum foodTypeEnum, int orderId);
+    Set<FoodEntity> findAllByTypeEquals(FoodTypeEnum foodTypeEnum);
 }

@@ -74,27 +74,27 @@ public class FoodService {
         double randomValueCalories = 100 + (500 - 100) * random.nextDouble(); // random between 10 and 50
 
         FoodEntity foodEntity = new FoodEntity();
-        foodEntity.setOrderId(1);
+//        foodEntity.setOrderId(1);
         foodEntity.setName(foodName);
         foodEntity.setPrice(BigDecimal.valueOf(randomValuePrice));
         foodEntity.setType(foodTypeEnum);
 
         foodEntity.setSize(random.nextInt(301) + 200); // random int from 300 to 500
         foodEntity.setKcal(BigDecimal.valueOf(randomValueCalories));
-        foodEntity.setPreparationTime(random.nextInt(20) + 10);
-        foodEntity.setCompleted(true);
-        foodEntity.setDelivered(true);
-        foodEntity.setPaid(true);
+//        foodEntity.setPreparationTime(random.nextInt(20) + 10);
+//        foodEntity.setCompleted(true);
+//        foodEntity.setDelivered(true);
+//        foodEntity.setPaid(true);
 
         foodRepository.save(foodEntity);
 
     }
 
-    public Set<FoodEntity> findAllByOrderId (int id) {
-        return foodRepository.findAllByOrderId(id);
+    public Set<FoodEntity> findAllBy () {
+        return foodRepository.findAllBy();
     }
 
-    public Set<FoodEntity> findAllByTypeAndOrderId(FoodTypeEnum foodTypeEnum, int orderId) {
-        return foodRepository.findAllByTypeEqualsAndOrderId(foodTypeEnum, orderId);
+    public Set<FoodEntity> findAllByType(FoodTypeEnum foodTypeEnum) {
+        return foodRepository.findAllByTypeEquals(foodTypeEnum);
     }
 }

@@ -12,9 +12,9 @@ import java.util.Set;
 public interface DrinkRepository extends JpaRepository<DrinkEntity, Long> {
 
     //    Set<DrinkEntity> findAllByOrderById (Long id);
-    Set<DrinkEntity> findAllByOrderId(int id);
+    Set<DrinkEntity> findAllBy();
 
-    Set<DrinkEntity> findAllByTypeEqualsAndOrderId(DrinkTypeEnum drinkTypeEnum, int orderId);
+    Set<DrinkEntity> findAllByTypeEquals(DrinkTypeEnum drinkTypeEnum);
 
     Optional<DrinkEntity> findById(Long id);
 }

@@ -27,6 +27,9 @@ public class OrderEntity extends BaseEntity {
     @Column(nullable = false)
     private boolean isPaid;
 
+    @ManyToOne
+    private UserEntity madeBy;
+
     public OrderEntity() {
         this.foods = new HashSet<>();
         this.drinks = new HashSet<>();
@@ -78,5 +81,13 @@ public class OrderEntity extends BaseEntity {
 
     public void setPaid(boolean paid) {
         isPaid = paid;
+    }
+
+    public UserEntity getMadeBy() {
+        return madeBy;
+    }
+
+    public void setMadeBy(UserEntity madeBy) {
+        this.madeBy = madeBy;
     }
 }

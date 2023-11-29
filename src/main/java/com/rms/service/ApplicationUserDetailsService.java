@@ -52,14 +52,4 @@ public class ApplicationUserDetailsService implements UserDetailsService {
         return new SimpleGrantedAuthority("ROLE_" + userRoleEntity.getRole().name());
     }
 
-//    private List<GrantedAuthority> extractAuthorities(UserEntity userEntity) {
-//        List<GrantedAuthority> grantedAuthorities= new ArrayList<>();
-//        for (UserRoleEntity u : userEntity.getRoles()) {
-//            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + u.getName().name()));
-//        }
-//        return grantedAuthorities; // FIXME only names of the roles or ??
-////        return List.of(new SimpleGrantedAuthority("ROLE_" + userEntity.getRole().getName().name()));
-//    }
-
-
 }

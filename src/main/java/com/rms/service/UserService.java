@@ -90,8 +90,8 @@ public class UserService
         user.setAddress(registerDTO.getAddress());
         UserRoleEntity userRole = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
         user.getRoles().add(userRole);
-        UserRoleEntity clientRole = userRoleService.findUserRoleEntityByRole(UserRoleEnum.CLIENT);
-        user.getRoles().add(clientRole);
+//        UserRoleEntity clientRole = userRoleService.findUserRoleEntityByRole(UserRoleEnum.CLIENT);
+//        user.getRoles().add(clientRole);
         return user;
     }
 
@@ -146,29 +146,29 @@ public class UserService
         }
 //        UserRoleEntity userRoleUser = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
 //        UserRoleEntity userRoleWaiter = userRoleService.findUserRoleEntityByRole(UserRoleEnum.WAITER);
-        UserRoleEntity userRoleCook = userRoleService.findUserRoleEntityByRole(UserRoleEnum.COOK);
-        UserRoleEntity userRoleBartender = userRoleService.findUserRoleEntityByRole(UserRoleEnum.BARTENDER);
-        UserRoleEntity userRoleClient = userRoleService.findUserRoleEntityByRole(UserRoleEnum.CLIENT);
+//        UserRoleEntity userRoleCook = userRoleService.findUserRoleEntityByRole(UserRoleEnum.COOK);
+//        UserRoleEntity userRoleBartender = userRoleService.findUserRoleEntityByRole(UserRoleEnum.BARTENDER);
+//        UserRoleEntity userRoleClient = userRoleService.findUserRoleEntityByRole(UserRoleEnum.CLIENT);
 
 //        initUser("waiter1", userRoleWaiter);
 //        initUser("waiter2", userRoleWaiter);
 
-        initUser("cook1", userRoleCook);
+//        initUser("cook1", userRoleCook);
 //        addUser("cook2", userRoleCook);
 
-        initUser("bartender1", userRoleBartender);
+//        initUser("bartender1", userRoleBartender);
 //        addUser("bartender2", userRoleBartender);
 
-        initUser("client1", userRoleClient);
-        initUser("client2", userRoleClient);
-        initUser("client3", userRoleClient);
-        initUser("client4", userRoleClient);
-        initUser("client5", userRoleClient);
-        initUser("client6", userRoleClient);
-        initUser("client7", userRoleClient);
-        initUser("client8", userRoleClient);
-        initUser("client9", userRoleClient);
-        initUser("client10", userRoleClient);
+        initUser("client1");
+        initUser("client2");
+        initUser("client3");
+        initUser("client4");
+        initUser("client5");
+        initUser("client6");
+        initUser("client7");
+        initUser("client8");
+        initUser("client9");
+        initUser("client10");
 
     }
 
@@ -177,7 +177,8 @@ public class UserService
 //        //
 //    }
 
-    private void initUser(String username, UserRoleEntity specificUserRole) {
+    private void initUser(String username) {
+//    private void initUser(String username, UserRoleEntity specificUserRole) {
         UserEntity user = new UserEntity();
         user.setUsername(username);
         user.setEmail(username + "@pripesho.com");
@@ -191,7 +192,7 @@ public class UserService
 
         UserRoleEntity userRoleUser = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
         user.getRoles().add(userRoleUser);
-        user.getRoles().add(specificUserRole);
+//        user.getRoles().add(specificUserRole);
 
         userRepository.save(user);
     }

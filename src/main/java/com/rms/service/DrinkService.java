@@ -68,26 +68,26 @@ public class DrinkService {
         double randomValuePrice = 10 + (50 - 10) * random.nextDouble(); // random between 10 and 50
 
         DrinkEntity drinkEntity = new DrinkEntity();
-        drinkEntity.setOrderId(1);
+//        drinkEntity.setOrderId(1);
         drinkEntity.setName(drinkName);
         drinkEntity.setPrice(BigDecimal.valueOf(randomValuePrice));
         drinkEntity.setType(drinkType);
 
         drinkEntity.setVolume(random.nextInt(301) + 200); // random int from 300 to 500
-        drinkEntity.setPreparationTime(random.nextInt(20) + 10);
-        drinkEntity.setCompleted(true);
-        drinkEntity.setDelivered(true);
-        drinkEntity.setPaid(true);
+//        drinkEntity.setPreparationTime(random.nextInt(20) + 10);
+//        drinkEntity.setCompleted(true);
+//        drinkEntity.setDelivered(true);
+//        drinkEntity.setPaid(true);
 
         drinkRepository.save(drinkEntity);
     }
 
-    public Set<DrinkEntity> findAllByOrderId (int id) {
-        return drinkRepository.findAllByOrderId(id);
+    public Set<DrinkEntity> findAllBy() {
+        return drinkRepository.findAllBy();
     }
 
-    public Set<DrinkEntity> findAllByTypeAndOrderId(DrinkTypeEnum drinkTypeEnum, int orderId) {
-        return drinkRepository.findAllByTypeEqualsAndOrderId(drinkTypeEnum, orderId);
+    public Set<DrinkEntity> findAllByTypeAndOrderId(DrinkTypeEnum drinkTypeEnum) {
+        return drinkRepository.findAllByTypeEquals(drinkTypeEnum);
     }
 
     public DrinkEntity findById(Long id) {

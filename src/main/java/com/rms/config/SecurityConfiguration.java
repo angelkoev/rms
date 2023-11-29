@@ -31,13 +31,13 @@ public class SecurityConfiguration {
                                 authorizeHttpRequests
                                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                         .requestMatchers("/", "/index", "/users/login", "/users/register", "/users/login-error", "/reviews/all", "/api/reviews",
-                                                "/order", "/order/menu", "/order/drink/**", "/order/food/**").permitAll()
+                                                "/order", "/order/menu", "/order/drink/**", "/order/food/**").permitAll() // FIXME remove /order/food/** and /order/drink/**
                                         .requestMatchers("/views/admins").hasRole(UserRoleEnum.ADMIN.name())
                                         .requestMatchers("/order/menu", "/order/drink/**", "/order/food/**").hasRole(UserRoleEnum.USER.name())
 //                                        .requestMatchers("/views/waiters").hasRole(UserRoleEnum.WAITER.name())
-                                        .requestMatchers("/views/cooks").hasRole(UserRoleEnum.COOK.name())
-                                        .requestMatchers("/views/bartenders").hasRole(UserRoleEnum.BARTENDER.name())
-                                        .requestMatchers("/views/clients", "/reviews/add").hasRole(UserRoleEnum.CLIENT.name())
+//                                        .requestMatchers("/views/cooks").hasRole(UserRoleEnum.COOK.name())
+//                                        .requestMatchers("/views/bartenders").hasRole(UserRoleEnum.BARTENDER.name())
+//                                        .requestMatchers("/views/clients", "/reviews/add").hasRole(UserRoleEnum.CLIENT.name())
                                         .anyRequest().authenticated()
 
                 )

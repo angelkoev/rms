@@ -26,15 +26,15 @@ public class FoodEntity extends BaseEntity {
 //    @ManyToOne
 //    @JoinColumn(name = "order_id", nullable = false)
 //    private OrderEntity order;
-    private int orderId;
-    @Column(nullable = false)
-    private int preparationTime;
-    @Column(nullable = false)
-    private boolean completed;
+//    private int orderId;
+//    @Column(nullable = false)
+//    private int preparationTime;
+//    @Column(nullable = false)
+//    private boolean completed;
 
-    @Column(nullable = false)
-    private boolean delivered;
-    private boolean isPaid; // may be not needed, because Order had the same field
+//    @Column(nullable = false)
+//    private boolean delivered;
+//    private boolean isPaid; // may be not needed, because Order had the same field
 
     public FoodEntity() {
     }
@@ -79,43 +79,43 @@ public class FoodEntity extends BaseEntity {
         this.kcal = kcal;
     }
 
-    public int getOrderId() {
-        return orderId;
-    }
+//    public int getOrderId() {
+//        return orderId;
+//    }
+//
+//    public void setOrderId(int orderId) {
+//        this.orderId = orderId;
+//    }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public int getPreparationTime() {
-        return preparationTime;
-    }
-
-    public void setPreparationTime(int preparationTime) {
-        this.preparationTime = preparationTime;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-
-    public boolean isDelivered() {
-        return delivered;
-    }
-
-    public void setDelivered(boolean delivered) {
-        this.delivered = delivered;
-    }
-
-    public boolean isPaid() {
-        return isPaid;
-    }
-
-    public void setPaid(boolean paid) {
-        isPaid = paid;
-    }
+//    public int getPreparationTime() {
+//        return preparationTime;
+//    }
+//
+//    public void setPreparationTime(int preparationTime) {
+//        this.preparationTime = preparationTime;
+//    }
+//
+//    public boolean isCompleted() {
+//        return completed;
+//    }
+//
+//    public void setCompleted(boolean completed) {
+//        this.completed = completed;
+//    }
+//
+//    public boolean isDelivered() {
+//        return delivered;
+//    }
+//
+//    public void setDelivered(boolean delivered) {
+//        this.delivered = delivered;
+//    }
+//
+//    public boolean isPaid() {
+//        return isPaid;
+//    }
+//
+//    public void setPaid(boolean paid) {
+//        isPaid = paid;
+//    }
 }
