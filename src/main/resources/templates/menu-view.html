@@ -25,7 +25,7 @@
         <div th:each="orderDrinks : ${preorderDrinks}" th:object="${orderDrinks}">
             <span th:text="|${orderDrinks.name} (${orderDrinks.volume}мл)    Цена: ${orderDrinks.price}лв| "></span>
 
-<!--        </div>-->
+        </div>
     </div>
     <div id="menu-main">
         <!--    <div class="col-5 bg-dark rounded m-auto" style="height: 50vh">-->
@@ -99,9 +99,10 @@
           th:method="POST"
           th:action="@{/order/new}"
           th:object="${preorderDTO}">
-    <div class="form-group button-holder d-flex justify-content-center">
-        <input type="submit" name="submit" class="btn btn-info btn-md justify-content-center" value="Направи поръчка">
-    </div>
+        <div class="form-group button-holder d-flex justify-content-center">
+            <input type="submit" name="submit" class="btn btn-info btn-md justify-content-center"
+                   value="Направи поръчка">
+        </div>
     </form>
 
     <script>
@@ -112,7 +113,7 @@
             e.stopPropagation();
         });
     </script>
-
+    </div>
 </main>
 <footer th:replace="~{fragments/commons::footer}"></footer>
 </body>

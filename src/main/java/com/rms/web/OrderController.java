@@ -2,6 +2,7 @@ package com.rms.web;
 
 import com.rms.model.dto.PreorderDTO;
 import com.rms.model.dto.RegisterDTO;
+import com.rms.model.dto.ReviewDTO;
 import com.rms.model.entity.*;
 import com.rms.model.views.DrinkView;
 import com.rms.model.views.FoodView;
@@ -13,10 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
@@ -151,7 +149,7 @@ public class OrderController {
     @GetMapping("/drink/{id}")
     public String addDrinkToOrder(@PathVariable Long id, PreorderDTO preorderDTO, Model model) {
 
-        OrderEntity menu = orderService.getMenu();
+//        OrderEntity menu = orderService.getMenu();
         DrinkEntity currentDrink = drinkService.findById(id);
         DrinkView currendDrinkView = modelMapper.map(currentDrink, DrinkView.class);
 
@@ -214,5 +212,10 @@ public class OrderController {
 //
 //            // FIXME message that user is registered and to go to login page to Login !!!
 //            return "redirect:/home";
+    }
+
+    @ModelAttribute
+    public PreorderDTO preorderDTO() {
+        return new PreorderDTO();
     }
 }

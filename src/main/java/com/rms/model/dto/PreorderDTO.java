@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class PreorderDTO {
-    Long id;
+//    Long id;
     private Set<FoodView> foods;
     private Set<DrinkView> drinks;
 
@@ -16,13 +16,13 @@ public class PreorderDTO {
         this.drinks = new HashSet<>();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
     public Set<FoodView> getFoods() {
         return foods;
