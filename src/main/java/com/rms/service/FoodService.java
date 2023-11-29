@@ -34,7 +34,7 @@ public class FoodService {
         initFood(random, "Мусака", FoodTypeEnum.MAIN_DISH);
         initFood(random, "Боб яхния", FoodTypeEnum.MAIN_DISH);
         initFood(random, "Пиле с картофи", FoodTypeEnum.MAIN_DISH);
-        initFood(random, "Свинско със злее", FoodTypeEnum.MAIN_DISH);
+        initFood(random, "Свинско със зеле", FoodTypeEnum.MAIN_DISH);
         initFood(random, "Свинска кавърма", FoodTypeEnum.MAIN_DISH);
         initFood(random, "Сандвич с шунка", FoodTypeEnum.SANDWICH);
         initFood(random, "Сандвич с кашкавал", FoodTypeEnum.SANDWICH);
