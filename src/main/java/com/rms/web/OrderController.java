@@ -1,16 +1,23 @@
 package com.rms.web;
 
+import com.rms.model.dto.PreorderDTO;
+import com.rms.model.dto.RegisterDTO;
 import com.rms.model.entity.*;
 import com.rms.model.views.DrinkView;
 import com.rms.model.views.FoodView;
 import com.rms.service.DrinkService;
 import com.rms.service.FoodService;
 import com.rms.service.OrderService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
 import java.util.List;
@@ -127,5 +134,85 @@ public class OrderController {
 //        model.addAttribute("drinkCategories", Arrays.stream(DrinkTypeEnum.values()).toList());
 
         return "menu-view";
+    }
+
+    @GetMapping("/food/{id}")
+    public String addFoodToOrder(@PathVariable Long id) {
+
+        OrderEntity menu = orderService.getMenu();
+
+        if (menu == null) {
+            return "/";
+        }
+
+        return "redirect:menu-view";
+    }
+
+    @GetMapping("/drink/{id}")
+    public String addDrinkToOrder(@PathVariable Long id, PreorderDTO preorderDTO, Model model) {
+
+        OrderEntity menu = orderService.getMenu();
+        DrinkEntity currentDrink = drinkService.findById(id);
+        DrinkView currendDrinkView = modelMapper.map(currentDrink, DrinkView.class);
+
+        preorderDTO.getDrinks().add(currendDrinkView);
+
+        model.addAttribute("preorderDrinks", preorderDTO.getDrinks());
+        model.addAttribute("preorderFoods", preorderDTO.getFoods());
+
+        Set<DrinkEntity> allDrinks = orderService.getMenu().getDrinks();
+        List<DrinkView> allDrinksView = allDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
+        model.addAttribute("allDrinksView", allDrinksView);
+
+        Set<FoodEntity> allFoods = orderService.getMenu().getFoods();
+        List<FoodView> allFoodsView = allFoods.stream().map(foodEntity -> modelMapper.map(foodEntity, FoodView.class)).toList();
+        model.addAttribute("allFoodsView", allFoodsView);
+
+//        if (menu == null) {
+//            return "/";
+//        }
+
+        return "menu-view";
+    }
+
+//    @PostMapping("/order/food/id")
+//    public String addToOrder(Model model) {
+//
+//        OrderEntity menu = orderService.getMenu();
+//
+//        if (menu == null) {
+//            return "/";
+//        }
+//
+//        return "redirect:menu-view";
+//    }
+
+    @GetMapping("/new")
+    public String newOrder(Model model) {
+
+        OrderEntity menu = orderService.getMenu();
+
+
+        return "/order-view";
+
+//        @Valid RegisterDTO registerDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+//
+//            boolean equalPasswords = registerDTO.getPassword().equals(registerDTO.getConfirmPassword());
+//
+//            if (!equalPasswords) {
+//                bindingResult.addError(new FieldError("registerDTO", "confirmPassword", "Паролите НЕ съвпадат !!!"));
+//            }
+//
+//            if (bindingResult.hasErrors() || !equalPasswords) {
+//                redirectAttributes.addFlashAttribute("registerDTO", registerDTO);
+//                redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerDTO", bindingResult);
+//
+//                return "redirect:/users/register";
+//            }
+//
+//            this.userService.register(registerDTO);
+//
+//            // FIXME message that user is registered and to go to login page to Login !!!
+//            return "redirect:/home";
     }
 }

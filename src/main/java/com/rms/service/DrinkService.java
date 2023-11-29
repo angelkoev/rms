@@ -89,4 +89,8 @@ public class DrinkService {
     public Set<DrinkEntity> findAllByTypeAndOrderId(DrinkTypeEnum drinkTypeEnum, int orderId) {
         return drinkRepository.findAllByTypeEqualsAndOrderId(drinkTypeEnum, orderId);
     }
+
+    public DrinkEntity findById(Long id) {
+        return drinkRepository.findById(id).orElse(null);
+    }
 }
