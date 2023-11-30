@@ -27,10 +27,10 @@ public class FoodService {
 
 //        OrderEntity order = orderService.findById(1L);
 
-        initFood(random, "Шопса", FoodTypeEnum.SALAD);
-        initFood(random, "Овчарска", FoodTypeEnum.SALAD);
-        initFood(random, "Зеле с моркови", FoodTypeEnum.SALAD);
-        initFood(random, "Гръцка", FoodTypeEnum.SALAD);
+        initFood(random, "Шопса салата", FoodTypeEnum.SALAD);
+        initFood(random, "Овчарска салата", FoodTypeEnum.SALAD);
+        initFood(random, "Салата зеле с моркови", FoodTypeEnum.SALAD);
+        initFood(random, "Гръцка салата", FoodTypeEnum.SALAD);
         initFood(random, "Мусака", FoodTypeEnum.MAIN_DISH);
         initFood(random, "Боб яхния", FoodTypeEnum.MAIN_DISH);
         initFood(random, "Пиле с картофи", FoodTypeEnum.MAIN_DISH);
@@ -38,22 +38,22 @@ public class FoodService {
         initFood(random, "Свинска кавърма", FoodTypeEnum.MAIN_DISH);
         initFood(random, "Сандвич с шунка", FoodTypeEnum.SANDWICH);
         initFood(random, "Сандвич с кашкавал", FoodTypeEnum.SANDWICH);
-        initFood(random, "Сандвич веган", FoodTypeEnum.SANDWICH);
-        initFood(random, "Сицилиана", FoodTypeEnum.PIZZA);
-        initFood(random, "Вегетариана", FoodTypeEnum.PIZZA);
-        initFood(random, "Неаполитанска", FoodTypeEnum.PIZZA);
-        initFood(random, "Пепепрони", FoodTypeEnum.PIZZA);
-        initFood(random, "Маргарита", FoodTypeEnum.PIZZA);
-        initFood(random, "Ребра", FoodTypeEnum.BBQ);
+        initFood(random, "Веган сандвич", FoodTypeEnum.SANDWICH);
+        initFood(random, "Пица Сицилиана", FoodTypeEnum.PIZZA);
+        initFood(random, "Пица Вегетариана", FoodTypeEnum.PIZZA);
+        initFood(random, "Пица Неаполитана", FoodTypeEnum.PIZZA);
+        initFood(random, "Пица Пепепрони", FoodTypeEnum.PIZZA);
+        initFood(random, "Пица Маргарита", FoodTypeEnum.PIZZA);
+        initFood(random, "Ребърца", FoodTypeEnum.BBQ);
         initFood(random, "Вратна пържола", FoodTypeEnum.BBQ);
         initFood(random, "Свински сач", FoodTypeEnum.BBQ);
         initFood(random, "Кюфте", FoodTypeEnum.BBQ);
         initFood(random, "Кебапче", FoodTypeEnum.BBQ);
         initFood(random, "Наденичка", FoodTypeEnum.BBQ);
         initFood(random, "Пилешко шишче", FoodTypeEnum.BBQ);
-        initFood(random, "Пилешка", FoodTypeEnum.SOUP);
-        initFood(random, "Топчета", FoodTypeEnum.SOUP);
-        initFood(random, "Картофена", FoodTypeEnum.SOUP);
+        initFood(random, "Пилешка супа", FoodTypeEnum.SOUP);
+        initFood(random, "Супа топчета", FoodTypeEnum.SOUP);
+        initFood(random, "Картофена супа", FoodTypeEnum.SOUP);
         initFood(random, "Крем супа", FoodTypeEnum.SOUP);
         initFood(random, "Крем карамел", FoodTypeEnum.DESSERT);
         initFood(random, "Суфле", FoodTypeEnum.DESSERT);
@@ -96,5 +96,9 @@ public class FoodService {
 
     public Set<FoodEntity> findAllByType(FoodTypeEnum foodTypeEnum) {
         return foodRepository.findAllByTypeEquals(foodTypeEnum);
+    }
+
+    public FoodEntity findById(Long id) {
+        return foodRepository.findById(id).orElse(null);
     }
 }
