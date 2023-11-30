@@ -1,5 +1,7 @@
 package com.rms.model.entity;
 
+import com.rms.model.views.DrinkView;
+import com.rms.model.views.FoodView;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -115,5 +117,21 @@ public class UserEntity extends BaseEntity {
 
     public void setRoles(Set<UserRoleEntity> roles) {
         this.roles = roles;
+    }
+
+    public List<OrderEntity> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderEntity> orders) {
+        this.orders = orders;
+    }
+
+    public OrderEntity getLastOrder() {
+        return lastOrder;
+    }
+
+    public void setLastOrder(OrderEntity lastOrder) {
+        this.lastOrder = lastOrder;
     }
 }

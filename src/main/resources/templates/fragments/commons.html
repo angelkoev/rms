@@ -62,8 +62,9 @@
                 </li>
                 <!--                <li><a href="#chefs">Chefs</a></li>-->
                 <li><a href="/reviews/all">Отзиви от клиенти</a></li>
-                <li sec:authorize="hasRole('ROLE_CLIENT')"><a href="/reviews/add">Остави отзив</a></li>
-                <li sec:authorize="hasRole('ROLE_CLIENT')"><a href="/orders/new">Направи поръчка</a></li>
+                <li sec:authorize(isAuthenticated())><a href="/reviews/add">Остави отзив</a></li>
+                <li sec:authorize(isAuthenticated())><a href="/order/new">Направи поръчка</a></li>
+                <li sec:authorize(isAuthenticated())><a href="/order/menu">Меню</a></li>
 
             </ul>
             <ul class="navbar navbar-right">

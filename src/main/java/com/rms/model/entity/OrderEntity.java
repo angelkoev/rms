@@ -3,6 +3,7 @@ package com.rms.model.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,10 +12,10 @@ import java.util.Set;
 @Table(name = "orders")
 public class OrderEntity extends BaseEntity {
 
-    @OneToMany(fetch = FetchType.EAGER)
-    private Set<FoodEntity> foods;
-    @OneToMany(fetch = FetchType.EAGER)
-    private Set<DrinkEntity> drinks;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<FoodEntity> foods;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<DrinkEntity> drinks;
 //    @ManyToOne
 //    private TableEntity table;
 
@@ -31,23 +32,23 @@ public class OrderEntity extends BaseEntity {
     private UserEntity madeBy;
 
     public OrderEntity() {
-        this.foods = new HashSet<>();
-        this.drinks = new HashSet<>();
+        this.foods = new ArrayList<>();
+        this.drinks = new ArrayList<>();
     }
 
-    public Set<FoodEntity> getFoods() {
+    public List<FoodEntity> getFoods() {
         return foods;
     }
 
-    public void setFoods(Set<FoodEntity> foods) {
+    public void setFoods(List<FoodEntity> foods) {
         this.foods = foods;
     }
 
-    public Set<DrinkEntity> getDrinks() {
+    public List<DrinkEntity> getDrinks() {
         return drinks;
     }
 
-    public void setDrinks(Set<DrinkEntity> drinks) {
+    public void setDrinks(List<DrinkEntity> drinks) {
         this.drinks = drinks;
     }
 

@@ -21,11 +21,32 @@
     <br>
     <br>
     <div class="menu-ordered">
-        <h1>За сега сте си избрали:</h1>
-        <div th:each="orderDrinks : ${preorderDrinks}" th:object="${orderDrinks}">
-            <span th:text="|${orderDrinks.name} (${orderDrinks.volume}мл)    Цена: ${orderDrinks.price}лв| "></span>
-
+        <h5>За сега сте си избрали: <span style="color: red; font-size: small">(натиснете върху продукта, за да го премахнете от поръчката)</span></h5>
+        <h5>Напитки:</h5>
+        <div th:each="currentDrinks : ${allCurrentDrinkViews}" th:object="${currentDrinks}">
+<!--            <span th:text="|${currentDrinks.name} (${currentDrinks.volume}мл)    Цена: ${currentDrinks.price}лв|"></span>-->
+            <form th:action="@{/order/drink/{id}(id=${currentDrinks.id})}" th:method="DELETE">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <button id="remove-btn" style="font-size: small; padding: 5px; margin: 2px; line-height: 2px"
+                        type="submit"
+                        class="bg-transparent border-0 h5"
+                        th:text="|- ${currentDrinks.name} (${currentDrinks.volume}мл) Цена: ${currentDrinks.price}лв|">
+                </button>
+                </form>
         </div>
+<!--        <h5>Храни:</h5>-->
+<!--        <div th:each="currentDrinks : ${allCurrentDrinkViews}" th:object="${currentDrinks}">-->
+<!--            &lt;!&ndash;            <span th:text="|${currentDrinks.name} (${currentDrinks.volume}мл)    Цена: ${currentDrinks.price}лв|"></span>&ndash;&gt;-->
+<!--            <form th:action="@{/order/drink/{id}(id=${currentDrinks.id})}" th:method="DELETE">-->
+<!--                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+<!--                <button id="remove-btn" style="font-size: small; padding: 5px; margin: 2px; line-height: 2px"-->
+<!--                        type="submit"-->
+<!--                        class="bg-transparent border-0 h5"-->
+<!--                        th:text="|- ${currentDrinks.name} (${currentDrinks.volume}мл) Цена: ${currentDrinks.price}лв|">-->
+<!--                </button>-->
+<!--            </form>-->
+<!--        </div>-->
+
     </div>
     <div id="menu-main">
         <!--    <div class="col-5 bg-dark rounded m-auto" style="height: 50vh">-->

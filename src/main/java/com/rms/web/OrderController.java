@@ -1,29 +1,27 @@
 package com.rms.web;
 
-import com.rms.model.dto.PreorderDTO;
-import com.rms.model.dto.RegisterDTO;
-import com.rms.model.dto.ReviewDTO;
-import com.rms.model.entity.*;
+import com.rms.model.entity.DrinkEntity;
+import com.rms.model.entity.FoodEntity;
+import com.rms.model.entity.OrderEntity;
+import com.rms.model.entity.UserEntity;
 import com.rms.model.views.DrinkView;
 import com.rms.model.views.FoodView;
 import com.rms.service.DrinkService;
 import com.rms.service.FoodService;
 import com.rms.service.OrderService;
-import jakarta.validation.Valid;
+import com.rms.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-
-import static com.rms.model.entity.DrinkTypeEnum.*;
-import static com.rms.model.entity.FoodTypeEnum.*;
 
 @Controller
 @RequestMapping("/order")
@@ -33,12 +31,14 @@ public class OrderController {
     private final DrinkService drinkService;
     private final FoodService foodService;
     private final ModelMapper modelMapper;
+    private final UserService userService;
 
-    public OrderController(OrderService orderService, DrinkService drinkService, FoodService foodService, ModelMapper modelMapper) {
+    public OrderController(OrderService orderService, DrinkService drinkService, FoodService foodService, ModelMapper modelMapper, UserService userService) {
         this.orderService = orderService;
         this.drinkService = drinkService;
         this.foodService = foodService;
         this.modelMapper = modelMapper;
+        this.userService = userService;
     }
 
 
@@ -120,11 +120,23 @@ public class OrderController {
 //        List<FoodView> breadFoodsView = breadFoods.stream().map(foodEntity -> modelMapper.map(foodEntity, FoodView.class)).toList();
 //        model.addAttribute("breadFoodsView", breadFoodsView);
 
-        Set<DrinkEntity> allDrinks = orderService.getMenu().getDrinks();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserEntity currentUser = userService.getUserByUsername(authentication.getName());
+
+        if (currentUser.getLastOrder() == null) {
+            OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
+            currentUser.setLastOrder(newLastOrder);
+        }
+        List<DrinkEntity> currentDrinks = currentUser.getLastOrder().getDrinks();
+
+        List<DrinkView> allCurrentDrinkViews = currentDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
+        model.addAttribute("allCurrentDrinkViews", allCurrentDrinkViews);
+
+        List<DrinkEntity> allDrinks = orderService.getMenu().getDrinks();
         List<DrinkView> allDrinksView = allDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
         model.addAttribute("allDrinksView", allDrinksView);
 
-        Set<FoodEntity> allFoods = orderService.getMenu().getFoods();
+        List<FoodEntity> allFoods = orderService.getMenu().getFoods();
         List<FoodView> allFoodsView = allFoods.stream().map(foodEntity -> modelMapper.map(foodEntity, FoodView.class)).toList();
         model.addAttribute("allFoodsView", allFoodsView);
 
@@ -146,31 +158,72 @@ public class OrderController {
         return "redirect:menu-view";
     }
 
+    @DeleteMapping("/drink/{id}")
+    public String deleteDrinkFromORder(@PathVariable Long id, Model model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        UserEntity currentUser = userService.getUserByUsername(authentication.getName());
+
+        if (currentUser.getLastOrder() == null) {
+            // FIXME throw error !!!
+        }
+
+
+        OrderEntity lastOrder = currentUser.getLastOrder();
+
+        DrinkEntity currentDrink = lastOrder.getDrinks().stream().filter(f -> f.getId().equals(id)).findAny().get();
+        lastOrder.getDrinks().remove(currentDrink);
+        orderService.saveOrder(lastOrder);
+        userService.saveUser(currentUser);
+
+        return "redirect:/order/menu";
+    }
+
     @GetMapping("/drink/{id}")
-    public String addDrinkToOrder(@PathVariable Long id, PreorderDTO preorderDTO, Model model) {
+    public String addDrinkToOrder(@PathVariable Long id, Model model) {
 
-//        OrderEntity menu = orderService.getMenu();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        UserEntity currentUser = userService.getUserByUsername(authentication.getName());
+
+        if (currentUser.getLastOrder() == null) {
+            OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
+//            OrderEntity lastOrder = new OrderEntity();
+//            orderService.saveOrder(lastOrder);
+            currentUser.setLastOrder(newLastOrder);
+        }
+
+//        Set<DrinkEntity> currentDrinks = currentUser.getLastOrder().getDrinks();
         DrinkEntity currentDrink = drinkService.findById(id);
-        DrinkView currendDrinkView = modelMapper.map(currentDrink, DrinkView.class);
+        OrderEntity lastOrder = currentUser.getLastOrder();
+        lastOrder.getDrinks().add(currentDrink);
+//        lastOrder.getDrinks().add(currentDrink);
+        orderService.saveOrder(lastOrder);
+//        currentDrinks.add(currentDrink);
+//        currentUser.getLastOrder().setDrinks(currentDrinks);
+        userService.saveUser(currentUser);
 
-        preorderDTO.getDrinks().add(currendDrinkView);
+//        List<DrinkView> allCurrentDrinkViews = currentDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
+//        model.addAttribute("allCurrentDrinkViews", allCurrentDrinkViews);
 
-        model.addAttribute("preorderDrinks", preorderDTO.getDrinks());
-        model.addAttribute("preorderFoods", preorderDTO.getFoods());
 
-        Set<DrinkEntity> allDrinks = orderService.getMenu().getDrinks();
-        List<DrinkView> allDrinksView = allDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
-        model.addAttribute("allDrinksView", allDrinksView);
 
-        Set<FoodEntity> allFoods = orderService.getMenu().getFoods();
-        List<FoodView> allFoodsView = allFoods.stream().map(foodEntity -> modelMapper.map(foodEntity, FoodView.class)).toList();
-        model.addAttribute("allFoodsView", allFoodsView);
+//        Set<DrinkEntity> allDrinks = orderService.getMenu().getDrinks();
+//        List<DrinkView> allDrinksView = allDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
+//        model.addAttribute("allDrinksView", allDrinksView);
+//
+//        Set<FoodEntity> allFoods = orderService.getMenu().getFoods();
+//        List<FoodView> allFoodsView = allFoods.stream().map(foodEntity -> modelMapper.map(foodEntity, FoodView.class)).toList();
+//        model.addAttribute("allFoodsView", allFoodsView);
+
+
 
 //        if (menu == null) {
 //            return "/";
 //        }
 
-        return "menu-view";
+        return "redirect:/order/menu";
     }
 
 //    @PostMapping("/order/food/id")
@@ -214,8 +267,8 @@ public class OrderController {
 //            return "redirect:/home";
     }
 
-    @ModelAttribute
-    public PreorderDTO preorderDTO() {
-        return new PreorderDTO();
-    }
+//    @ModelAttribute
+//    public PreorderDTO preorderDTO() {
+//        return new PreorderDTO();
+//    }
 }

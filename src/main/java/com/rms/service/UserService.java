@@ -11,6 +11,7 @@ import com.rms.repositiry.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.beans.Transient;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -74,7 +75,7 @@ public class UserService
 //        this.loggedUser.setUsername(null);
 //    }
 
-    private UserEntity getUserByUsername(String username) {
+    public UserEntity getUserByUsername(String username) {
         return this.userRepository.findByUsername(username).orElse(null);
     }
 
@@ -196,6 +197,13 @@ public class UserService
 
         userRepository.save(user);
     }
+
+    @Transient
+    public void saveUser (UserEntity userEntity) {
+        userRepository.save(userEntity);
+    }
+
+
 
 
 //    @Override
