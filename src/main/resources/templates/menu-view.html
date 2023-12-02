@@ -20,10 +20,12 @@
 
     <br>
     <div th:if="!${totalViewSize == 0}" class="menu-ordered">
-        <h5>За сега сте си избрали: <span style="color: red; font-size: small">(натиснете върху продукта, за да го премахнете от поръчката)</span></h5>
+        <h5>За сега сте си избрали: <span style="color: red; font-size: small">(натиснете върху продукта, за да го премахнете от поръчката)</span>
+        </h5>
         <h5 th:if="!${drinkViewCount == 0}">Напитки:</h5>
-        <div th:if="!${drinkViewCount == 0}" th:each="currentDrink : ${allCurrentDrinkViews}" th:object="${currentDrink}">
-<!--            <span th:text="|${currentDrinks.name} (${currentDrinks.volume}мл)    Цена: ${currentDrinks.price}лв|"></span>-->
+        <div th:if="!${drinkViewCount == 0}" th:each="currentDrink : ${allCurrentDrinkViews}"
+             th:object="${currentDrink}">
+            <!--            <span th:text="|${currentDrinks.name} (${currentDrinks.volume}мл)    Цена: ${currentDrinks.price}лв|"></span>-->
             <form th:action="@{/order/drink/{id}(id=${currentDrink.id})}" th:method="DELETE">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <button style="font-size: small; padding: 5px; margin: 2px; line-height: 2px"
@@ -31,7 +33,7 @@
                         class="bg-transparent border-0 h5"
                         th:text="|- ${currentDrink.name} (${currentDrink.volume}мл) Цена: ${currentDrink.price}лв|">
                 </button>
-                </form>
+            </form>
         </div>
         <br>
         <h5 th:if="!${foodViewCount == 0}">Храни:</h5>
@@ -60,9 +62,8 @@
 
     </div>
     <div id="menu-main">
-        <!--    <div class="col-5 bg-dark rounded m-auto" style="height: 50vh">-->
         <div id="drinksContainer" class="container bg-gray box" style="height: 50vh">
-            <h3 class="mySticky bg-gray text-dark rounded">Избери напитка</h3>
+<!--            <h3 class="mySticky bg-gray text-dark rounded">Избери напитка</h3>-->
 
             <div class="dropdown mt-3 choose-button">
                 <button class="btn btn-warning dropdown-toggle" type="button" id="drinkDropdown" data-toggle="dropdown"
@@ -71,16 +72,14 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="drinkDropdown">
 
-                    <!-- Iterate over each drink type -->
-                    <div th:each="drinkType : ${T(com.rms.model.entity.DrinkTypeEnum).values()}">
-                        <div class="dropdown-submenu">
-                            <a class="dropdown-item dropdown-toggle" th:text="${drinkType.getName()}" href="#"></a>
 
-                            <!-- Iterate over drinks for the current type -->
+                    <div th:each="drinkType : ${T(com.rms.model.entity.DrinkTypeEnum).values()}">
+                        <div class="dropdown-submenu bg-nav">
+                            <a class="dropdown-item dropdown-toggle" th:text="${drinkType.getName()}" href="#"></a>
                             <div class="dropdown-menu">
                                 <div th:each="drink : ${allDrinksView}" th:object="${drink}">
                                     <div th:if="${drink.type == drinkType}">
-                                        <a class="dropdown-item" th:href="@{/order/drink/{id}(id=${drink.id})}">
+                                        <a class="dropdown-item bg-nav" th:href="@{/order/drink/{id}(id=${drink.id})}">
                                             <span th:text="|${drink.name} (${drink.volume}мл)    Цена: ${drink.price}лв| "></span>
                                         </a>
                                     </div>
@@ -88,14 +87,12 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
 
         <div id="foodsContainer" class="container bg-gray box" style="height: 50vh">
-            <!--    <div class="col-5 bg-dark rounded m-auto" style="height: 50vh">-->
-            <h3 class="mySticky bg-gray text-dark rounded">Избери храна</h3>
+<!--            <h3 class="mySticky bg-gray text-dark rounded">Избери храна</h3>-->
 
             <div class="dropdown mt-3 choose-button">
                 <button class="btn btn-warning dropdown-toggle" type="button" id="foodDropdown" data-toggle="dropdown"
@@ -104,16 +101,13 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-food" aria-labelledby="foodDropdown">
 
-                    <!-- Iterate over each drink type -->
                     <div th:each="foodType : ${T(com.rms.model.entity.FoodTypeEnum).values()}">
-                        <div class="dropdown-submenu">
+                        <div class="dropdown-submenu bg-nav">
                             <a class="dropdown-item dropdown-toggle" th:text="${foodType.getName()}" href="#"></a>
-
-                            <!-- Iterate over drinks for the current type -->
                             <div class="dropdown-menu dropdown-menu-food">
                                 <div th:each="food : ${allFoodsView}" th:object="${food}">
                                     <div th:if="${food.type == foodType}">
-                                        <a class="dropdown-item" th:href="@{/order/food/{id}(id=${food.id})}">
+                                        <a class="dropdown-item bg-nav" th:href="@{/order/food/{id}(id=${food.id})}">
                                             <span th:text="|${food.name} (${food.size}гр - ${food.kcal}kcal)    Цена: ${food.price}лв| "></span>
                                         </a>
                                     </div>
@@ -121,7 +115,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
