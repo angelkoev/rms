@@ -18,4 +18,6 @@ public interface DrinkRepository extends JpaRepository<DrinkEntity, Long> {
     Set<DrinkEntity> findAllByTypeEquals(DrinkTypeEnum drinkTypeEnum);
 
     Optional<DrinkEntity> findById(Long id);
+
+    Optional<DrinkEntity> findByName(String name);
 }

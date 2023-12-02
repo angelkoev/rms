@@ -120,6 +120,28 @@ body {
 /*}*/
 
 /*--------------------------------------------------------------
+# add drink form
+--------------------------------------------------------------*/
+
+body {
+    margin: 0;
+    padding: 0;
+    /*background-color: #17a2b8;*/
+    height: 100vh;
+}
+#add-drink .container #add-drink-row #add-drink-column #add-drink-box {
+    margin-top: 120px;
+    margin-bottom: 120px;
+    /*max-width: 600px;*/
+    /*height: 320px;*/
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+}
+#add-drink .container #add-drink-row #add-drink-column #add-drink-box #add-drink-form {
+    padding: 20px;
+}
+
+/*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
 body {

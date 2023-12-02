@@ -1,5 +1,6 @@
 package com.rms.web;
 
+import com.rms.model.dto.DrinkDTO;
 import com.rms.model.entity.DrinkEntity;
 import com.rms.model.entity.FoodEntity;
 import com.rms.model.entity.OrderEntity;
@@ -10,18 +11,17 @@ import com.rms.service.DrinkService;
 import com.rms.service.FoodService;
 import com.rms.service.OrderService;
 import com.rms.service.UserService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/order")
@@ -165,6 +165,36 @@ public class OrderController {
         return "redirect:/order/menu";
     }
 
+    @GetMapping("/add/drink")
+    String addDrink() {
+
+        return "add-drink";
+    }
+
+    @PostMapping("/add/drink")
+    String addNewDrink(@Valid DrinkDTO drinkDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        boolean alreadyAdded = drinkService.isDrinkAlreadyAdded(drinkDTO);
+
+        String infoMessage = "";
+        if (bindingResult.hasErrors() || alreadyAdded) {
+            redirectAttributes.addFlashAttribute("drinkDTO", drinkDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.drinkDTO", bindingResult);
+            if (alreadyAdded) {
+                infoMessage = infoMessage = "Вече има добавена напитка с това име!";
+                redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
+            }
+            return "redirect:/order/add/drink";
+        }
+
+        this.orderService.addDrink(drinkDTO, drinkDTO.isAddToMenu());
+
+        // FIXME message that user is registered and to go to login page to Login !!!
+        infoMessage = "Напитката беше добавена успешно!";
+        redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
+        return "redirect:/home";
+    }
+
 
     @GetMapping("/new")
     public String newOrder(Model model) {
@@ -172,8 +202,12 @@ public class OrderController {
         OrderEntity menu = orderService.getMenu();
 
 
-
         return "/order-view";
+    }
+
+    @ModelAttribute
+    public DrinkDTO drinkDTO() {
+        return new DrinkDTO();
     }
 
 }

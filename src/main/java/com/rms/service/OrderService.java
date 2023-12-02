@@ -1,15 +1,16 @@
 package com.rms.service;
 
+import com.rms.model.dto.DrinkDTO;
 import com.rms.model.entity.DrinkEntity;
 import com.rms.model.entity.FoodEntity;
 import com.rms.model.entity.OrderEntity;
 import com.rms.model.entity.UserEntity;
 import com.rms.repositiry.OrderRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -20,13 +21,15 @@ public class OrderService {
     private final FoodService foodService;
     private final DrinkService drinkService;
     private final UserService userService;
+    private final ModelMapper modelMapper;
 
-    public OrderService(OrderRepository orderRepository, FoodService foodService, DrinkService drinkService, UserService userService) {
+    public OrderService(OrderRepository orderRepository, FoodService foodService, DrinkService drinkService, UserService userService, ModelMapper modelMapper) {
         this.orderRepository = orderRepository;
 //        this.tableService = tableService;
         this.foodService = foodService;
         this.drinkService = drinkService;
         this.userService = userService;
+        this.modelMapper = modelMapper;
     }
 
     public void initMenuOrder() {
@@ -52,24 +55,6 @@ public class OrderService {
         orderRepository.save(menu);
 //        }
     }
-
-//    public void initMenu() {
-//
-//        Set<FoodEntity> allFoodsInMenu = foodService.findAllBy();
-//        Set<DrinkEntity> allDrinksInMenu = drinkService.findAllBy();
-//
-//        Optional<OrderEntity> menuOpt = orderRepository.findById(1L);
-//
-//        if (menuOpt.isPresent()) {
-//            OrderEntity menu = menuOpt.get();
-//            menu.setMadeBy(userService.findById(1L).get());
-//            menu.getDrinks().addAll(allDrinksInMenu);
-//            menu.getFoods().addAll(allFoodsInMenu);
-//            orderRepository.save(menu);
-//        }
-//
-//    }
-
     public OrderEntity findById(Long id) {
         return orderRepository.findOrderEntitiesById(id).orElse(null);
     }
@@ -92,4 +77,24 @@ public class OrderService {
         return lastOrder;
     }
 
+    public void addToMenu(DrinkEntity drinkEntity) {
+        OrderEntity menu = getMenu();
+        menu.getDrinks().add(drinkEntity);
+        orderRepository.save(menu);
+    }
+    
+    public void addDrink(DrinkDTO drinkDTO, boolean addToMenu) {
+
+        DrinkEntity drinkToAdd = modelMapper.map(drinkDTO, DrinkEntity.class);
+
+//        if (drinkService.isDrinkAlreadyAdded(drinkToAdd)) {
+//            throw new Exception("Вече има напитка със същото име!");
+//        }
+        drinkService.addDrink(drinkToAdd);
+
+        if (addToMenu) {
+            addToMenu(drinkToAdd);
+        }
+
+    }
 }

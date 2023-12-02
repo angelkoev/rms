@@ -1,10 +1,12 @@
 package com.rms.service;
 
+import com.rms.model.dto.DrinkDTO;
 import com.rms.model.entity.*;
 import com.rms.repositiry.DrinkRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
@@ -73,6 +75,27 @@ public class DrinkService {
         drinkEntity.setType(drinkType);
 
         drinkEntity.setVolume(random.nextInt(301) + 200); // random int from 300 to 500
+
+        drinkRepository.save(drinkEntity);
+    }
+
+    public boolean isDrinkAlreadyAdded(DrinkEntity drinkEntity) {
+        Optional<DrinkEntity> findByName = drinkRepository.findByName(drinkEntity.getName());
+
+        return findByName.isPresent();
+    }
+
+    public boolean isDrinkAlreadyAdded(DrinkDTO drinkDTO) {
+        Optional<DrinkEntity> findByName = drinkRepository.findByName(drinkDTO.getName());
+
+        return findByName.isPresent();
+    }
+
+    public void addDrink(DrinkEntity drinkEntity) {
+
+        if (isDrinkAlreadyAdded(drinkEntity)) {
+            throw new IllegalStateException(); // FIXME fix the error name
+        }
 
         drinkRepository.save(drinkEntity);
     }
