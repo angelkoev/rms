@@ -19,8 +19,6 @@
 <main>
 
     <br>
-    <br>
-    <br>
     <div th:if="!${totalViewSize == 0}" class="menu-ordered">
         <h5>За сега сте си избрали: <span style="color: red; font-size: small">(натиснете върху продукта, за да го премахнете от поръчката)</span></h5>
         <h5 th:if="!${drinkViewCount == 0}">Напитки:</h5>
@@ -35,6 +33,7 @@
                 </button>
                 </form>
         </div>
+        <br>
         <h5 th:if="!${foodViewCount == 0}">Храни:</h5>
         <div th:if="!${foodViewCount == 0}" th:each="currentFood : ${allCurrentFoodViews}" th:object="${currentFood}">
             <!--            <span th:text="|${currentDrinks.name} (${currentDrinks.volume}мл)    Цена: ${currentDrinks.price}лв|"></span>-->
@@ -48,6 +47,7 @@
             </form>
         </div>
 
+        <br>
         <form id="order-form" class="form"
               th:method="POST"
               th:action="@{/order/new}"

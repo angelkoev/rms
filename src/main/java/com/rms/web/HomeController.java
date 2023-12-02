@@ -13,13 +13,18 @@ public class HomeController {
     @GetMapping("/")
     public String index(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-//        model.addAttribute("isLogged", userDetails != null);
-//
-//        if (userDetails != null) {
-//            model.addAttribute("isLogged", userDetails.get);
-//        }
 
+        if (userDetails != null) {
+            return "home";
+
+        }
         return "index";
+    }
+
+    @GetMapping("/home")
+    public String home () {
+
+        return "home";
     }
 
 }

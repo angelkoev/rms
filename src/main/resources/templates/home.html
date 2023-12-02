@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/commons::head}"></head>
+<body>
+<header th:replace="~{fragments/commons::nav}"></header>
+<main>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h2 class="text-center">Добре дошли "при Пешо"</h2>
+    <br>
+    <ul id="home-ur" class="text-center">
+        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/users/all">Виж всички потребители</a></li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/order/all">Виж всички поръчки</a></li>
+
+        <br>
+        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/logs/all">Виж всички логове</a></li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/maintenance/start">Спри сайта за профилактика</a></li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/maintenance/stop">Пусни сайта след профилактика</a></li>
+
+        <br>
+        <li sec:authorize(isAuthenticated())><a href="/order/menu">Виж менюто и направи поръчка</a></li>
+        <li sec:authorize(isAuthenticated())><a href="/order/menu">Промени менюто</a></li>
+        <br>
+        <li sec:authorize="!hasRole('ROLE_ADMIN')"><a href="/order/history">История на поръчките</a></li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/order/add/food">Добави храна</a></li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/order/add/drink">Добави напитка</a></li>
+        <br>
+        <li sec:authorize="!hasRole('ROLE_ADMIN')"><a href="/reviews/add">Остави отзив</a></li>
+
+
+    </ul>
+
+
+</main>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>
