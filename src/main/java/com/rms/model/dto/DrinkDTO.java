@@ -9,7 +9,7 @@ import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 public class DrinkDTO {
-    @Size(min = 3, max = 20, message = "Съдържанието трябва да е между 3 и 20 символа")
+    @Size(min = 3, max = 20, message = "Името трябва да е между 3 и 20 символа")
     @NotNull
     private String name;
 
@@ -26,8 +26,7 @@ public class DrinkDTO {
     @NotNull (message = "Изберете тип на напитката:")
     private DrinkTypeEnum type;
 
-
-    @NotNull
+//    @NotNull
     private boolean addToMenu;
 
     public DrinkDTO() {
