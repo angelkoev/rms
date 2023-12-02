@@ -1,6 +1,7 @@
 package com.rms.service;
 
 import com.rms.model.dto.DrinkDTO;
+import com.rms.model.dto.FoodDTO;
 import com.rms.model.entity.DrinkEntity;
 import com.rms.model.entity.FoodEntity;
 import com.rms.model.entity.OrderEntity;
@@ -82,6 +83,12 @@ public class OrderService {
         menu.getDrinks().add(drinkEntity);
         orderRepository.save(menu);
     }
+
+    public void addToMenu(FoodEntity foodEntity) {
+        OrderEntity menu = getMenu();
+        menu.getFoods().add(foodEntity);
+        orderRepository.save(menu);
+    }
     
     public void addDrink(DrinkDTO drinkDTO, boolean addToMenu) {
 
@@ -95,6 +102,21 @@ public class OrderService {
         if (addToMenu) {
             addToMenu(drinkToAdd);
         }
-
     }
+
+    public void addFood(FoodDTO foodDTO, boolean addToMenu) {
+
+        FoodEntity foodToAdd = modelMapper.map(foodDTO, FoodEntity.class);
+
+//        if (drinkService.isDrinkAlreadyAdded(foodToAdd)) {
+//            throw new Exception("Вече има храна със същото име!");
+//        }
+        foodService.addFood(foodToAdd);
+
+        if (addToMenu) {
+            addToMenu(foodToAdd);
+        }
+    }
+
+
 }

@@ -6,6 +6,95 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 
+    <div id="add-food">
+        <div class="container">
+            <div id="add-food-row" class="row justify-content-center align-items-center">
+                <div id="add-food-column" class="col-md-6">
+                    <div id="add-food-box" class="col-md-12">
+
+                        <small th:if="${infoMessage}"
+                               id="infoMessage"
+                               th:text="${infoMessage}"
+                               class="text-danger h2 d-flex justify-content-center align-items-center">
+                            Вече има добавена храна с това име!!!
+                        </small>
+
+                        <form id="add-food-form" class="form"
+                              th:method="POST"
+                              th:action="@{/order/add/food}"
+                              th:object="${foodDTO}">
+                            <h3 class="text-center text-info">Добавяне на храна</h3>
+                            <span style="font-size: small; color: red">(всички полета са задължителни)</span>
+                            <br>
+
+                            <div class="form-group">
+                                <label for="name" class="text-info">Наименование:</label><br>
+                                <input th:field="*{name}"
+                                       required
+                                       th:errorclass="bg-danger"
+                                       type="text" name="name" id="name" class="form-control">
+                            </div>
+                            <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                   class="text-danger">Name error message</small>
+                            <div class="form-group">
+                                <label for="price" class="text-info">Цена:</span></label><br>
+                                <input th:field="*{price}"
+                                       required
+                                       th:errorclass="'is-invalid bg-danger'"
+                                       type="text" name="price" id="price" class="form-control">
+                            </div>
+                            <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+                                   class="text-danger">Email error message</small>
+                            <div class="form-group">
+                                <label for="size" class="text-info">Големина на порцията в гр:</label><br>
+                                <input th:field="*{size}"
+                                       required
+                                       th:errorclass="bg-danger"
+                                       type="text" name="size" id="size" class="form-control">
+                                <small th:if="${#fields.hasErrors('size')}"
+                                       th:errors="*{size}"
+                                       class="text-danger">size error message</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="size" class="text-info">Калории в порцията:</label><br>
+                                <input th:field="*{kcal}"
+                                       required
+                                       th:errorclass="bg-danger"
+                                       type="text" name="kcal" id="kcal" class="form-control">
+                                <small th:if="${#fields.hasErrors('size')}"
+                                       th:errors="*{kcal}"
+                                       class="text-danger">kcal error message</small>
+                            </div>
+                            <div class="form-group">
+                                <div class="text-white label-holder d-flex justify-content-center">
+                                </div>
+                                <select th:field="*{type}"
+                                        th:errorclass="bg-danger"
+                                        class="browser-default custom-select" id="type" name="type">
+                                    <option value="">Изберете тип на храната:</option>
+                                    <option th:each="f : ${T(com.rms.model.entity.FoodTypeEnum).values()}"
+                                            th:text="${f.getName()}"
+                                            th:value="${f}"
+                                    >Food</option>
+                                </select>
+                            </div>
+                            <small th:if="${#fields.hasErrors('type')}" th:errors="*{type}"
+                                   class="text-danger">Type error message</small>
+                            <div class="form-group">
+                                <label for="addToMenu" class="text-info">Да се добави ли към менюто?</label><br>
+                                <input th:field="*{addToMenu}"
+                                       th:errorclass="bg-danger"
+                                       type="checkbox" name="addToMenu" id="addToMenu" class="form-control">
+                            </div>
+                            <div class="form-group button-holder d-flex justify-content-center">
+                                <input type="submit" name="submit" class="btn btn-info btn-md justify-content-center" value="Добави!">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </main>

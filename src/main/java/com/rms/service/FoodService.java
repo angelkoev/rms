@@ -87,18 +87,18 @@ public class FoodService {
     }
 
     public boolean isFoodAlreadyAdded(FoodEntity foodEntity) {
-        Optional<DrinkEntity> findByName = foodRepository.findByName(foodEntity.getName());
+        Optional<FoodEntity> findByName = foodRepository.findByName(foodEntity.getName());
 
         return findByName.isPresent();
     }
 
     public boolean isFoodAlreadyAdded(FoodDTO foodDTO) {
-        Optional<DrinkEntity> findByName = foodRepository.findByName(foodDTO.getName());
+        Optional<FoodEntity> findByName = foodRepository.findByName(foodDTO.getName());
 
         return findByName.isPresent();
     }
 
-    public void addDrink(FoodEntity foodEntity) {
+    public void addFood(FoodEntity foodEntity) {
 
         if (isFoodAlreadyAdded(foodEntity)) {
             throw new IllegalStateException(); // FIXME fix the error name

@@ -9,7 +9,6 @@
 
     <br>
     <br>
-    <br>
     <small th:if="${infoMessage}"
            id="message-error-msg"
            th:text="${infoMessage}"
@@ -17,7 +16,8 @@
 
     <br>
     <br>
-    <h2 class="text-center">Добре дошли "при Пешо"</h2>
+    <h2 sec:authorize="!hasRole('ROLE_ADMIN')" class="text-center">Добре дошли "при Пешо"</h2>
+    <h2 sec:authorize="hasRole('ROLE_ADMIN')" class="text-center">Админ панел</h2>
     <br>
     <ul id="home-ur" class="text-center">
         <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/users/all">Виж всички потребители</a></li>

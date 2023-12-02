@@ -1,6 +1,7 @@
 package com.rms.web;
 
 import com.rms.model.dto.DrinkDTO;
+import com.rms.model.dto.FoodDTO;
 import com.rms.model.entity.DrinkEntity;
 import com.rms.model.entity.FoodEntity;
 import com.rms.model.entity.OrderEntity;
@@ -181,7 +182,7 @@ public class OrderController {
             redirectAttributes.addFlashAttribute("drinkDTO", drinkDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.drinkDTO", bindingResult);
             if (alreadyAdded) {
-                infoMessage = infoMessage = "Вече има добавена напитка с това име!";
+                infoMessage = "Вече има добавена напитка с това име!";
                 redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
             }
             return "redirect:/order/add/drink";
@@ -195,12 +196,41 @@ public class OrderController {
         return "redirect:/home";
     }
 
+    @GetMapping("/add/food")
+    String addFoodk() {
+
+        return "add-food";
+    }
+
+    @PostMapping("/add/food")
+    String addNewDrink(@Valid FoodDTO foodDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        boolean alreadyAdded = foodService.isFoodAlreadyAdded(foodDTO);
+
+        String infoMessage = "";
+        if (bindingResult.hasErrors() || alreadyAdded) {
+            redirectAttributes.addFlashAttribute("foodDTO", foodDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.foodDTO", bindingResult);
+            if (alreadyAdded) {
+                infoMessage = "Вече има добавена храна с това име!";
+                redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
+            }
+            return "redirect:/order/add/food";
+        }
+
+        this.orderService.addFood(foodDTO, foodDTO.isAddToMenu());
+
+        // FIXME message that user is registered and to go to login page to Login !!!
+        infoMessage = "Храната беше добавена успешно!";
+        redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
+        return "redirect:/home";
+    }
+
 
     @GetMapping("/new")
     public String newOrder(Model model) {
 
         OrderEntity menu = orderService.getMenu();
-
 
         return "/order-view";
     }
@@ -208,6 +238,11 @@ public class OrderController {
     @ModelAttribute
     public DrinkDTO drinkDTO() {
         return new DrinkDTO();
+    }
+
+    @ModelAttribute
+    public FoodDTO foodDTO() {
+        return new FoodDTO();
     }
 
 }

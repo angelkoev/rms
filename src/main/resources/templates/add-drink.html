@@ -66,7 +66,7 @@
                                     <option th:each="d : ${T(com.rms.model.entity.DrinkTypeEnum).values()}"
                                             th:text="${d.getName()}"
                                             th:value="${d}"
-                                    >Food</option>
+                                    >Drink</option>
                                 </select>
                             </div>
                             <small th:if="${#fields.hasErrors('type')}" th:errors="*{type}"

@@ -141,6 +141,29 @@ body {
     padding: 20px;
 }
 
+
+/*--------------------------------------------------------------
+# add food form
+--------------------------------------------------------------*/
+
+body {
+    margin: 0;
+    padding: 0;
+    /*background-color: #17a2b8;*/
+    height: 100vh;
+}
+#add-food .container #add-food-row #add-food-column #add-food-box {
+    margin-top: 120px;
+    margin-bottom: 120px;
+    /*max-width: 600px;*/
+    /*height: 320px;*/
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+}
+#add-food .container #add-food-row #add-food-column #add-food-box #add-food-form {
+    padding: 20px;
+}
+
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
