@@ -1,10 +1,13 @@
 package com.rms.service;
 
+import com.rms.model.dto.DrinkDTO;
+import com.rms.model.dto.FoodDTO;
 import com.rms.model.entity.*;
 import com.rms.repositiry.FoodRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
@@ -24,8 +27,6 @@ public class FoodService {
         }
 
         Random random = new Random();
-
-//        OrderEntity order = orderService.findById(1L);
 
         initFood(random, "Шопса салата", FoodTypeEnum.SALAD);
         initFood(random, "Овчарска салата", FoodTypeEnum.SALAD);
@@ -74,20 +75,36 @@ public class FoodService {
         double randomValueCalories = 100 + (500 - 100) * random.nextDouble(); // random between 10 and 50
 
         FoodEntity foodEntity = new FoodEntity();
-//        foodEntity.setOrderId(1);
         foodEntity.setName(foodName);
         foodEntity.setPrice(BigDecimal.valueOf(randomValuePrice));
         foodEntity.setType(foodTypeEnum);
 
         foodEntity.setSize(random.nextInt(301) + 200); // random int from 300 to 500
         foodEntity.setKcal(BigDecimal.valueOf(randomValueCalories));
-//        foodEntity.setPreparationTime(random.nextInt(20) + 10);
-//        foodEntity.setCompleted(true);
-//        foodEntity.setDelivered(true);
-//        foodEntity.setPaid(true);
 
         foodRepository.save(foodEntity);
 
+    }
+
+    public boolean isFoodAlreadyAdded(FoodEntity foodEntity) {
+        Optional<DrinkEntity> findByName = foodRepository.findByName(foodEntity.getName());
+
+        return findByName.isPresent();
+    }
+
+    public boolean isFoodAlreadyAdded(FoodDTO foodDTO) {
+        Optional<DrinkEntity> findByName = foodRepository.findByName(foodDTO.getName());
+
+        return findByName.isPresent();
+    }
+
+    public void addDrink(FoodEntity foodEntity) {
+
+        if (isFoodAlreadyAdded(foodEntity)) {
+            throw new IllegalStateException(); // FIXME fix the error name
+        }
+
+        foodRepository.save(foodEntity);
     }
 
     public Set<FoodEntity> findAllBy () {

@@ -19,4 +19,6 @@ public interface FoodRepository extends JpaRepository<FoodEntity, Long> {
     Set<FoodEntity> findAllByTypeEquals(FoodTypeEnum foodTypeEnum);
 
     Optional<FoodEntity> findById(Long id);
+
+    Optional<DrinkEntity> findByName(String name);
 }
