@@ -45,13 +45,13 @@ public class MaintenanceController {
 
     @GetMapping("/start")
     public String startMaintenance() {
-        maintenanceInterceptor.activateMaintenanceMode();
+        maintenanceInterceptor.MaintenanceModeStart();
         return "redirect:/";
     }
 
     @GetMapping("/stop")
     public String stopMaintenance() {
-        maintenanceInterceptor.deactivateMaintenanceMode();
+        maintenanceInterceptor.MaintenanceModeStop();
         return "redirect:/";
     }
 }

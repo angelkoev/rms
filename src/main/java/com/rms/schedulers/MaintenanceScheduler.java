@@ -14,13 +14,13 @@ public class MaintenanceScheduler {
 
     @Scheduled(cron = "0 0 2 * * *") // sec min hours day month dayWeek
     public void activateMaintenance() {
-        System.out.println("SCHEDULE MAINTENANCE ON");
-        maintenanceInterceptor.activateMaintenanceMode();
+        System.out.println("Scheduled Maintenance Start");
+        maintenanceInterceptor.MaintenanceModeStart();
     }
 
     @Scheduled(cron = "0 0 3 * * *") // sec min hours day month dayWeek
     public void deactivateMaintenance() {
-        System.out.println("SCHEDULE MAINTENANCE OFF");
-        maintenanceInterceptor.deactivateMaintenanceMode();
+        System.out.println("Scheduled Maintenance Stop");
+        maintenanceInterceptor.MaintenanceModeStop();
     }
 }

@@ -15,33 +15,31 @@ import java.util.Map;
 @Component
 public class MaintenanceInterceptor implements HandlerInterceptor {
 
-    private boolean maintenanceMode = false;
-    private ThymeleafViewResolver tlvr;
+    private boolean isMaintenanceMode = false;
+    private ThymeleafViewResolver thymeleafViewResolver;
 
-    public MaintenanceInterceptor(ThymeleafViewResolver tlvr) {
-        this.tlvr = tlvr;
+    public MaintenanceInterceptor(ThymeleafViewResolver thymeleafViewResolver) {
+        this.thymeleafViewResolver = thymeleafViewResolver;
     }
 
-    public void activateMaintenanceMode() {
-        System.out.println("MAINTENANCE ON");
-        maintenanceMode = true;
+    public void MaintenanceModeStart() {
+        System.out.println("Interceptor for maintenance is activated");
+        isMaintenanceMode = true;
     }
 
-    public void deactivateMaintenanceMode() {
-        System.out.println("MAINTENANCE OFF");
-        maintenanceMode = false;
+    public void MaintenanceModeStop() {
+        System.out.println("Interceptor for maintenance is deactivated");
+        isMaintenanceMode = false;
     }
 
     public boolean isMaintenanceMode() {
-        return maintenanceMode;
+        return isMaintenanceMode;
     }
 
         @Override
         public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-            if (maintenanceMode) {
+            if (isMaintenanceMode) {
                 boolean hasAdminRole = false;
-
-
 
                 if (request.getUserPrincipal() != null) {
                     for (GrantedAuthority authority : SecurityContextHolder.getContext().getAuthentication().getAuthorities()) {
@@ -50,26 +48,19 @@ public class MaintenanceInterceptor implements HandlerInterceptor {
                         }
                     }
                     if (hasAdminRole) {
-                        return true;  // Allow access for users with ROLE_ADMIN
+                        return true;
                     } else {
-                        View maintenanceView = tlvr.resolveViewName("maintenance", Locale.getDefault());
+                        View maintenanceView = thymeleafViewResolver.resolveViewName("maintenance", Locale.getDefault());
                         if (maintenanceView != null) {
                             maintenanceView.render(Map.of(), request, response);
                         }
                         return false;
-//                        response.sendRedirect("maintenance");  // Redirect to the maintenance page
-//                        return false;  // Deny access for other roles or both roles
-//                        if (!request.getRequestURI().equals("/maintenance.html")) {
-//                            // Redirect to maintenance.html
-//                            response.sendRedirect("/maintenance.html");
-//                            return false; // Stop further processing
-//                        }
                     }
                 }
 
 
             }
-            return true;  // Maintenance mode is not active, allow access
+            return true;
         }
 
 
