@@ -25,6 +25,7 @@
 
         <br>
         <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/logs/all">Виж всички логове</a></li>
+        <br>
         <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/maintenance/start">Започни профилактика на сайта</a></li>
         <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/maintenance/stop">Спри профилактиката на сайта</a></li>
 
