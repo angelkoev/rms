@@ -47,6 +47,7 @@ public class OrderService {
         menu.setCompleted(true);
 //            menu.setTable(table);
         menu.setPaid(true);
+//        menu.setMadeBy(userService.findById(1L).get());
         menu.setDateTime(LocalDateTime.now());
         Set<FoodEntity> allFoodsInMenu = foodService.findAllBy();
         Set<DrinkEntity> allDrinksInMenu = drinkService.findAllBy();

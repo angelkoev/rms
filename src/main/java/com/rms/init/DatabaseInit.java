@@ -41,32 +41,18 @@ public class DatabaseInit implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
 
         userRoleService.initUserRoles();
-//        drinkTypeService.initDrinkTypes();
-//        foodTypeService.initFoodTypes();
 
-//        userService.initClients();
-
-//        tableService.initTables();
+        userService.initAdmin();
+        userService.initUsers();
+        reviewService.initReviews();
 
         foodService.initFoods();
         drinkService.initDrinks();
         orderService.initMenuOrder();
-
-        userService.initAdmin();
-        userService.initUsers();
-
-        reviewService.initReviews();
-//        orderService.initMenu();
-
-
-        // TODO -> init menu -> put initial food and drinks in the menu !!!
-
-
-        // TODO -> add some test data for users and menu !!!
 
     }
 }
