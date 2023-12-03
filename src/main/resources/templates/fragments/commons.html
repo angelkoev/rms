@@ -20,54 +20,7 @@
         <div class="container">
             <ul class="navbar navbar-left">
                 <li sec:authorize(isAuthenticated()><a href="/">Начало</a></li>
-                <!--                <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/users/add">Добави служител</a></li>-->
-                <!--                <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/users/view-all">виж всички служители</a></li>-->
-                <!--                // по-добре да е някакъв admin panel...-->
-                <!--                <li>-->
-                <!--                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown">-->
-                <!--                        <button class="nav-link bg-transparent border-0 h5" type="button" id="dropdownMenuButton"-->
-                <!--                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-                <!--                            Admin Panel-->
-                <!--                        </button>-->
-                <!--                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-                <!--                            <a class="dropdown-item" href="/statistics">Statistics</a>-->
-                <!--                            <a class="dropdown-item" href="/articles/add">Add article</a>-->
-                <!--                            <a class="dropdown-item" href="#">Something else here</a>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                </li>-->
-
-
-<!--                <li sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown"><a href="#"><span>Admin Panel</span> <i-->
-<!--                        class="bi bi-chevron-down dropdown-indicator"></i></a>-->
-<!--                    <ul>-->
-<!--                        <li class="dropdown"><a href="#"><span>Потребители</span> <i-->
-<!--                                class="bi bi-chevron-down dropdown-indicator"></i></a>-->
-<!--                            <ul>-->
-<!--                                <li><a href="#">Виж всички клиенти</a></li>-->
-<!--                                <li><a href="#">Виж служителите</a></li>-->
-<!--&lt;!&ndash;                                <li><a href="#">Намери служител</a></li>&ndash;&gt;-->
-<!--                            </ul>-->
-<!--                        </li>-->
-<!--                        <li><a href="#">Статистика</a></li>-->
-<!--                        <li class="dropdown"><a href="#"><span>Поддръжка</span> <i-->
-<!--                                class="bi bi-chevron-down dropdown-indicator"></i></a>-->
-<!--                            <ul>-->
-<!--                                <li><a href="#">Освободи всички маси</a></li>-->
-<!--                                <li><a href="#">Добави нова маса</a></li>-->
-<!--                                <li><a href="#">Спри сайта за 1 час</a></li>-->
-<!--                                <li><a href="#">Пусни сайта</a></li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
-<!--&lt;!&ndash;                        <li><a href="#">Drop Down 4</a></li>&ndash;&gt;-->
-<!--                    </ul>-->
-<!--                </li>-->
-                <!--                <li><a href="#chefs">Chefs</a></li>-->
                 <li><a href="/reviews/all">Отзиви</a></li>
-<!--                <li sec:authorize(isAuthenticated())><a href="/reviews/add">Остави отзив</a></li>-->
-<!--                <li sec:authorize(isAuthenticated())><a href="/order/new">Направи поръчка</a></li>-->
-<!--                <li sec:authorize(isAuthenticated())><a href="/order/menu">Меню</a></li>-->
-
             </ul>
             <ul class="navbar navbar-right">
                 <li>
@@ -108,7 +61,6 @@
                         Тъбъдъпково, България<br>
                     </p>
                 </div>
-
             </div>
 
             <div class="col-lg-3 col-md-6 footer-links d-flex">
@@ -160,7 +112,6 @@
         </div>
     </div>
 
-</footer><!-- End Footer -->
-<!-- End Footer -->
+</footer>
 </body>
 </html>

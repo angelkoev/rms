@@ -79,7 +79,7 @@
                             <a class="dropdown-item dropdown-toggle" th:text="${drinkType.getName()}" href="#"></a>
                             <div class="dropdown-menu">
                                 <div th:each="drink : ${allDrinksView}" th:object="${drink}">
-                                    <div th:if="${drink.type == drinkType}">
+                                    <div th:if="${drink.type.equals(drinkType)}">
                                         <a class="dropdown-item bg-nav" th:href="@{/order/drink/{id}(id=${drink.id})}">
                                             <span th:text="|${drink.name} (${drink.volume}мл)    Цена: ${drink.price}лв| "></span>
                                         </a>
@@ -107,7 +107,7 @@
                             <a class="dropdown-item dropdown-toggle" th:text="${foodType.getName()}" href="#"></a>
                             <div class="dropdown-menu dropdown-menu-food">
                                 <div th:each="food : ${allFoodsView}" th:object="${food}">
-                                    <div th:if="${food.type == foodType}">
+                                    <div th:if="${food.type.equals(foodType)}">
                                         <a class="dropdown-item bg-nav" th:href="@{/order/food/{id}(id=${food.id})}">
                                             <span th:text="|${food.name} (${food.size}гр - ${food.kcal}kcal)    Цена: ${food.price}лв| "></span>
                                         </a>

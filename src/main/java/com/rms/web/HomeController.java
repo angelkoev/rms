@@ -1,5 +1,6 @@
 package com.rms.web;
 
+import com.rms.interceptors.MaintenanceInterceptor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,6 +12,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class HomeController {
+
+    private final MaintenanceInterceptor maintenanceInterceptor;
+
+    public HomeController(MaintenanceInterceptor maintenanceInterceptor) {
+        this.maintenanceInterceptor = maintenanceInterceptor;
+    }
 
 
     @GetMapping("/")
@@ -27,6 +34,10 @@ public class HomeController {
     @GetMapping("/home")
     public String home() {
 
+        if (maintenanceInterceptor.isMaintenanceMode()) {
+            return "maintenance";
+        }
+
         return "home";
     }
 
@@ -42,28 +53,30 @@ public class HomeController {
         }
 
         String infoMessage = "";
-        if (isAdmin) {
-            infoMessage = "В момента сайта се намира в maintenance режим!";
+        if (isAdmin && maintenanceInterceptor.isMaintenanceMode()) {
+            infoMessage = "В момента сайта се намира в режим на профилактика!";
             redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
             return "redirect:/home";
         }
 
 
-        return "maintenance";
+        if (maintenanceInterceptor.isMaintenanceMode()) {
+            return "maintenance";
+        }
 
+        return "home";
     }
 
     @GetMapping("/maintenance/start")
     public String startMaintenance() {
-        // FIXME
-
-        return "";
+        maintenanceInterceptor.activateMaintenanceMode();
+        return "redirect:/";
     }
 
     @GetMapping("/maintenance/stop")
     public String stopMaintenance() {
-// FIXME
-        return "";
+        maintenanceInterceptor.deactivateMaintenanceMode();
+        return "redirect:/";
     }
 
 }
