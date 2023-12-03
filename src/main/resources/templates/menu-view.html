@@ -50,6 +50,7 @@
         </div>
 
         <br>
+        <h3 class="d-flex justify-content-center" th:text="|Обща цена: ${totalOrderPrice}лв|"></h3>
         <form id="order-form" class="form"
               th:method="POST"
               th:action="@{/order/new}"

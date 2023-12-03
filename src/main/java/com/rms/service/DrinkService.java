@@ -46,10 +46,10 @@ public class DrinkService {
         initDrink(random, "Портокалов сок", DrinkTypeEnum.JUICE);
         initDrink(random, "Сок от ананас", DrinkTypeEnum.JUICE);
         initDrink(random, "Сок от моркови", DrinkTypeEnum.JUICE);
-        initDrink(random, "Лагер", DrinkTypeEnum.BEER);
-        initDrink(random, "Ейл", DrinkTypeEnum.BEER);
-        initDrink(random, "Пилснер", DrinkTypeEnum.BEER);
-        initDrink(random, "Тъмна", DrinkTypeEnum.BEER);
+        initDrink(random, "Бира Лагер", DrinkTypeEnum.BEER);
+        initDrink(random, "Бира Ейл", DrinkTypeEnum.BEER);
+        initDrink(random, "Бира Пилснер", DrinkTypeEnum.BEER);
+        initDrink(random, "Тъмна бира", DrinkTypeEnum.BEER);
         initDrink(random, "Кока кола", DrinkTypeEnum.SODA);
         initDrink(random, "Фанта", DrinkTypeEnum.SODA);
         initDrink(random, "Спрайт", DrinkTypeEnum.SODA);

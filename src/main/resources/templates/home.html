@@ -30,7 +30,7 @@
 
         <br>
         <li sec:authorize(isAuthenticated())><a href="/order/menu">Виж менюто и направи поръчка</a></li>
-        <li sec:authorize(isAuthenticated())><a href="/order/menu">Промени менюто</a></li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/order/menu">Промени менюто</a></li>
         <br>
         <li sec:authorize="!hasRole('ROLE_ADMIN')"><a href="/order/history">История на поръчките</a></li>
         <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/order/add/food">Добави храна</a></li>

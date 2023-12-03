@@ -22,7 +22,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/order")
@@ -71,6 +73,17 @@ public class OrderController {
 
         model.addAttribute("totalViewSize", allCurrentDrinkViews.size() + allCurrentFoodViews.size());
 
+
+        BigDecimal priceForAllDrinks = allCurrentDrinkViews.stream()
+                .map(DrinkView::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal priceForAllFoods = allCurrentFoodViews.stream()
+                .map(FoodView::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        String totalOrderPrice = priceForAllDrinks.add(priceForAllFoods).toString();
+        model.addAttribute("totalOrderPrice", totalOrderPrice);
+
         List<DrinkEntity> allDrinks = orderService.getMenu().getDrinks();
         List<DrinkView> allDrinksView = allDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
         model.addAttribute("allDrinksView", allDrinksView);
@@ -95,8 +108,17 @@ public class OrderController {
 
         OrderEntity lastOrder = currentUser.getLastOrder();
 
-        DrinkEntity currentDrink = lastOrder.getDrinks().stream().filter(d -> d.getId().equals(id)).findAny().get();
-        lastOrder.getDrinks().remove(currentDrink);
+        Optional<DrinkEntity> currentDrink = lastOrder.getDrinks().stream().filter(d -> d.getId().equals(id)).findAny();
+
+        DrinkEntity drinkEntity = null;
+        if (currentDrink.isPresent()) {
+            drinkEntity = currentDrink.get();
+        }
+        //FIXME java.util.NoSuchElementException: No value present
+
+        if (drinkEntity != null) {
+            lastOrder.getDrinks().remove(drinkEntity);
+        }
         orderService.saveOrder(lastOrder);
         userService.saveUser(currentUser);
 
