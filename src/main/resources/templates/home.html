@@ -21,7 +21,8 @@
     <br>
     <ul id="home-ur" class="text-center">
         <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/users/all">Виж всички потребители</a></li>
-        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/order/all">Виж всички поръчки</a></li>
+        <br>
+        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/order/history">Виж всички поръчки</a></li>
 
         <br>
         <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/logs/all">Виж всички логове</a></li>

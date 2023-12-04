@@ -5,8 +5,47 @@
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            padding: 50px;
+            margin: 50px;
+        }
 
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
 
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+    <h2>История на поръчките</h2>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Направена от</th>
+            <th>Дата</th>
+            <th>Час</th>
+            <th>Обща цена</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="order : ${allCurrentOrdersViews}">
+
+            <td th:text="${order.madeBy}"></td>
+            <td th:text="${order.date}"></td>
+            <td th:text="${order.time}"></td>
+            <td th:text="${order.totalPrice}"></td>
+        </tr>
+        </tbody>
+    </table>
 
 </main>
 <footer th:replace="~{fragments/commons::footer}"></footer>

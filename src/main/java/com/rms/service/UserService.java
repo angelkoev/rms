@@ -2,6 +2,7 @@ package com.rms.service;
 
 import com.rms.model.dto.RegisterDTO;
 import com.rms.model.dto.UserDTO;
+import com.rms.model.entity.OrderEntity;
 import com.rms.model.entity.UserEntity;
 import com.rms.model.entity.UserRoleEntity;
 import com.rms.model.entity.UserRoleEnum;
@@ -23,6 +24,7 @@ public class UserService
 
     private final PasswordEncoder encoder;
     private final UserRoleService userRoleService;
+
 
     public UserService(UserRepository userRepository,
                        PasswordEncoder encoder,
@@ -91,8 +93,7 @@ public class UserService
         user.setAddress(registerDTO.getAddress());
         UserRoleEntity userRole = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
         user.getRoles().add(userRole);
-//        UserRoleEntity clientRole = userRoleService.findUserRoleEntityByRole(UserRoleEnum.CLIENT);
-//        user.getRoles().add(clientRole);
+
         return user;
     }
 
@@ -173,10 +174,6 @@ public class UserService
 
     }
 
-//    @Override
-//    public void initClients() {
-//        //
-//    }
 
     private void initUser(String username) {
 //    private void initUser(String username, UserRoleEntity specificUserRole) {
@@ -194,6 +191,9 @@ public class UserService
         UserRoleEntity userRoleUser = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
         user.getRoles().add(userRoleUser);
 //        user.getRoles().add(specificUserRole);
+
+//        OrderEntity newLastOrder = orderService.createNewLastOrder(user);
+//        orderService.saveOrder(newLastOrder);
 
         userRepository.save(user);
     }

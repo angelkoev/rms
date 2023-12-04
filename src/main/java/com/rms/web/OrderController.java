@@ -2,12 +2,10 @@ package com.rms.web;
 
 import com.rms.model.dto.DrinkDTO;
 import com.rms.model.dto.FoodDTO;
-import com.rms.model.entity.DrinkEntity;
-import com.rms.model.entity.FoodEntity;
-import com.rms.model.entity.OrderEntity;
-import com.rms.model.entity.UserEntity;
+import com.rms.model.entity.*;
 import com.rms.model.views.DrinkView;
 import com.rms.model.views.FoodView;
+import com.rms.model.views.OrderView;
 import com.rms.service.DrinkService;
 import com.rms.service.FoodService;
 import com.rms.service.OrderService;
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -273,6 +272,77 @@ public class OrderController {
         redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
 
         return "redirect:/home";
+    }
+
+    @GetMapping("/history")
+    public String ordersHistory(Model model, RedirectAttributes redirectAttributes) {
+
+        boolean isAdmin = false;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        UserEntity currentUser = userService.getUserByUsername(authentication.getName());
+
+        for (UserRoleEntity role : currentUser.getRoles()) {
+            if (role.getRole().name().equals("ADMIN")) {
+                isAdmin = true;
+                break;
+            }
+        }
+
+        if (currentUser.getLastOrder() == null && !isAdmin) {
+            String infoMessage = "Нямате направени поръчки!";
+            redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
+            return "redirect:/home";
+        }
+//            OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
+//            orderService.saveOrder(newLastOrder);
+//            currentUser.setLastOrder(newLastOrder);
+//        }
+
+        List<OrderEntity> orderEntities = new ArrayList<>();
+        if (isAdmin) {
+            orderEntities = orderService.getAllOrders();
+        } else {
+            orderEntities = orderService.allOrdersByUsername(authentication.getName());
+        }
+
+        if (!isAdmin) {
+            Long idForLastOrder = currentUser.getLastOrder().getId();
+            OrderEntity lastOrder = orderEntities.stream().filter(o -> o.getId().equals(idForLastOrder)).findFirst().orElse(null);
+            if (lastOrder != null) {
+                orderEntities.remove(lastOrder);
+            }
+        } else {
+            OrderEntity menu = orderEntities.stream().filter(o -> o.getId() == 1L).findFirst().orElse(null);
+            if (menu != null) {
+                orderEntities.remove(menu);
+            }
+        }
+
+
+        List<OrderView> allCurrentOrdersViews = orderEntities.stream().map(orderEntity -> {
+            OrderView currentOrderView = modelMapper.map(orderEntity, OrderView.class);
+
+            currentOrderView.setMadeBy(orderEntity.getMadeBy().getUsername());
+
+            BigDecimal currentPriceForAllDrinks = orderEntity.getDrinks().stream().map(DrinkEntity::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal currentPriceForAllFoods = orderEntity.getFoods().stream().map(FoodEntity::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal totalOrderPrice = currentPriceForAllDrinks.add(currentPriceForAllFoods);
+
+            currentOrderView.setTotalPrice(totalOrderPrice);
+
+            String currentDateTime = orderEntity.getDateTime().toString(); // 2023-12-04T12:17:56.705155
+            currentOrderView.setDate(currentDateTime.split("T")[0]);
+            currentOrderView.setTime(currentDateTime.split("T")[1]);
+
+            return currentOrderView;
+        }).toList();
+
+        List<OrderView> filteredOrdersWithZeroAmount = allCurrentOrdersViews.stream().filter(order -> order.getTotalPrice().compareTo(BigDecimal.ZERO) != 0).toList();
+
+        model.addAttribute("allCurrentOrdersViews", filteredOrdersWithZeroAmount);
+
+        return "order-history";
     }
 
     @ModelAttribute
