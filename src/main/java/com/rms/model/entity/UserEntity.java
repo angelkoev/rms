@@ -36,7 +36,7 @@ public class UserEntity extends BaseEntity {
 //    @Column(nullable = false)
     private Set<UserRoleEntity> roles;
 
-    @OneToMany(mappedBy = "madeBy")
+    @OneToMany(mappedBy = "madeBy", fetch = FetchType.EAGER)
     private List<OrderEntity> orders;
 
     @OneToOne

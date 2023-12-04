@@ -249,12 +249,30 @@ public class OrderController {
     }
 
 
-    @GetMapping("/new")
-    public String newOrder(Model model) {
+    @PostMapping("/new")
+    public String newOrder(RedirectAttributes redirectAttributes) {
 
-        OrderEntity menu = orderService.getMenu();
+//        OrderEntity menu = orderService.getMenu();
 
-        return "/order-view";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        UserEntity currentUser = userService.getUserByUsername(authentication.getName());
+
+        OrderEntity newOrder = orderService.makeNewOrder(currentUser);
+        currentUser.getOrders().add(newOrder);
+
+        currentUser.getLastOrder().getDrinks().clear();
+        currentUser.getLastOrder().getFoods().clear();
+        orderService.saveOrder(currentUser.getLastOrder());
+//        OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
+//        orderService.saveOrder(newLastOrder);
+//        currentUser.setLastOrder(newLastOrder);
+        userService.saveUser(currentUser);
+
+        String infoMessage = "Поръчката беше направена успешно!";
+        redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
+
+        return "redirect:/home";
     }
 
     @ModelAttribute

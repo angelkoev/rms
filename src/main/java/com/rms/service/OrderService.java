@@ -120,4 +120,15 @@ public class OrderService {
     }
 
 
+    public OrderEntity makeNewOrder(UserEntity currentUser) {
+        OrderEntity newOrder = new OrderEntity();
+        newOrder.setDateTime(LocalDateTime.now());
+        newOrder.setMadeBy(currentUser);
+        newOrder.setPaid(false);
+        newOrder.setCompleted(false);
+        newOrder.setDrinks(currentUser.getLastOrder().getDrinks());
+        newOrder.setFoods(currentUser.getLastOrder().getFoods());
+        orderRepository.save(newOrder);
+        return newOrder;
+    }
 }

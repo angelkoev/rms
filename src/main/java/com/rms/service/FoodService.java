@@ -43,7 +43,7 @@ public class FoodService {
         initFood(random, "Пица Сицилиана", FoodTypeEnum.PIZZA);
         initFood(random, "Пица Вегетариана", FoodTypeEnum.PIZZA);
         initFood(random, "Пица Неаполитана", FoodTypeEnum.PIZZA);
-        initFood(random, "Пица Пепепрони", FoodTypeEnum.PIZZA);
+        initFood(random, "Пица Пеперони", FoodTypeEnum.PIZZA);
         initFood(random, "Пица Маргарита", FoodTypeEnum.PIZZA);
         initFood(random, "Ребърца", FoodTypeEnum.BBQ);
         initFood(random, "Вратна пържола", FoodTypeEnum.BBQ);
