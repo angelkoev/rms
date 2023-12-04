@@ -10,12 +10,19 @@ import com.rms.repositiry.UserRepository;
 //import com.rms.service.interfaces.UserRoleService;
 //import com.rms.service.interfaces.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -23,11 +30,9 @@ public class UserService
 {
 
     private final UserRepository userRepository;
-
     private final PasswordEncoder encoder;
     private final UserRoleService userRoleService;
     private final ModelMapper modelMapper;
-
 
     public UserService(UserRepository userRepository,
                        PasswordEncoder encoder,
@@ -60,26 +65,15 @@ public class UserService
         return this.mapUserDTO(user);
     }
 
-    public boolean checkCredentials(String username, String password) {
-        UserEntity user = this.getUserByUsername(username);
-
-        return user != null && encoder.matches(password, user.getPassword());
-    }
-
-//    public void login(String username) {
+//    public boolean checkCredentials(String username, String password) {
 //        UserEntity user = this.getUserByUsername(username);
+//
+//        return user != null && encoder.matches(password, user.getPassword());
 //    }
 
     public void register(RegisterDTO registerDTO) {
         this.userRepository.save(this.mapUser(registerDTO));
-//        this.login(registerDTO.getUsername());
     }
-
-//    public void logout() {
-//        this.session.invalidate();
-//        this.loggedUser.setId(null);
-//        this.loggedUser.setUsername(null);
-//    }
 
     public UserEntity getUserByUsername(String username) {
         return this.userRepository.findByUsername(username).orElse(null);
@@ -150,20 +144,6 @@ public class UserService
         if (userRepository.count() > 1) {
             return;
         }
-//        UserRoleEntity userRoleUser = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
-//        UserRoleEntity userRoleWaiter = userRoleService.findUserRoleEntityByRole(UserRoleEnum.WAITER);
-//        UserRoleEntity userRoleCook = userRoleService.findUserRoleEntityByRole(UserRoleEnum.COOK);
-//        UserRoleEntity userRoleBartender = userRoleService.findUserRoleEntityByRole(UserRoleEnum.BARTENDER);
-//        UserRoleEntity userRoleClient = userRoleService.findUserRoleEntityByRole(UserRoleEnum.CLIENT);
-
-//        initUser("waiter1", userRoleWaiter);
-//        initUser("waiter2", userRoleWaiter);
-
-//        initUser("cook1", userRoleCook);
-//        addUser("cook2", userRoleCook);
-
-//        initUser("bartender1", userRoleBartender);
-//        addUser("bartender2", userRoleBartender);
 
         initUser("client1");
         initUser("client2");
@@ -228,6 +208,55 @@ public class UserService
         }).toList();
 
         return allUserViews;
+    }
+
+    public void addAdmin(@AuthenticationPrincipal UserDetails userDetails, Long id) {
+
+        Optional<UserEntity> currentUserOpt = userRepository.findById(id);
+        if (currentUserOpt.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        UserEntity currentUser = currentUserOpt.get();
+
+        UserEntity loggedUser = findUserEntityByUsername(userDetails.getUsername());
+        if (loggedUser.getId() == id) {
+            return; // can not add admin role by himself
+        }
+        boolean isLoggedUserStillAdmin = false; // check if is still admin or somebody removed the role !!!
+        for (UserRoleEntity role : loggedUser.getRoles()) {
+            if (role.getRole().name().equals("ADMIN")) {
+                isLoggedUserStillAdmin = true;
+                break;
+            }
+        }
+
+        if (isLoggedUserStillAdmin) {
+            UserRoleEntity roleAdmin = userRoleService.findUserRoleEntityByRole(UserRoleEnum.ADMIN);
+            currentUser.getRoles().add(roleAdmin);
+
+            userRepository.save(currentUser);
+        }
+
+
+    }
+
+    public void removeAdmin(Long id) {
+
+        if (id == 1L) {
+            return; // forbidden to remove the role of pesho
+        }
+
+        Optional<UserEntity> currentUserOpt = userRepository.findById(id);
+        if (currentUserOpt.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        UserEntity currentUser = currentUserOpt.get();
+
+        currentUser.getRoles().removeIf(role -> role.getRole().name().equals("ADMIN"));
+//        UserRoleEntity roleAdmin = userRoleService.findUserRoleEntityByRole(UserRoleEnum.ADMIN);
+//        currentUser.getRoles().remove(roleAdmin);
+
+        userRepository.save(currentUser);
     }
 
 }

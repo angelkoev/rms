@@ -21,7 +21,7 @@ public class HomeController {
 
 
     @GetMapping("/")
-    public String index(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    public String index(@AuthenticationPrincipal UserDetails userDetails) {
 
 
         if (userDetails != null) {

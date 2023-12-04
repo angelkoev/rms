@@ -10,6 +10,8 @@ import com.rms.model.views.UserView;
 import com.rms.service.UserService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -79,6 +81,30 @@ public class UserController {
 
     @GetMapping("/all")
     String showAll(Model model) {
+
+        List<UserView> allUserViews = userService.getAllUserViews();
+
+        model.addAttribute("allUserViews", allUserViews);
+
+        return "allUsers";
+    }
+
+    @PostMapping("/addAdmin/{id}")
+    public String addAdmin(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+
+        userService.addAdmin(userDetails, id);
+
+        List<UserView> allUserViews = userService.getAllUserViews();
+
+        model.addAttribute("allUserViews", allUserViews);
+
+        return "allUsers";
+    }
+
+    @PostMapping("/removeAdmin/{id}")
+    public String removeAdmin(@PathVariable Long id, Model model) {
+
+        userService.removeAdmin(id);
 
         List<UserView> allUserViews = userService.getAllUserViews();
 
