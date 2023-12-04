@@ -299,7 +299,7 @@ public class OrderController {
 //            currentUser.setLastOrder(newLastOrder);
 //        }
 
-        List<OrderEntity> orderEntities = new ArrayList<>();
+        List<OrderEntity> orderEntities;
         if (isAdmin) {
             orderEntities = orderService.getAllOrders();
         } else {
@@ -318,7 +318,6 @@ public class OrderController {
                 orderEntities.remove(menu);
             }
         }
-
 
         List<OrderView> allCurrentOrdersViews = orderEntities.stream().map(orderEntity -> {
             OrderView currentOrderView = modelMapper.map(orderEntity, OrderView.class);

@@ -2,18 +2,20 @@ package com.rms.service;
 
 import com.rms.model.dto.RegisterDTO;
 import com.rms.model.dto.UserDTO;
-import com.rms.model.entity.OrderEntity;
 import com.rms.model.entity.UserEntity;
 import com.rms.model.entity.UserRoleEntity;
 import com.rms.model.entity.UserRoleEnum;
+import com.rms.model.views.UserView;
 import com.rms.repositiry.UserRepository;
 //import com.rms.service.interfaces.UserRoleService;
 //import com.rms.service.interfaces.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,14 +26,16 @@ public class UserService
 
     private final PasswordEncoder encoder;
     private final UserRoleService userRoleService;
+    private final ModelMapper modelMapper;
 
 
     public UserService(UserRepository userRepository,
                        PasswordEncoder encoder,
-                       UserRoleService userRoleService) {
+                       UserRoleService userRoleService, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.encoder = encoder;
         this.userRoleService = userRoleService;
+        this.modelMapper = modelMapper;
     }
 
     public UserDTO findUserByUsername(String username) { // for validation for unique username
@@ -203,11 +207,27 @@ public class UserService
         userRepository.save(userEntity);
     }
 
+    public List<UserEntity> getAllUsersOrderById() {
+        return userRepository.getUserEntitiesByOrderById();
+    }
 
+    public List<UserView> getAllUserViews() {
+        List<UserEntity> allUsersOrderById = getAllUsersOrderById();
 
+        List<UserView> allUserViews = allUsersOrderById.stream().map(userEntity -> {
 
-//    @Override
-//    public Language findByName(LanguageNameEnum languageNameEnum) {
-//        return languageRepository.findByName(languageNameEnum).orElse(null);
-//    }
+            UserView currentUserView = modelMapper.map(userEntity, UserView.class);
+
+            currentUserView.getRoles().clear();
+            for (UserRoleEntity role : userEntity.getRoles()) {
+                currentUserView.getRoles().add(role.getRole().name());
+            }
+            currentUserView.getRoles().sort(String::compareTo);
+
+            return currentUserView;
+        }).toList();
+
+        return allUserViews;
+    }
+
 }

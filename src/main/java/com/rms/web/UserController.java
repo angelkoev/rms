@@ -2,14 +2,23 @@ package com.rms.web;
 
 import com.rms.model.dto.LoginDTO;
 import com.rms.model.dto.RegisterDTO;
+import com.rms.model.entity.UserEntity;
+import com.rms.model.entity.UserRoleEntity;
+import com.rms.model.views.FoodView;
+import com.rms.model.views.OrderView;
+import com.rms.model.views.UserView;
 import com.rms.service.UserService;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 
 @Controller
@@ -18,9 +27,9 @@ public class UserController {
 
     private final UserService userService;
 
-
     public UserController(UserService userService) {
         this.userService = userService;
+
     }
 
     @GetMapping("/login")
@@ -37,36 +46,6 @@ public class UserController {
 //        this.userService.login(loginDTO.getUsername());
         return "auth-login";
     }
-
-
-//    @PostMapping("/login")
-//    public String onFailure(@Valid LoginDTO loginDTO,
-//                     BindingResult bindingResult,
-//                     RedirectAttributes redirectAttributes) {
-//
-//
-//        if (bindingResult.hasErrors()) {
-//            redirectAttributes.addFlashAttribute("loginDTO", loginDTO);
-//            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.loginDTO", bindingResult);
-//
-//            return "redirect:/auth-login";
-//        }
-//
-//        boolean validCredentials = this.userService.checkCredentials(loginDTO.getUsername(), loginDTO.getPassword());
-//
-//
-//        if (!validCredentials) {
-//            redirectAttributes.addFlashAttribute("loginDTO", loginDTO);
-//            bindingResult.addError(new FieldError("loginDTO", "validCredentials", "Incorrect username or password!"));
-//            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.loginDTO", bindingResult);
-////            redirectAttributes.addFlashAttribute("validCredentials", false);
-//            return "redirect:/auth-login";
-//        }
-//
-////        this.userService.login(loginDTO.getUsername());
-//        return "/home";
-//    }
-
 
     @GetMapping("/register")
     String register() {
@@ -92,19 +71,21 @@ public class UserController {
 
         this.userService.register(registerDTO);
 
-        // FIXME message that user is registered and to go to login page to Login !!!
+//        String infoMessage = "Регистрацията беше успешна! Вече можете да влезете в акаунта си";
+//        redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
+
         return "redirect:/home";
     }
 
-//    @GetMapping("/logout")
-//    String logout() {
-//        if (!this.loggedUser.isLogged()) {
-//            return "redirect:/users/login";
-//        }
-//
-//        this.userService.logout();
-//        return "redirect:/";
-//    }
+    @GetMapping("/all")
+    String showAll(Model model) {
+
+        List<UserView> allUserViews = userService.getAllUserViews();
+
+        model.addAttribute("allUserViews", allUserViews);
+
+        return "allUsers";
+    }
 
     @ModelAttribute
     public LoginDTO loginDTO() {
