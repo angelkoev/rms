@@ -1,5 +1,6 @@
 package com.rms.model.entity;
 
+import com.rms.model.enums.FoodTypeEnum;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

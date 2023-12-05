@@ -1,4 +1,4 @@
-package com.rms.model.entity;
+package com.rms.model.enums;
 
 public enum FoodTypeEnum {
     SALAD("Салати"),

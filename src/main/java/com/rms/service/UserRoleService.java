@@ -1,7 +1,7 @@
 package com.rms.service;
 
 import com.rms.model.entity.UserRoleEntity;
-import com.rms.model.entity.UserRoleEnum;
+import com.rms.model.enums.UserRoleEnum;
 import com.rms.repositiry.UserRoleRepository;
 //import com.rms.service.interfaces.UserRoleService;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.rms.repositiry;
 
 import com.rms.model.entity.UserRoleEntity;
-import com.rms.model.entity.UserRoleEnum;
+import com.rms.model.enums.UserRoleEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

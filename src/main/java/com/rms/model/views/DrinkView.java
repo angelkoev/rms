@@ -1,9 +1,6 @@
 package com.rms.model.views;
 
-import com.rms.model.entity.DrinkTypeEnum;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import com.rms.model.enums.DrinkTypeEnum;
 
 import java.math.BigDecimal;
 

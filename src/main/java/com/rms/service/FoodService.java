@@ -1,8 +1,8 @@
 package com.rms.service;
 
-import com.rms.model.dto.DrinkDTO;
 import com.rms.model.dto.FoodDTO;
 import com.rms.model.entity.*;
+import com.rms.model.enums.FoodTypeEnum;
 import com.rms.repositiry.FoodRepository;
 import org.springframework.stereotype.Service;
 

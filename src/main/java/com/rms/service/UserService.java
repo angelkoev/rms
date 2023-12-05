@@ -3,6 +3,7 @@ package com.rms.service;
 import com.rms.model.dto.RegisterDTO;
 import com.rms.model.dto.UserDTO;
 import com.rms.model.entity.*;
+import com.rms.model.enums.UserRoleEnum;
 import com.rms.model.views.DrinkView;
 import com.rms.model.views.FoodView;
 import com.rms.model.views.OrderView;
