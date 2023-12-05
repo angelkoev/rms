@@ -1,6 +1,6 @@
 package com.rms.model.dto;
 
-import com.rms.model.enums.FoodTypeEnum;
+import com.rms.model.entity.FoodTypeEnum;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;

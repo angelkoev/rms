@@ -3,14 +3,11 @@ package com.rms.service;
 import com.rms.model.dto.RegisterDTO;
 import com.rms.model.dto.UserDTO;
 import com.rms.model.entity.*;
-import com.rms.model.enums.UserRoleEnum;
 import com.rms.model.views.DrinkView;
 import com.rms.model.views.FoodView;
 import com.rms.model.views.OrderView;
 import com.rms.model.views.UserView;
 import com.rms.repositiry.UserRepository;
-//import com.rms.service.interfaces.UserRoleService;
-//import com.rms.service.interfaces.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -143,74 +140,13 @@ public class UserService {
         return userDTO;
     }
 
-    //    @Override
     public Optional<UserEntity> findById(Long id) {
         return userRepository.findById(id);
-    }
-
-    //    @Override
-    public void initAdmin() {
-
-        if (userRepository.count() != 0) {
-            return;
-        }
-
-        UserEntity admin = new UserEntity();
-        admin.setUsername("pesho");
-        admin.setEmail("pesho@pripesho.com");
-        admin.setPassword(encoder.encode("123"));
-        admin.setFirstName("Pesho");
-        admin.setLastName("Peshev");
-        admin.setAddress("Tabadupkovo");
-        admin.setPhone("123456");
-        admin.setRegistrationDate(LocalDate.of(1991, 2, 3));
-        UserRoleEntity roleAdmin = userRoleService.findUserRoleEntityByRole(UserRoleEnum.ADMIN);
-        admin.getRoles().add(roleAdmin);
-        UserRoleEntity roleUser = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
-        admin.getRoles().add(roleUser);
-
-        userRepository.save(admin);
     }
 
     public Long usersCount() {
         return userRepository.count();
     }
-
-    //    @Override
-    public void initUsers() {
-
-        if (userRepository.count() > 1) {
-            return;
-        }
-
-        initUser("client1");
-        initUser("client2");
-        initUser("client3");
-        initUser("client4");
-        initUser("client5");
-
-    }
-
-
-    private void initUser(String username) {
-//    private void initUser(String username, UserRoleEntity specificUserRole) {
-        UserEntity user = new UserEntity();
-        user.setUsername(username);
-        user.setEmail(username + "@pripesho.com");
-        user.setPassword(encoder.encode("123"));
-//        System.out.println(encoder.encode("123"));
-        user.setFirstName(username + "Fname");
-        user.setLastName(username + "Lname");
-        user.setAddress(username + " address");
-        user.setPhone(username + " phone");
-        user.setRegistrationDate(LocalDate.of(1991, 2, 3));
-
-        UserRoleEntity userRoleUser = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
-        user.getRoles().add(userRoleUser);
-
-        userRepository.save(user);
-    }
-
     @Transient
     public void saveUser(UserEntity userEntity) {
         userRepository.save(userEntity);
@@ -317,7 +253,6 @@ public class UserService {
         if (currentDrink.isPresent()) {
             drinkEntity = currentDrink.get();
         }
-        //FIXME java.util.NoSuchElementException: No value present
 
         if (drinkEntity != null) {
             lastOrder.getDrinks().remove(drinkEntity);

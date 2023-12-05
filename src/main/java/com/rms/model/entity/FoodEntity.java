@@ -1,6 +1,5 @@
 package com.rms.model.entity;
 
-import com.rms.model.enums.FoodTypeEnum;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -14,11 +13,9 @@ public class FoodEntity extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal price;
 
-//    @ManyToOne
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private FoodTypeEnum type;
-//    private FoodType type;
     @Column(nullable = false)
     private int size; //serving size
     @Column(nullable = false)

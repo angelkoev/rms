@@ -1,6 +1,6 @@
 package com.rms.model.views;
 
-import com.rms.model.enums.DrinkTypeEnum;
+import com.rms.model.entity.DrinkTypeEnum;
 
 import java.math.BigDecimal;
 

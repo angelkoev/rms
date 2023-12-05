@@ -1,6 +1,6 @@
 package com.rms.model.views;
 
-import com.rms.model.enums.FoodTypeEnum;
+import com.rms.model.entity.FoodTypeEnum;
 
 import java.math.BigDecimal;
 

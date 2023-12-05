@@ -12,7 +12,6 @@ import com.rms.model.views.DrinkView;
 import com.rms.model.views.FoodView;
 import com.rms.repositiry.OrderRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 import java.beans.Transient;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class OrderService {
@@ -39,27 +37,6 @@ public class OrderService {
         this.modelMapper = modelMapper;
         this.eventPublisher = eventPublisher;
     }
-
-    public void initMenuOrder() {
-
-        if (orderRepository.count() != 0) {
-            return;
-        }
-
-        OrderEntity menu = new OrderEntity();
-
-        menu.setCompleted(true);
-        menu.setPaid(true);
-        menu.setDateTime(LocalDateTime.now());
-        Set<FoodEntity> allFoodsInMenu = foodService.findAllBy();
-        Set<DrinkEntity> allDrinksInMenu = drinkService.findAllBy();
-        menu.getDrinks().addAll(allDrinksInMenu);
-        menu.getFoods().addAll(allFoodsInMenu);
-
-        orderRepository.save(menu);
-//        }
-    }
-
     public OrderEntity findById(Long id) {
         return orderRepository.findOrderEntitiesById(id).orElse(null);
     }
@@ -159,7 +136,6 @@ public class OrderService {
             addToMenu(foodToAdd);
         }
     }
-
 
     public OrderEntity makeNewOrder(UserEntity currentUser) {
         OrderEntity newOrder = new OrderEntity();

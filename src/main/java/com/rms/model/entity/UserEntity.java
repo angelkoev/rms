@@ -14,12 +14,10 @@ import java.util.Set;
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
 
-//    @UniqueUsername // FIXME
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
     private String password;
-//    @UniqueEmail // FIXME
     @Column(nullable = false, unique = true)
     private String email;
 
