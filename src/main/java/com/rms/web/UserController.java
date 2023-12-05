@@ -83,7 +83,6 @@ public class UserController {
     String showAll(Model model) {
 
         List<UserView> allUserViews = userService.getAllUserViews();
-
         model.addAttribute("allUserViews", allUserViews);
 
         return "allUsers";
@@ -95,7 +94,6 @@ public class UserController {
         userService.addAdmin(userDetails, id);
 
         List<UserView> allUserViews = userService.getAllUserViews();
-
         model.addAttribute("allUserViews", allUserViews);
 
         return "allUsers";
@@ -107,7 +105,6 @@ public class UserController {
         userService.removeAdmin(id);
 
         List<UserView> allUserViews = userService.getAllUserViews();
-
         model.addAttribute("allUserViews", allUserViews);
 
         return "allUsers";

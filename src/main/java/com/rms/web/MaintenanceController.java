@@ -1,6 +1,7 @@
 package com.rms.web;
 
 import com.rms.interceptors.MaintenanceInterceptor;
+import com.rms.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -13,20 +14,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MaintenanceController {
 
     private final MaintenanceInterceptor maintenanceInterceptor;
+    private final UserService userService;
 
-    public MaintenanceController(MaintenanceInterceptor maintenanceInterceptor) {
+    public MaintenanceController(MaintenanceInterceptor maintenanceInterceptor, UserService userService) {
         this.maintenanceInterceptor = maintenanceInterceptor;
+        this.userService = userService;
     }
 
     @GetMapping("/")
     public String maintenancePage(Authentication authentication, RedirectAttributes redirectAttributes) {
-        boolean isAdmin = false;
-        for (GrantedAuthority authority : authentication.getAuthorities()) {
-            String role = authority.getAuthority();
-            if ("ROLE_ADMIN".equals(role)) {
-                isAdmin = true;
-            }
-        }
+
+        boolean isAdmin = userService.isAdmin(authentication.getName());
+
+
+//        for (GrantedAuthority authority : authentication.getAuthorities()) {
+//            String role = authority.getAuthority();
+//            if ("ROLE_ADMIN".equals(role)) {
+//                isAdmin = true;
+//            }
+//        }
 
         String infoMessage = "";
         if (isAdmin && maintenanceInterceptor.isMaintenanceMode()) {

@@ -65,11 +65,22 @@ public class UserService
         return this.mapUserDTO(user);
     }
 
-//    public boolean checkCredentials(String username, String password) {
-//        UserEntity user = this.getUserByUsername(username);
-//
-//        return user != null && encoder.matches(password, user.getPassword());
-//    }
+    public boolean isAdmin(String username) {
+
+        Optional<UserEntity> byUsername = userRepository.findByUsername(username);
+        if (byUsername.isEmpty()) {
+            throw new NoSuchElementException(); // fixme
+        }
+
+        UserEntity currentUser = byUsername.get();
+        for (UserRoleEntity role : currentUser.getRoles()) {
+            if (role.getRole().name().equals("ADMIN")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public void register(RegisterDTO registerDTO) {
         this.userRepository.save(this.mapUser(registerDTO));
@@ -236,8 +247,6 @@ public class UserService
 
             userRepository.save(currentUser);
         }
-
-
     }
 
     public void removeAdmin(Long id) {
