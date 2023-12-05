@@ -54,41 +54,53 @@ public class OrderController {
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserEntity currentUser = userService.getUserByUsername(authentication.getName());
+//        UserEntity currentUser = userService.getUserByUsername(authentication.getName());
+//
+//        if (currentUser.getLastOrder() == null) {
+//            OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
+//            currentUser.setLastOrder(newLastOrder);
+//        }
 
-        if (currentUser.getLastOrder() == null) {
-            OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
-            currentUser.setLastOrder(newLastOrder);
-        }
-        List<DrinkEntity> currentDrinks = currentUser.getLastOrder().getDrinks();
-        List<DrinkView> allCurrentDrinkViews = currentDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
+        String username = authentication.getName();
+        userService.checkLastOrder(username);
+//
+//        List<DrinkEntity> currentDrinks = currentUser.getLastOrder().getDrinks();
+//        List<DrinkView> allCurrentDrinkViews = currentDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
+
+        List<DrinkView> allCurrentDrinkViews = userService.getAllCurrentDrinkViews(username);
         model.addAttribute("allCurrentDrinkViews", allCurrentDrinkViews);
         model.addAttribute("drinkViewCount", allCurrentDrinkViews.size());
 
-        List<FoodEntity> currentFoods = currentUser.getLastOrder().getFoods();
-        List<FoodView> allCurrentFoodViews = currentFoods.stream().map(foodEntity -> modelMapper.map(foodEntity, FoodView.class)).toList();
+//        List<FoodEntity> currentFoods = currentUser.getLastOrder().getFoods();
+//        List<FoodView> allCurrentFoodViews = currentFoods.stream().map(foodEntity -> modelMapper.map(foodEntity, FoodView.class)).toList();
+
+        List<FoodView> allCurrentFoodViews = userService.getAllCurrentFoodViews(username);
         model.addAttribute("allCurrentFoodViews", allCurrentFoodViews);
         model.addAttribute("foodViewCount", allCurrentFoodViews.size());
 
         model.addAttribute("totalViewSize", allCurrentDrinkViews.size() + allCurrentFoodViews.size());
 
+//        BigDecimal priceForAllDrinks = allCurrentDrinkViews.stream()
+//                .map(DrinkView::getPrice)
+//                .reduce(BigDecimal.ZERO, BigDecimal::add);
+//        BigDecimal priceForAllFoods = allCurrentFoodViews.stream()
+//                .map(FoodView::getPrice)
+//                .reduce(BigDecimal.ZERO, BigDecimal::add);
+//
+//        String totalOrderPrice = priceForAllDrinks.add(priceForAllFoods).toString();
 
-        BigDecimal priceForAllDrinks = allCurrentDrinkViews.stream()
-                .map(DrinkView::getPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        BigDecimal priceForAllFoods = allCurrentFoodViews.stream()
-                .map(FoodView::getPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        String totalOrderPrice = priceForAllDrinks.add(priceForAllFoods).toString();
+        String totalOrderPrice = userService.totalCurrentPrice(username);
         model.addAttribute("totalOrderPrice", totalOrderPrice);
 
-        List<DrinkEntity> allDrinks = orderService.getMenu().getDrinks();
-        List<DrinkView> allDrinksView = allDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
+//        List<DrinkEntity> allDrinks = orderService.getMenu().getDrinks();
+//        List<DrinkView> allDrinksView = allDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
+        List<DrinkView> allDrinksView = orderService.getAllDrinksView(username);
         model.addAttribute("allDrinksView", allDrinksView);
 
-        List<FoodEntity> allFoods = orderService.getMenu().getFoods();
-        List<FoodView> allFoodsView = allFoods.stream().map(foodEntity -> modelMapper.map(foodEntity, FoodView.class)).toList();
+
+//        List<FoodEntity> allFoods = orderService.getMenu().getFoods();
+//        List<FoodView> allFoodsView = allFoods.stream().map(foodEntity -> modelMapper.map(foodEntity, FoodView.class)).toList();
+        List<FoodView> allFoodsView = orderService.getAllFoodsView(username);
         model.addAttribute("allFoodsView", allFoodsView);
 
         return "menu-view";

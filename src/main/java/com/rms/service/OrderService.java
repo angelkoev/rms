@@ -2,17 +2,22 @@ package com.rms.service;
 
 import com.rms.model.dto.DrinkDTO;
 import com.rms.model.dto.FoodDTO;
+import com.rms.model.dto.UserDTO;
 import com.rms.model.entity.DrinkEntity;
 import com.rms.model.entity.FoodEntity;
 import com.rms.model.entity.OrderEntity;
 import com.rms.model.entity.UserEntity;
+import com.rms.model.views.DrinkView;
+import com.rms.model.views.FoodView;
 import com.rms.repositiry.OrderRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Service
@@ -50,12 +55,28 @@ public class OrderService {
         orderRepository.save(menu);
 //        }
     }
+
     public OrderEntity findById(Long id) {
         return orderRepository.findOrderEntitiesById(id).orElse(null);
     }
 
     public OrderEntity getMenu() {
         return orderRepository.findById(1L).orElse(null);
+    }
+
+    public List<DrinkView> getAllDrinksView(String username) {
+
+        List<DrinkEntity> allDrinks = getMenu().getDrinks();
+        List<DrinkView> allDrinksView = allDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
+
+        return allDrinksView;
+    }
+    public List<FoodView> getAllFoodsView(String username) {
+
+        List<FoodEntity> allFoods = getMenu().getFoods();
+        List<FoodView> allFoodsView = allFoods.stream().map(foodEntity -> modelMapper.map(foodEntity, FoodView.class)).toList();
+
+        return allFoodsView;
     }
 
     @Transient
@@ -82,7 +103,7 @@ public class OrderService {
         menu.getFoods().add(foodEntity);
         orderRepository.save(menu);
     }
-    
+
     public void addDrink(DrinkDTO drinkDTO, boolean addToMenu) {
 
         DrinkEntity drinkToAdd = modelMapper.map(drinkDTO, DrinkEntity.class);
@@ -118,7 +139,7 @@ public class OrderService {
         return newOrder;
     }
 
-    public List<OrderEntity> allOrdersByUsername (String username) {
+    public List<OrderEntity> allOrdersByUsername(String username) {
         return orderRepository.findOrderEntitiesByMadeBy_UsernameOrderByDateTimeDesc(username);
     }
 
