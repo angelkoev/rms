@@ -1,4 +1,4 @@
-package com.rms.Init;
+package com.rms.init;
 
 //import com.rms.service.DrinkTypeServiceImpl;
 //import com.rms.service.FoodTypeServiceImpl;

@@ -1,4 +1,4 @@
-package com.rms.Init;
+package com.rms.init;
 
 import com.rms.model.entity.*;
 import com.rms.model.entity.DrinkTypeEnum;
