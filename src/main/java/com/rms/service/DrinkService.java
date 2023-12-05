@@ -7,6 +7,7 @@ import com.rms.repositiry.DrinkRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
@@ -95,7 +96,7 @@ public class DrinkService {
     public void addDrink(DrinkEntity drinkEntity) {
 
         if (isDrinkAlreadyAdded(drinkEntity)) {
-            throw new IllegalStateException(); // FIXME fix the error name
+            throw new IllegalStateException();
         }
 
         drinkRepository.save(drinkEntity);

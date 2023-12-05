@@ -113,7 +113,7 @@ public class UserService {
     public UserEntity getUserByUsername(String username) {
         UserEntity currentUser = this.userRepository.findByUsername(username).orElse(null);
         if (currentUser == null) {
-            throw new NoSuchElementException(); // FIXME throw something else or go to error page ??
+            throw new NoSuchElementException();
         }
         return currentUser;
     }
@@ -255,7 +255,7 @@ public class UserService {
 
         Optional<UserEntity> currentUserOpt = userRepository.findById(id);
         if (currentUserOpt.isEmpty()) {
-            throw new NoSuchElementException(); // FIXME throw another error ??
+            throw new NoSuchElementException();
         }
         UserEntity currentUser = currentUserOpt.get();
 
@@ -306,7 +306,7 @@ public class UserService {
         UserEntity currentUser = getUserByUsername(username);
 
         if (currentUser.getLastOrder() == null) {
-            // FIXME throw error or just return !!!
+            return; // illegal
         }
 
         OrderEntity lastOrder = currentUser.getLastOrder();
@@ -362,7 +362,7 @@ public class UserService {
         UserEntity currentUser = getUserByUsername(username);
 
         if (currentUser.getLastOrder() == null) {
-            // FIXME throw error !!!
+           return; // illegal
         }
 
         OrderEntity lastOrder = currentUser.getLastOrder();

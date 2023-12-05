@@ -101,7 +101,7 @@ public class FoodService {
     public void addFood(FoodEntity foodEntity) {
 
         if (isFoodAlreadyAdded(foodEntity)) {
-            throw new IllegalStateException(); // FIXME fix the error name
+            throw new IllegalStateException();
         }
 
         foodRepository.save(foodEntity);
