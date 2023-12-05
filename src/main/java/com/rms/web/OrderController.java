@@ -10,7 +10,6 @@ import com.rms.service.FoodService;
 import com.rms.service.OrderService;
 import com.rms.service.UserService;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -28,14 +27,12 @@ public class OrderController {
     private final OrderService orderService;
     private final DrinkService drinkService;
     private final FoodService foodService;
-    private final ModelMapper modelMapper;
     private final UserService userService;
 
-    public OrderController(OrderService orderService, DrinkService drinkService, FoodService foodService, ModelMapper modelMapper, UserService userService) {
+    public OrderController(OrderService orderService, DrinkService drinkService, FoodService foodService, UserService userService) {
         this.orderService = orderService;
         this.drinkService = drinkService;
         this.foodService = foodService;
-        this.modelMapper = modelMapper;
         this.userService = userService;
     }
 
@@ -200,7 +197,6 @@ public class OrderController {
 
         boolean isAdmin = userService.isAdmin(username);
 
-//        UserEntity currentUser = userService.getUserByUsername(username);
         boolean userHasOrders = userService.checkIfUserHasOrders(username);
 
         if (!userHasOrders && !isAdmin) {

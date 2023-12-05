@@ -20,10 +20,8 @@ public class HomeController {
         this.userService = userService;
     }
 
-
     @GetMapping("/")
     public String index(@AuthenticationPrincipal UserDetails userDetails) {
-
 
         if (userDetails != null) {
             return "redirect:home";

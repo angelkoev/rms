@@ -26,13 +26,6 @@ public class MaintenanceController {
 
         boolean isAdmin = userService.isAdmin(authentication.getName());
 
-//        for (GrantedAuthority authority : authentication.getAuthorities()) {
-//            String role = authority.getAuthority();
-//            if ("ROLE_ADMIN".equals(role)) {
-//                isAdmin = true;
-//            }
-//        }
-
         String infoMessage = "";
         if (isAdmin && maintenanceInterceptor.isMaintenanceMode()) {
             infoMessage = "В момента сайта се намира в режим на профилактика!";
