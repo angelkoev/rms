@@ -53,7 +53,8 @@ public class ReviewService {
 
 //                    System.out.println();
 
-                    String writtenBy = reviewEntity.getWrittenBy().getFirstName() + " " + reviewEntity.getWrittenBy().getLastName();
+//                    String writtenBy = reviewEntity.getWrittenBy().getFirstName() + " " + reviewEntity.getWrittenBy().getLastName();
+                    String writtenBy = reviewEntity.getWrittenBy().getFirstName();
                     currentReview.setAuthor(writtenBy);
 
 //                    String postedOnd = reviewEntity.getPostedOn().toString();
@@ -90,7 +91,8 @@ public class ReviewService {
                 ReviewEntity review = new ReviewEntity();
 //                review.setPostedOn(LocalDate.now());
                 review.setPostedOn(randomDate());
-                review.setContent(userEntity.getFirstName() + " " + userEntity.getLastName() + " " + userEntity.getEmail());
+//                review.setContent(userEntity.getFirstName() + " " + userEntity.getLastName() + " " + userEntity.getEmail());
+                review.setContent("Random review text for " + userEntity.getEmail());
                 int randomScore = random.nextInt(5) + 1; // score between 1 and 5
                 review.setScore(randomScore);
                 review.setWrittenBy(userEntity);

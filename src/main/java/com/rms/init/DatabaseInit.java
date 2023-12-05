@@ -29,13 +29,8 @@ public class DatabaseInit implements CommandLineRunner {
                       ReviewService reviewService, FoodService foodService, DrinkService drinkService, OrderService orderService) {
         this.userRoleService = userRoleService;
         this.userService = userService;
-//        this.drinkTypeService = drinkTypeService;
-//        this.foodTypeService = foodTypeService;
-//        this.tableService = tableService;
         this.reviewService = reviewService;
-
         this.orderService = orderService;
-
         this.foodService = foodService;
         this.drinkService = drinkService;
     }

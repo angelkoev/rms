@@ -6,11 +6,9 @@ public class ReviewDTO {
 
     private Long id;
 
-    //    private String author;
     @Size(min = 5, max = 200, message = "Съдържанието трябва да е между 5 и 200 символа")
     @NotNull
     private String content;
-//    private String postedOn;
 
     @Min(value = 1, message = "Оценката трябва да е минимум 1")
     @Max(value = 5, message = "Оценката трябва да е максимум 5")

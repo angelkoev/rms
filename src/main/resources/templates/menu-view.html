@@ -72,7 +72,6 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="drinkDropdown">
 
-
                     <div th:each="drinkType : ${T(com.rms.model.entity.DrinkTypeEnum).values()}">
                         <div class="dropdown-submenu bg-nav">
                             <a class="dropdown-item dropdown-toggle" th:text="${drinkType.getName()}" href="#"></a>

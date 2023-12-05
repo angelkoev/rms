@@ -10,6 +10,8 @@ import com.rms.model.views.DrinkView;
 import com.rms.model.views.FoodView;
 import com.rms.repositiry.OrderRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
@@ -21,10 +23,10 @@ import java.util.Set;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-
     private final FoodService foodService;
     private final DrinkService drinkService;
     private final ModelMapper modelMapper;
+    private static OrderEntity menu = null;
 
     public OrderService(OrderRepository orderRepository, FoodService foodService, DrinkService drinkService, ModelMapper modelMapper) {
         this.orderRepository = orderRepository;
@@ -57,20 +59,26 @@ public class OrderService {
         return orderRepository.findOrderEntitiesById(id).orElse(null);
     }
 
+//    @Cacheable("menuCache")
     public OrderEntity getMenu() {
-        return orderRepository.findById(1L).orElse(null);
+        System.out.println("CACHE CHECK MENU");
+        menu = orderRepository.findById(1L).orElse(null);
+        return menu;
     }
 
-    public List<DrinkView> getAllDrinksView(String username) {
-
-        List<DrinkEntity> allDrinks = getMenu().getDrinks();
+    @Cacheable("drinksCache")
+    public List<DrinkView> getAllDrinksView() {
+        System.out.println("CACHE CHECK DRINKS");
+        List<DrinkEntity> allDrinks = menu.getDrinks();
         List<DrinkView> allDrinksView = allDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
 
         return allDrinksView;
     }
-    public List<FoodView> getAllFoodsView(String username) {
 
-        List<FoodEntity> allFoods = getMenu().getFoods();
+    @Cacheable("foodsCache")
+    public List<FoodView> getAllFoodsView() {
+        System.out.println("CACHE CHECK FOODS");
+        List<FoodEntity> allFoods = menu.getFoods();
         List<FoodView> allFoodsView = allFoods.stream().map(foodEntity -> modelMapper.map(foodEntity, FoodView.class)).toList();
 
         return allFoodsView;
@@ -90,23 +98,28 @@ public class OrderService {
     }
 
     public boolean isMenuOK() {
-        OrderEntity menu = getMenu();
-        if (menu == null) {
-            return false;
-        }
-        return true;
+        return menu != null;
     }
 
     public void addToMenu(DrinkEntity drinkEntity) {
-        OrderEntity menu = getMenu();
         menu.getDrinks().add(drinkEntity);
         orderRepository.save(menu);
     }
 
     public void addToMenu(FoodEntity foodEntity) {
-        OrderEntity menu = getMenu();
         menu.getFoods().add(foodEntity);
         orderRepository.save(menu);
+    }
+
+    @CacheEvict(value = "drinksCache", allEntries = true)
+    public void clearDrinksCache() {
+        System.out.println("CLEAR CACHE DRINKS");
+        // to clear drinks cache when new drink is added
+    }
+    @CacheEvict(value = "foodsCache", allEntries = true)
+    public void clearFoodsCache() {
+        System.out.println("CLEAR CACHE FOODS");
+        // to clear foods cache when new drink is added
     }
 
     public void addDrink(DrinkDTO drinkDTO, boolean addToMenu) {

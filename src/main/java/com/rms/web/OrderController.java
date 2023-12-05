@@ -42,7 +42,8 @@ public class OrderController {
         boolean isMenuOK = orderService.isMenuOK();
 
         if (!isMenuOK) {
-            return "/";
+            orderService.getMenu();
+            isMenuOK = true;
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -63,10 +64,10 @@ public class OrderController {
         String totalOrderPrice = userService.totalCurrentPrice(username);
         model.addAttribute("totalOrderPrice", totalOrderPrice);
 
-        List<DrinkView> allDrinksView = orderService.getAllDrinksView(username);
+        List<DrinkView> allDrinksView = orderService.getAllDrinksView();
         model.addAttribute("allDrinksView", allDrinksView);
 
-        List<FoodView> allFoodsView = orderService.getAllFoodsView(username);
+        List<FoodView> allFoodsView = orderService.getAllFoodsView();
         model.addAttribute("allFoodsView", allFoodsView);
 
         return "menu-view";
@@ -139,6 +140,7 @@ public class OrderController {
         }
 
         this.orderService.addDrink(drinkDTO, drinkDTO.isAddToMenu());
+        orderService.clearDrinksCache();
 
         infoMessage = "Напитката беше добавена успешно!";
         redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
@@ -168,6 +170,7 @@ public class OrderController {
         }
 
         this.orderService.addFood(foodDTO, foodDTO.isAddToMenu());
+        orderService.clearFoodsCache();
 
         infoMessage = "Храната беше добавена успешно!";
         redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
