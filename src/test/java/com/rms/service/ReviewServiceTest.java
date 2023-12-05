@@ -49,12 +49,12 @@ class ReviewServiceTest {
     @Test
     void testAddReview_ValidDTO() {
         // Arrange
-        ReviewDTO reviewDTO = new ReviewDTO(/* Initialize with valid test data */);
+        ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.setScore("4");
-        reviewDTO.setContent("ала бала");
+        reviewDTO.setContent("valid test content");
 
         UserEntity userEntity = new UserEntity(); // Initialize with test data
-        userEntity.setUsername("pesho");
+        userEntity.setUsername("valid_test_username");
         reviewDTO.setUsername(userEntity.getUsername());
 
         when(userService.findUserEntityByUsername(any())).thenReturn(userEntity);
@@ -72,26 +72,28 @@ class ReviewServiceTest {
     @Test
     void testAddReview_InvalidDTO() {
         // Arrange
-        ReviewDTO reviewDTO = new ReviewDTO(/* Initialize with invalid test data */);
+        ReviewDTO invalidReviewDTO = new ReviewDTO();
+        invalidReviewDTO.setScore("6");
+        invalidReviewDTO.setContent("test_content");
+        invalidReviewDTO.setUsername("valid_test_username");
 
         // Act
-        Set<ConstraintViolation<ReviewDTO>> violations = validator.validate(reviewDTO);
+        Set<ConstraintViolation<ReviewDTO>> violations = validator.validate(invalidReviewDTO);
 
         // Assert
         assertFalse(violations.isEmpty());
-        // Add more assertions based on your validation annotations
     }
 
     @Test
     void testGetAllReviews() {
         // Arrange
-        ReviewEntity reviewEntity = new ReviewEntity(); // Initialize with test data
+        ReviewEntity reviewEntity = new ReviewEntity();
         UserEntity userEntity = new UserEntity();
-        String firstName = "Pesho";
+        String firstName = "test_user";
         reviewEntity.setWrittenBy(userEntity);
-        when(reviewRepository.findAllByOrderByPostedOnDesc()).thenReturn(Arrays.asList(reviewEntity));
+        when(reviewRepository.findAllByOrderByPostedOnDesc()).thenReturn(List.of(reviewEntity));
 
-        ReviewView reviewView = new ReviewView(); // Initialize with test data
+        ReviewView reviewView = new ReviewView();
         when(modelMapper.map(any(), eq(ReviewView.class))).thenReturn(reviewView);
 
         // Act
@@ -102,21 +104,4 @@ class ReviewServiceTest {
         assertEquals(reviewView, result.get(0));
     }
 
-    // Helper method to create a valid ReviewDTO
-    private ReviewDTO createValidReviewDTO() {
-        ReviewDTO reviewDTO = new ReviewDTO();
-        reviewDTO.setContent("Valid review content");
-        reviewDTO.setScore("5");
-        reviewDTO.setUsername("validUsername");
-        return reviewDTO;
-    }
-
-    // Helper method to create an invalid ReviewDTO
-    private ReviewDTO createInvalidReviewDTO() {
-        ReviewDTO reviewDTO = new ReviewDTO();
-        // Intentionally leaving content empty to violate @Size constraint
-        reviewDTO.setScore("6"); // Violating @Max constraint
-        // Intentionally leaving username blank to violate @NotBlank constraint
-        return reviewDTO;
-    }
 }
