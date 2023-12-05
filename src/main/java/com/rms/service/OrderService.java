@@ -1,5 +1,7 @@
 package com.rms.service;
 
+import com.rms.events.DrinksCacheEvictEvent;
+import com.rms.events.FoodsCacheEvictEvent;
 import com.rms.model.dto.DrinkDTO;
 import com.rms.model.dto.FoodDTO;
 import com.rms.model.entity.DrinkEntity;
@@ -12,6 +14,7 @@ import com.rms.repositiry.OrderRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
@@ -26,13 +29,15 @@ public class OrderService {
     private final FoodService foodService;
     private final DrinkService drinkService;
     private final ModelMapper modelMapper;
+    private final ApplicationEventPublisher eventPublisher;
     private static OrderEntity menu = null;
 
-    public OrderService(OrderRepository orderRepository, FoodService foodService, DrinkService drinkService, ModelMapper modelMapper) {
+    public OrderService(OrderRepository orderRepository, FoodService foodService, DrinkService drinkService, ModelMapper modelMapper, ApplicationEventPublisher eventPublisher) {
         this.orderRepository = orderRepository;
         this.foodService = foodService;
         this.drinkService = drinkService;
         this.modelMapper = modelMapper;
+        this.eventPublisher = eventPublisher;
     }
 
     public void initMenuOrder() {
@@ -111,15 +116,26 @@ public class OrderService {
         orderRepository.save(menu);
     }
 
-    @CacheEvict(value = "drinksCache", allEntries = true)
+//    @CacheEvict(value = "drinksCache", allEntries = true) // MOVED LOGIC TO EVENT
     public void clearDrinksCache() {
         System.out.println("CLEAR CACHE DRINKS");
+        triggerDrinksCacheEviction();
         // to clear drinks cache when new drink is added
     }
-    @CacheEvict(value = "foodsCache", allEntries = true)
+
+//    @CacheEvict(value = "foodsCache", allEntries = true) // MOVED LOGIC TO EVENT
     public void clearFoodsCache() {
         System.out.println("CLEAR CACHE FOODS");
+        triggerFoodsCacheEviction();
         // to clear foods cache when new drink is added
+    }
+
+    public void triggerDrinksCacheEviction() {
+        eventPublisher.publishEvent(new DrinksCacheEvictEvent(this));
+    }
+
+    public void triggerFoodsCacheEviction() {
+        eventPublisher.publishEvent(new FoodsCacheEvictEvent(this));
     }
 
     public void addDrink(DrinkDTO drinkDTO, boolean addToMenu) {
