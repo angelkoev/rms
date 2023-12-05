@@ -30,13 +30,17 @@ public class UserService {
     private final UserRoleService userRoleService;
     private final ModelMapper modelMapper;
     private final OrderService orderService;
+    private final DrinkService drinkService;
+    private final FoodService foodService;
 
-    public UserService(UserRepository userRepository, PasswordEncoder encoder, UserRoleService userRoleService, ModelMapper modelMapper, OrderService orderService) {
+    public UserService(UserRepository userRepository, PasswordEncoder encoder, UserRoleService userRoleService, ModelMapper modelMapper, OrderService orderService, DrinkService drinkService, FoodService foodService) {
         this.userRepository = userRepository;
         this.encoder = encoder;
         this.userRoleService = userRoleService;
         this.modelMapper = modelMapper;
         this.orderService = orderService;
+        this.drinkService = drinkService;
+        this.foodService = foodService;
     }
 
     public UserDTO findUserByUsername(String username) { // for validation for unique username
@@ -256,7 +260,7 @@ public class UserService {
 
         Optional<UserEntity> currentUserOpt = userRepository.findById(id);
         if (currentUserOpt.isEmpty()) {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException(); // FIXME throw another error ??
         }
         UserEntity currentUser = currentUserOpt.get();
 
@@ -293,10 +297,84 @@ public class UserService {
         UserEntity currentUser = currentUserOpt.get();
 
         currentUser.getRoles().removeIf(role -> role.getRole().name().equals("ADMIN"));
-//        UserRoleEntity roleAdmin = userRoleService.findUserRoleEntityByRole(UserRoleEnum.ADMIN);
-//        currentUser.getRoles().remove(roleAdmin);
 
         userRepository.save(currentUser);
     }
 
+    public boolean checkIfUserHasOrders(String username) {
+        UserEntity currentUser = getUserByUsername(username);
+
+        return currentUser.getLastOrder() != null;
+    }
+
+    public void deleteDrinkFromLastOrder(String username, Long id) {
+        UserEntity currentUser = getUserByUsername(username);
+
+        if (currentUser.getLastOrder() == null) {
+            // FIXME throw error or just return !!!
+        }
+
+        OrderEntity lastOrder = currentUser.getLastOrder();
+
+        Optional<DrinkEntity> currentDrink = lastOrder.getDrinks().stream().filter(d -> d.getId().equals(id)).findAny();
+
+        DrinkEntity drinkEntity = null;
+        if (currentDrink.isPresent()) {
+            drinkEntity = currentDrink.get();
+        }
+        //FIXME java.util.NoSuchElementException: No value present
+
+        if (drinkEntity != null) {
+            lastOrder.getDrinks().remove(drinkEntity);
+        }
+        orderService.saveOrder(lastOrder);
+        saveUser(currentUser);
+    }
+
+    public void addDrinkToLastOrder(String username, Long id) {
+
+        UserEntity currentUser = getUserByUsername(username);
+
+        if (currentUser.getLastOrder() == null) {
+            OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
+            currentUser.setLastOrder(newLastOrder);
+        }
+
+        DrinkEntity currentDrink = drinkService.findById(id);
+        OrderEntity lastOrder = currentUser.getLastOrder();
+        lastOrder.getDrinks().add(currentDrink);
+        orderService.saveOrder(lastOrder);
+        saveUser(currentUser);
+    }
+
+    public void addFoodToLastOrder(String username, Long id) {
+
+        UserEntity currentUser = getUserByUsername(username);
+
+        if (currentUser.getLastOrder() == null) {
+            OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
+            currentUser.setLastOrder(newLastOrder);
+        }
+
+        FoodEntity currentFood = foodService.findById(id);
+        OrderEntity lastOrder = currentUser.getLastOrder();
+        lastOrder.getFoods().add(currentFood);
+        orderService.saveOrder(lastOrder);
+        saveUser(currentUser);
+    }
+
+    public void deleteFoodFromLastOrder(String username, Long id) {
+        UserEntity currentUser = getUserByUsername(username);
+
+        if (currentUser.getLastOrder() == null) {
+            // FIXME throw error !!!
+        }
+
+        OrderEntity lastOrder = currentUser.getLastOrder();
+
+        FoodEntity currentFood = lastOrder.getFoods().stream().filter(f -> f.getId().equals(id)).findAny().get();
+        lastOrder.getFoods().remove(currentFood);
+        orderService.saveOrder(lastOrder);
+        saveUser(currentUser);
+    }
 }

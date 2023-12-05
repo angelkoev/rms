@@ -45,7 +45,6 @@ public class UserController {
 
         model.addAttribute("errorMessage", "Invalid username or password");
 
-//        this.userService.login(loginDTO.getUsername());
         return "auth-login";
     }
 
@@ -72,9 +71,6 @@ public class UserController {
         }
 
         this.userService.register(registerDTO);
-
-//        String infoMessage = "Регистрацията беше успешна! Вече можете да влезете в акаунта си";
-//        redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
 
         return "redirect:/home";
     }

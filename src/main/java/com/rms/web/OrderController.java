@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/order")
@@ -43,36 +41,23 @@ public class OrderController {
         this.userService = userService;
     }
 
-
     @GetMapping("/menu")
     public String viewAll(Model model) {
 
-        OrderEntity menu = orderService.getMenu();
+        boolean isMenuOK = orderService.isMenuOK();
 
-        if (menu == null) {
+        if (!isMenuOK) {
             return "/";
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        UserEntity currentUser = userService.getUserByUsername(authentication.getName());
-//
-//        if (currentUser.getLastOrder() == null) {
-//            OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
-//            currentUser.setLastOrder(newLastOrder);
-//        }
-
         String username = authentication.getName();
+
         userService.checkLastOrder(username);
-//
-//        List<DrinkEntity> currentDrinks = currentUser.getLastOrder().getDrinks();
-//        List<DrinkView> allCurrentDrinkViews = currentDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
 
         List<DrinkView> allCurrentDrinkViews = userService.getAllCurrentDrinkViews(username);
         model.addAttribute("allCurrentDrinkViews", allCurrentDrinkViews);
         model.addAttribute("drinkViewCount", allCurrentDrinkViews.size());
-
-//        List<FoodEntity> currentFoods = currentUser.getLastOrder().getFoods();
-//        List<FoodView> allCurrentFoodViews = currentFoods.stream().map(foodEntity -> modelMapper.map(foodEntity, FoodView.class)).toList();
 
         List<FoodView> allCurrentFoodViews = userService.getAllCurrentFoodViews(username);
         model.addAttribute("allCurrentFoodViews", allCurrentFoodViews);
@@ -80,26 +65,12 @@ public class OrderController {
 
         model.addAttribute("totalViewSize", allCurrentDrinkViews.size() + allCurrentFoodViews.size());
 
-//        BigDecimal priceForAllDrinks = allCurrentDrinkViews.stream()
-//                .map(DrinkView::getPrice)
-//                .reduce(BigDecimal.ZERO, BigDecimal::add);
-//        BigDecimal priceForAllFoods = allCurrentFoodViews.stream()
-//                .map(FoodView::getPrice)
-//                .reduce(BigDecimal.ZERO, BigDecimal::add);
-//
-//        String totalOrderPrice = priceForAllDrinks.add(priceForAllFoods).toString();
-
         String totalOrderPrice = userService.totalCurrentPrice(username);
         model.addAttribute("totalOrderPrice", totalOrderPrice);
 
-//        List<DrinkEntity> allDrinks = orderService.getMenu().getDrinks();
-//        List<DrinkView> allDrinksView = allDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
         List<DrinkView> allDrinksView = orderService.getAllDrinksView(username);
         model.addAttribute("allDrinksView", allDrinksView);
 
-
-//        List<FoodEntity> allFoods = orderService.getMenu().getFoods();
-//        List<FoodView> allFoodsView = allFoods.stream().map(foodEntity -> modelMapper.map(foodEntity, FoodView.class)).toList();
         List<FoodView> allFoodsView = orderService.getAllFoodsView(username);
         model.addAttribute("allFoodsView", allFoodsView);
 
@@ -110,28 +81,9 @@ public class OrderController {
     public String deleteDrinkFromOrder(@PathVariable Long id) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
 
-        UserEntity currentUser = userService.getUserByUsername(authentication.getName());
-
-        if (currentUser.getLastOrder() == null) {
-            // FIXME throw error !!!
-        }
-
-        OrderEntity lastOrder = currentUser.getLastOrder();
-
-        Optional<DrinkEntity> currentDrink = lastOrder.getDrinks().stream().filter(d -> d.getId().equals(id)).findAny();
-
-        DrinkEntity drinkEntity = null;
-        if (currentDrink.isPresent()) {
-            drinkEntity = currentDrink.get();
-        }
-        //FIXME java.util.NoSuchElementException: No value present
-
-        if (drinkEntity != null) {
-            lastOrder.getDrinks().remove(drinkEntity);
-        }
-        orderService.saveOrder(lastOrder);
-        userService.saveUser(currentUser);
+        userService.deleteDrinkFromLastOrder(username, id);
 
         return "redirect:/order/menu";
     }
@@ -140,19 +92,9 @@ public class OrderController {
     public String addDrinkToOrder(@PathVariable Long id) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
 
-        UserEntity currentUser = userService.getUserByUsername(authentication.getName());
-
-        if (currentUser.getLastOrder() == null) {
-            OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
-            currentUser.setLastOrder(newLastOrder);
-        }
-
-        DrinkEntity currentDrink = drinkService.findById(id);
-        OrderEntity lastOrder = currentUser.getLastOrder();
-        lastOrder.getDrinks().add(currentDrink);
-        orderService.saveOrder(lastOrder);
-        userService.saveUser(currentUser);
+        userService.addDrinkToLastOrder(username, id);
 
         return "redirect:/order/menu";
     }
@@ -161,19 +103,9 @@ public class OrderController {
     public String addFoodToOrder(@PathVariable Long id) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
 
-        UserEntity currentUser = userService.getUserByUsername(authentication.getName());
-
-        if (currentUser.getLastOrder() == null) {
-            OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
-            currentUser.setLastOrder(newLastOrder);
-        }
-
-        FoodEntity currentFood = foodService.findById(id);
-        OrderEntity lastOrder = currentUser.getLastOrder();
-        lastOrder.getFoods().add(currentFood);
-        orderService.saveOrder(lastOrder);
-        userService.saveUser(currentUser);
+        userService.addFoodToLastOrder(username, id);
 
         return "redirect:/order/menu";
     }
@@ -182,19 +114,9 @@ public class OrderController {
     public String deleteFoodFromOrder(@PathVariable Long id) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
 
-        UserEntity currentUser = userService.getUserByUsername(authentication.getName());
-
-        if (currentUser.getLastOrder() == null) {
-            // FIXME throw error !!!
-        }
-
-        OrderEntity lastOrder = currentUser.getLastOrder();
-
-        FoodEntity currentFood = lastOrder.getFoods().stream().filter(f -> f.getId().equals(id)).findAny().get();
-        lastOrder.getFoods().remove(currentFood);
-        orderService.saveOrder(lastOrder);
-        userService.saveUser(currentUser);
+        userService.deleteFoodFromLastOrder(username, id);
 
         return "redirect:/order/menu";
     }
@@ -223,7 +145,6 @@ public class OrderController {
 
         this.orderService.addDrink(drinkDTO, drinkDTO.isAddToMenu());
 
-        // FIXME message that user is registered and to go to login page to Login !!!
         infoMessage = "Напитката беше добавена успешно!";
         redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
         return "redirect:/home";
@@ -253,7 +174,6 @@ public class OrderController {
 
         this.orderService.addFood(foodDTO, foodDTO.isAddToMenu());
 
-        // FIXME message that user is registered and to go to login page to Login !!!
         infoMessage = "Храната беше добавена успешно!";
         redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
         return "redirect:/home";
@@ -262,8 +182,6 @@ public class OrderController {
 
     @PostMapping("/new")
     public String newOrder(RedirectAttributes redirectAttributes) {
-
-//        OrderEntity menu = orderService.getMenu();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -275,9 +193,6 @@ public class OrderController {
         currentUser.getLastOrder().getDrinks().clear();
         currentUser.getLastOrder().getFoods().clear();
         orderService.saveOrder(currentUser.getLastOrder());
-//        OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
-//        orderService.saveOrder(newLastOrder);
-//        currentUser.setLastOrder(newLastOrder);
         userService.saveUser(currentUser);
 
         String infoMessage = "Поръчката беше направена успешно!";
@@ -289,27 +204,19 @@ public class OrderController {
     @GetMapping("/history")
     public String ordersHistory(Model model, RedirectAttributes redirectAttributes) {
 
-        boolean isAdmin = false;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
 
-        UserEntity currentUser = userService.getUserByUsername(authentication.getName());
+        boolean isAdmin = userService.isAdmin(username);
 
-        for (UserRoleEntity role : currentUser.getRoles()) {
-            if (role.getRole().name().equals("ADMIN")) {
-                isAdmin = true;
-                break;
-            }
-        }
+        UserEntity currentUser = userService.getUserByUsername(username);
+        boolean userHasOrders = userService.checkIfUserHasOrders(username);
 
-        if (currentUser.getLastOrder() == null && !isAdmin) {
+        if (!userHasOrders && !isAdmin) {
             String infoMessage = "Нямате направени поръчки!";
             redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
             return "redirect:/home";
         }
-//            OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
-//            orderService.saveOrder(newLastOrder);
-//            currentUser.setLastOrder(newLastOrder);
-//        }
 
         List<OrderEntity> orderEntities;
         if (isAdmin) {

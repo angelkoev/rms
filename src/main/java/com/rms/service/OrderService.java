@@ -2,7 +2,6 @@ package com.rms.service;
 
 import com.rms.model.dto.DrinkDTO;
 import com.rms.model.dto.FoodDTO;
-import com.rms.model.dto.UserDTO;
 import com.rms.model.entity.DrinkEntity;
 import com.rms.model.entity.FoodEntity;
 import com.rms.model.entity.OrderEntity;
@@ -14,10 +13,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Service
@@ -92,6 +89,14 @@ public class OrderService {
         return lastOrder;
     }
 
+    public boolean isMenuOK() {
+        OrderEntity menu = getMenu();
+        if (menu == null) {
+            return false;
+        }
+        return true;
+    }
+
     public void addToMenu(DrinkEntity drinkEntity) {
         OrderEntity menu = getMenu();
         menu.getDrinks().add(drinkEntity);
@@ -146,4 +151,5 @@ public class OrderService {
     public List<OrderEntity> getAllOrders() {
         return orderRepository.getAllByOrderByDateTimeDesc();
     }
+
 }
