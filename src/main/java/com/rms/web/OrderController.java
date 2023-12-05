@@ -2,7 +2,6 @@ package com.rms.web;
 
 import com.rms.model.dto.DrinkDTO;
 import com.rms.model.dto.FoodDTO;
-import com.rms.model.entity.*;
 import com.rms.model.views.DrinkView;
 import com.rms.model.views.FoodView;
 import com.rms.model.views.OrderView;
@@ -20,7 +19,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -184,16 +182,9 @@ public class OrderController {
     public String newOrder(RedirectAttributes redirectAttributes) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
 
-        UserEntity currentUser = userService.getUserByUsername(authentication.getName());
-
-        OrderEntity newOrder = orderService.makeNewOrder(currentUser);
-        currentUser.getOrders().add(newOrder);
-
-        currentUser.getLastOrder().getDrinks().clear();
-        currentUser.getLastOrder().getFoods().clear();
-        orderService.saveOrder(currentUser.getLastOrder());
-        userService.saveUser(currentUser);
+        userService.addNewOrder(username);
 
         String infoMessage = "Поръчката беше направена успешно!";
         redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
@@ -209,7 +200,7 @@ public class OrderController {
 
         boolean isAdmin = userService.isAdmin(username);
 
-        UserEntity currentUser = userService.getUserByUsername(username);
+//        UserEntity currentUser = userService.getUserByUsername(username);
         boolean userHasOrders = userService.checkIfUserHasOrders(username);
 
         if (!userHasOrders && !isAdmin) {
@@ -218,45 +209,7 @@ public class OrderController {
             return "redirect:/home";
         }
 
-        List<OrderEntity> orderEntities;
-        if (isAdmin) {
-            orderEntities = orderService.getAllOrders();
-        } else {
-            orderEntities = orderService.allOrdersByUsername(authentication.getName());
-        }
-
-        if (!isAdmin) {
-            Long idForLastOrder = currentUser.getLastOrder().getId();
-            OrderEntity lastOrder = orderEntities.stream().filter(o -> o.getId().equals(idForLastOrder)).findFirst().orElse(null);
-            if (lastOrder != null) {
-                orderEntities.remove(lastOrder);
-            }
-        } else {
-            OrderEntity menu = orderEntities.stream().filter(o -> o.getId() == 1L).findFirst().orElse(null);
-            if (menu != null) {
-                orderEntities.remove(menu);
-            }
-        }
-
-        List<OrderView> allCurrentOrdersViews = orderEntities.stream().map(orderEntity -> {
-            OrderView currentOrderView = modelMapper.map(orderEntity, OrderView.class);
-
-            currentOrderView.setMadeBy(orderEntity.getMadeBy().getUsername());
-
-            BigDecimal currentPriceForAllDrinks = orderEntity.getDrinks().stream().map(DrinkEntity::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
-            BigDecimal currentPriceForAllFoods = orderEntity.getFoods().stream().map(FoodEntity::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
-            BigDecimal totalOrderPrice = currentPriceForAllDrinks.add(currentPriceForAllFoods);
-
-            currentOrderView.setTotalPrice(totalOrderPrice);
-
-            String currentDateTime = orderEntity.getDateTime().toString(); // 2023-12-04T12:17:56.705155
-            currentOrderView.setDate(currentDateTime.split("T")[0]);
-            currentOrderView.setTime(currentDateTime.split("T")[1]);
-
-            return currentOrderView;
-        }).toList();
-
-        List<OrderView> filteredOrdersWithZeroAmount = allCurrentOrdersViews.stream().filter(order -> order.getTotalPrice().compareTo(BigDecimal.ZERO) != 0).toList();
+        List<OrderView> filteredOrdersWithZeroAmount = userService.getAllCurrentOrdersViews(username);
 
         model.addAttribute("allCurrentOrdersViews", filteredOrdersWithZeroAmount);
 

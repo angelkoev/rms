@@ -5,6 +5,7 @@ import com.rms.model.dto.UserDTO;
 import com.rms.model.entity.*;
 import com.rms.model.views.DrinkView;
 import com.rms.model.views.FoodView;
+import com.rms.model.views.OrderView;
 import com.rms.model.views.UserView;
 import com.rms.repositiry.UserRepository;
 //import com.rms.service.interfaces.UserRoleService;
@@ -83,16 +84,20 @@ public class UserService {
 
         if (currentUser.getLastOrder() == null) {
             OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
+            orderService.saveOrder(newLastOrder);
             currentUser.setLastOrder(newLastOrder);
+            saveUser(currentUser);
         }
     }
 
     public List<DrinkView> getAllCurrentDrinkViews(String username) {
         UserEntity currentUser = getUserByUsername(username);
 
+
         List<DrinkEntity> currentDrinks = currentUser.getLastOrder().getDrinks();
         return currentDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
     }
+
     public List<FoodView> getAllCurrentFoodViews(String username) {
         UserEntity currentUser = getUserByUsername(username);
 
@@ -182,11 +187,6 @@ public class UserService {
         initUser("client3");
         initUser("client4");
         initUser("client5");
-        initUser("client6");
-        initUser("client7");
-        initUser("client8");
-        initUser("client9");
-        initUser("client10");
 
     }
 
@@ -244,12 +244,6 @@ public class UserService {
 
         BigDecimal priceForAllDrinks = currentUser.getLastOrder().getDrinks().stream().map(DrinkEntity::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal priceForAllFoods = currentUser.getLastOrder().getFoods().stream().map(FoodEntity::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
-//        BigDecimal priceForAllDrinks = allCurrentDrinkViews.stream()
-//                .map(DrinkView::getPrice)
-//                .reduce(BigDecimal.ZERO, BigDecimal::add);
-//        BigDecimal priceForAllFoods = allCurrentFoodViews.stream()
-//                .map(FoodView::getPrice)
-//                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         String totalOrderPrice = priceForAllDrinks.add(priceForAllFoods).toString();
 
@@ -376,5 +370,65 @@ public class UserService {
         lastOrder.getFoods().remove(currentFood);
         orderService.saveOrder(lastOrder);
         saveUser(currentUser);
+    }
+
+    public void addNewOrder(String username) {
+
+        UserEntity currentUser = getUserByUsername(username);
+        OrderEntity newOrder = orderService.makeNewOrder(currentUser);
+        currentUser.getOrders().add(newOrder);
+
+        currentUser.getLastOrder().getDrinks().clear();
+        currentUser.getLastOrder().getFoods().clear();
+        orderService.saveOrder(currentUser.getLastOrder());
+        saveUser(currentUser);
+    }
+
+    public List<OrderView> getAllCurrentOrdersViews(String username) {
+
+        UserEntity currentUser = getUserByUsername(username);
+        boolean isAdmin = isAdmin(username);
+        List<OrderEntity> orderEntities;
+
+        if (isAdmin) {
+            orderEntities = orderService.getAllOrders();
+        } else {
+            orderEntities = orderService.allOrdersByUsername(username);
+        }
+
+        if (!isAdmin) {
+            Long idForLastOrder = currentUser.getLastOrder().getId();
+            OrderEntity lastOrder = orderEntities.stream().filter(o -> o.getId().equals(idForLastOrder)).findFirst().orElse(null);
+            if (lastOrder != null) {
+                orderEntities.remove(lastOrder);
+            }
+        } else {
+            OrderEntity menu = orderEntities.stream().filter(o -> o.getId() == 1L).findFirst().orElse(null);
+            if (menu != null) {
+                orderEntities.remove(menu);
+            }
+        }
+
+        List<OrderView> allCurrentOrdersViews = orderEntities.stream().map(orderEntity -> {
+            OrderView currentOrderView = modelMapper.map(orderEntity, OrderView.class);
+
+            currentOrderView.setMadeBy(orderEntity.getMadeBy().getUsername());
+
+            BigDecimal currentPriceForAllDrinks = orderEntity.getDrinks().stream().map(DrinkEntity::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal currentPriceForAllFoods = orderEntity.getFoods().stream().map(FoodEntity::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal totalOrderPrice = currentPriceForAllDrinks.add(currentPriceForAllFoods);
+
+            currentOrderView.setTotalPrice(totalOrderPrice);
+
+            String currentDateTime = orderEntity.getDateTime().toString(); // 2023-12-04T12:17:56.705155
+            currentOrderView.setDate(currentDateTime.split("T")[0]);
+            currentOrderView.setTime(currentDateTime.split("T")[1]);
+
+            return currentOrderView;
+        }).toList();
+
+        List<OrderView> filteredOrdersWithZeroAmount = allCurrentOrdersViews.stream().filter(order -> order.getTotalPrice().compareTo(BigDecimal.ZERO) != 0).toList();
+
+        return filteredOrdersWithZeroAmount;
     }
 }
