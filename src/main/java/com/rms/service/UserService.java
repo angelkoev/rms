@@ -69,7 +69,7 @@ public class UserService
 
         Optional<UserEntity> byUsername = userRepository.findByUsername(username);
         if (byUsername.isEmpty()) {
-            throw new NoSuchElementException(); // fixme
+            throw new NoSuchElementException(); // FIXME throw something else or go to error page ??
         }
 
         UserEntity currentUser = byUsername.get();

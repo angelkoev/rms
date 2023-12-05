@@ -26,7 +26,6 @@ public class MaintenanceController {
 
         boolean isAdmin = userService.isAdmin(authentication.getName());
 
-
 //        for (GrantedAuthority authority : authentication.getAuthorities()) {
 //            String role = authority.getAuthority();
 //            if ("ROLE_ADMIN".equals(role)) {
