@@ -11,32 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class NightModeController {
 
     private final NightModeInterceptor nightModeInterceptor;
-//    private final UserService userService;
 
     public NightModeController(NightModeInterceptor nightModeInterceptor, UserService userService) {
         this.nightModeInterceptor = nightModeInterceptor;
-//        this.userService = userService;
     }
-
-//    @GetMapping("/")
-//    public String maintenancePage(Authentication authentication, RedirectAttributes redirectAttributes) {
-//
-//        boolean isAdmin = userService.isAdmin(authentication.getName());
-//
-//        String infoMessage = "";
-//        if (isAdmin && nightModeInterceptor.isNightMode()) {
-//            infoMessage = "В момента сайта се намира в режим на профилактика!";
-//            redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
-//            return "redirect:/home";
-//        }
-//
-//
-//        if (nightModeInterceptor.isMaintenanceMode()) {
-//            return "maintenance";
-//        }
-
-//        return "home";
-//    }
 
     @GetMapping("/start")
     public String startNightMode() {
