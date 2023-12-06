@@ -1,20 +1,18 @@
 package com.rms.service;
 
 import com.rms.model.entity.FoodEntity;
-        import com.rms.model.entity.FoodTypeEnum;
-        import com.rms.repository.FoodRepository;
-        import org.junit.jupiter.api.BeforeEach;
-        import org.junit.jupiter.api.Test;
-        import org.mockito.InjectMocks;
-        import org.mockito.Mock;
-        import org.mockito.MockitoAnnotations;
-
+import com.rms.model.entity.FoodTypeEnum;
+import com.rms.repository.FoodRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import java.util.Optional;
-        import java.util.Set;
-
-        import static org.junit.jupiter.api.Assertions.*;
-        import static org.mockito.ArgumentMatchers.any;
-        import static org.mockito.Mockito.*;
+import java.util.Set;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 class FoodServiceTest {
 
