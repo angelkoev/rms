@@ -16,7 +16,7 @@ import java.util.Map;
 public class MaintenanceInterceptor implements HandlerInterceptor {
 
     private boolean isMaintenanceMode = false;
-    private ThymeleafViewResolver thymeleafViewResolver;
+    private final ThymeleafViewResolver thymeleafViewResolver;
 
     public MaintenanceInterceptor(ThymeleafViewResolver thymeleafViewResolver) {
         this.thymeleafViewResolver = thymeleafViewResolver;
