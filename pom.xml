@@ -10,11 +10,11 @@
     </parent>
     <groupId>com.softuni</groupId>
     <artifactId>rms</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+<!--    <version>0.0.1-SNAPSHOT</version>-->
     <name>rms</name>
     <description>rms</description>
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>
