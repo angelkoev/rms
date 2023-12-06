@@ -1,7 +1,7 @@
 package com.rms.config;
 
 import com.rms.model.entity.UserRoleEnum;
-import com.rms.repositiry.UserRepository;
+import com.rms.repository.UserRepository;
 import com.rms.service.ApplicationUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;

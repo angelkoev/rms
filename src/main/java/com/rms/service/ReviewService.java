@@ -4,7 +4,7 @@ import com.rms.model.dto.ReviewDTO;
 import com.rms.model.entity.ReviewEntity;
 import com.rms.model.entity.UserEntity;
 import com.rms.model.views.ReviewView;
-import com.rms.repositiry.ReviewRepository;
+import com.rms.repository.ReviewRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

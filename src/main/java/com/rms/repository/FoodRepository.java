@@ -1,4 +1,4 @@
-package com.rms.repositiry;
+package com.rms.repository;
 
 import com.rms.model.entity.FoodEntity;
 import com.rms.model.entity.FoodTypeEnum;

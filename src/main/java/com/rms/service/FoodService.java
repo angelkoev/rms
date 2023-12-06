@@ -3,7 +3,7 @@ package com.rms.service;
 import com.rms.model.dto.FoodDTO;
 import com.rms.model.entity.FoodEntity;
 import com.rms.model.entity.FoodTypeEnum;
-import com.rms.repositiry.FoodRepository;
+import com.rms.repository.FoodRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

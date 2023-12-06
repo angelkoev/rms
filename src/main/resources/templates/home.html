@@ -6,14 +6,12 @@
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
-
     <br>
     <br>
     <small th:if="${infoMessage}"
            id="message-error-msg"
            th:text="${infoMessage}"
            class="text-danger h2 d-flex justify-content-center align-items-center"></small>
-
     <br>
     <br>
     <h2 sec:authorize="!hasRole('ROLE_ADMIN')" class="text-center">Добре дошли "при Пешо"</h2>
@@ -39,10 +37,7 @@
         <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/order/add/drink">Добави напитка</a></li>
         <br>
         <li sec:authorize="!hasRole('ROLE_ADMIN')"><a href="/reviews/add">Остави отзив</a></li>
-
-
     </ul>
-
 
 </main>
 <footer th:replace="~{fragments/commons::footer}"></footer>

@@ -7,7 +7,7 @@ import com.rms.model.views.DrinkView;
 import com.rms.model.views.FoodView;
 import com.rms.model.views.OrderView;
 import com.rms.model.views.UserView;
-import com.rms.repositiry.UserRepository;
+import com.rms.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

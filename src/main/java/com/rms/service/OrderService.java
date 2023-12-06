@@ -10,7 +10,7 @@ import com.rms.model.entity.OrderEntity;
 import com.rms.model.entity.UserEntity;
 import com.rms.model.views.DrinkView;
 import com.rms.model.views.FoodView;
-import com.rms.repositiry.OrderRepository;
+import com.rms.repository.OrderRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationEventPublisher;

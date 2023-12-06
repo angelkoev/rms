@@ -5,22 +5,12 @@
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
-<!--    <div style="margin-top: 120px"></div>-->
     <div id="login">
-<!--        <h3 class="text-center text-info pt-5">Login form</h3>-->
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
 
-<!--                        <th:block th:each="e : ${#fields.errors()}" th:object="${e}">-->
-<!--                            <small th:text="${e}" class="text-danger">Error messages</small>-->
-<!--                            <br>-->
-<!--                        </th:block>-->
-<!--                        <th:block th:each="e : ${#fields.errors()}" th:object="${e}">-->
-<!--                            <small th:text="${e}" class="text-danger">Error messages</small>-->
-<!--                            <br>-->
-<!--                        </th:block>-->
                         <small th:if="${errorMessage}"
                                id="login-error-msg"
                                class="text-danger h2 d-flex justify-content-center align-items-center">Въведена е невалидна комбинация от потребителско име и парола!</small>
@@ -37,14 +27,6 @@
                                        th:errorclass="bg-danger"
                                        type="text" name="username" id="username" class="form-control">
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="username" class="text-info">First Name:</label><br>-->
-<!--                                <input type="text" name="username" id="firstName" class="form-control">-->
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <label for="username" class="text-info">Second Name:</label><br>-->
-<!--                                <input type="text" name="username" id="secondName" class="form-control">-->
-<!--                            </div>-->
                             <div class="form-group">
                                 <label for="password" class="text-info">Парола:</label><br>
                                 <input th:field="*{password}"
@@ -53,12 +35,8 @@
                                        type="password" name="password" id="password" class="form-control">
                             </div>
                             <div class="form-group button-holder d-flex justify-content-center">
-<!--                                <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>-->
                                 <input type="submit" name="submit" class="btn btn-info btn-md justify-content-center" value="Вход">
                             </div>
-<!--                            <div id="register-link" class="text-right">-->
-<!--                                <a href="#" class="text-info">Register here</a>-->
-<!--                            </div>-->
                         </form>
                     </div>
                 </div>

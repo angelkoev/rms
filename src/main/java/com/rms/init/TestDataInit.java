@@ -4,7 +4,7 @@ import com.rms.model.entity.*;
 import com.rms.model.entity.DrinkTypeEnum;
 import com.rms.model.entity.FoodTypeEnum;
 import com.rms.model.entity.UserRoleEnum;
-import com.rms.repositiry.*;
+import com.rms.repository.*;
 import com.rms.service.DrinkService;
 import com.rms.service.FoodService;
 import com.rms.service.UserRoleService;

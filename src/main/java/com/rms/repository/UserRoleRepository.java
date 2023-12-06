@@ -1,4 +1,4 @@
-package com.rms.repositiry;
+package com.rms.repository;
 
 import com.rms.model.entity.UserRoleEntity;
 import com.rms.model.entity.UserRoleEnum;

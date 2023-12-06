@@ -43,45 +43,6 @@
         </div>
     </div>
 
-
-    <!--    <div id="review">-->
-<!--        <div class="container">-->
-<!--            <div id="review-row" class="row justify-content-center align-items-center">-->
-<!--                <div id="review-column" class="col-md-6">-->
-<!--                    <div id="review-box" class="col-md-12">-->
-<!--                        <form id="review-form" class="form"-->
-<!--                              th:method="POST"-->
-<!--                              th:action="@{/reviews/add}"-->
-<!--                              th:object="${reviewDTO}">-->
-<!--                            <h3 class="text-center text-info">Моля попълнете:</h3>-->
-<!--                            <div class="form-group">-->
-<!--                                <label for="content" class="text-info">Описание:</label><br>-->
-<!--                                <textarea th:field="*{content}"-->
-<!--                                          name="reviewText" rows="4" cols="50" required-->
-<!--                                       th:errorclass="bg-danger"-->
-<!--                                       type="text" name="content" id="content" class="form-control"></textarea>-->
-
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <label for="score" class="text-info">Оценка:</label><br>-->
-<!--                                <input th:field="*{score}"-->
-<!--                                       min="1" max="5" required-->
-<!--                                       th:errorclass="bg-danger"-->
-<!--                                       type="number" name="score" id="score" class="form-control">-->
-<!--                            </div>-->
-<!--                            <div class="form-group button-holder d-flex justify-content-center">-->
-<!--                                <input type="submit" name="submit" class="btn btn-info btn-md justify-content-center" value="Добави отзив">-->
-<!--                            </div>-->
-<!--                            &lt;!&ndash;                            <div id="register-link" class="text-right">&ndash;&gt;-->
-<!--                            &lt;!&ndash;                                <a href="#" class="text-info">Register here</a>&ndash;&gt;-->
-<!--                            &lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--                        </form>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
 </main>
 <footer th:replace="~{fragments/commons::footer}"></footer>
 </body>

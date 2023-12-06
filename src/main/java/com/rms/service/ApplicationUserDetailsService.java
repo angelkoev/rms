@@ -3,7 +3,7 @@ package com.rms.service;
 import com.rms.model.AppUserDetails;
 import com.rms.model.entity.UserEntity;
 import com.rms.model.entity.UserRoleEntity;
-import com.rms.repositiry.UserRepository;
+import com.rms.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -3,7 +3,7 @@ package com.rms.service;
 import com.rms.model.dto.DrinkDTO;
 import com.rms.model.entity.DrinkEntity;
 import com.rms.model.entity.DrinkTypeEnum;
-import com.rms.repositiry.DrinkRepository;
+import com.rms.repository.DrinkRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

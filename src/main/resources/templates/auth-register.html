@@ -7,7 +7,6 @@
 <main>
 
     <div id="register">
-        <!--        <h3 class="text-center text-info pt-5">Login form</h3>-->
         <div class="container">
             <div id="register-row" class="row justify-content-center align-items-center">
                 <div id="register-column" class="col-md-6">
@@ -39,13 +38,6 @@
                             </div>
                             <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                                    class="text-danger">Email error message</small>
-                            <!--        <div class="form-group">-->
-                            <!--            <div class="label-holder text-white textCol d-flex justify-content-center">-->
-                            <!--                <label for="email" class="h4 mb-2">Email</label>-->
-                            <!--            </div>-->
-                            <!--            <input th:field="*{email}" th:errorclass="'is-invalid bg-danger'"-->
-                            <!--                   type="email" class="form-control" id="email" name="email"/>-->
-                            <!--        </div>-->
                             <div class="form-group">
                                 <label for="firstName" class="text-info">Име:</label><br>
                                 <input th:field="*{firstName}"
@@ -95,9 +87,6 @@
                                 <!--                                <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>-->
                                 <input type="submit" name="submit" class="btn btn-info btn-md justify-content-center" value="Регистрация">
                             </div>
-                            <!--                            <div id="register-link" class="text-right">-->
-                            <!--                                <a href="#" class="text-info">Register here</a>-->
-                            <!--                            </div>-->
                         </form>
                     </div>
                 </div>
