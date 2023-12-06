@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-public class TestDataInit {
+public class InitialDataInit {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
     private final ReviewRepository reviewRepository;
@@ -35,7 +35,7 @@ public class TestDataInit {
     private final FoodService foodService;
     private final DrinkService drinkService;
 
-    public TestDataInit(UserRepository userRepository, UserRoleRepository userRoleRepository, ReviewRepository reviewRepository, UserService userService, UserRoleService userRoleService, PasswordEncoder encoder, FoodRepository foodRepository, DrinkRepository drinkRepository, OrderRepository orderRepository, FoodService foodService, DrinkService drinkService) {
+    public InitialDataInit(UserRepository userRepository, UserRoleRepository userRoleRepository, ReviewRepository reviewRepository, UserService userService, UserRoleService userRoleService, PasswordEncoder encoder, FoodRepository foodRepository, DrinkRepository drinkRepository, OrderRepository orderRepository, FoodService foodService, DrinkService drinkService) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.reviewRepository = reviewRepository;
