@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{fragments/commons::head}"></head>
-<body>
+<body th:class="${nightModeClass} ? ${nightModeClass} : ${''}">
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
     <br>
@@ -27,7 +27,9 @@
 <!--        <br>-->
         <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/maintenance/start">Започни профилактика на сайта</a></li>
         <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/maintenance/stop">Спри профилактиката на сайта</a></li>
-
+        <br>
+        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/nightmode/start">Пусни NightMode</a></li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/nightmode/stop">Спри NightMode</a></li>
         <br>
         <li sec:authorize(isAuthenticated())><a href="/order/menu">Виж менюто и направи поръчка</a></li>
 <!--        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/order/menu">Промени менюто</a></li>-->

@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/commons::head}"></head>
-<body>
+<body th:class="${nightModeClass} ? ${nightModeClass} : ${''}">
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 
@@ -15,13 +15,13 @@
         }
 
         th, td {
-            border: 1px solid #ddd;
+            border: 1px solid #bf00ff;
             padding: 8px;
             text-align: left;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #c7add5;
         }
 
         .role-button {

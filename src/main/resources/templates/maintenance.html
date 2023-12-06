@@ -31,9 +31,11 @@
     </style>
 </head>
 
-<body>
+<body th:class="${nightModeClass} ? ${nightModeClass} : ${''}">
+<main>
 <h1>В момента сайта се обновява.</h1>
 <p>Моля заповядайте по-късно.</p>
+</main>
 </body>
 
 </html>

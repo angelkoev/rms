@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/commons::head}"></head>
-<body>
+<body th:class="${nightModeClass} ? ${nightModeClass} : ${''}">
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
 <!--<main class="pink-theme">-->

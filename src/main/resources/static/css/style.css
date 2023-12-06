@@ -19,6 +19,10 @@ body {
     margin-bottom: 5rem;
 }
 
+.night-mode-background {
+    background-color: #ffe47b;
+}
+
 textarea {
     resize: none;
 }
