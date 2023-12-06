@@ -42,12 +42,6 @@ public class UserController {
         return "auth-login";
     }
 
-    @AfterReturning(pointcut = "execution(* com.rms.web.UserController.showLoginForm(..))", returning = "returnValue")
-    public void afterShowLoginForm(JoinPoint joinPoint, Object returnValue) {
-        // Logic to be executed after the showLoginForm method returns
-        System.out.println("After showLoginForm executed: " + joinPoint.getSignature().toShortString());
-    }
-
     @GetMapping("/login-error")
     public String onFailure(Model model) {
 
