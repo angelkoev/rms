@@ -1,59 +1,52 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns="http://www.w3.org/1999/xhtml"-->
-<!--      xmlns:th="http://www.thymeleaf.org">-->
-<!--<head th:replace="~{fragments/commons::head}"></head>-->
-<!--<body>-->
-<!--<header th:replace="~{fragments/commons::nav}"></header>-->
-<!--<main>-->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body th:class="${nightModeClass} ? ${nightModeClass} : ${''}">
+<header th:replace="~{fragments/commons::nav}"></header>
+<main>
 
-<!--    <style>-->
-<!--        table {-->
-<!--            border-collapse: collapse;-->
-<!--            width: 90%;-->
-<!--            padding: 50px;-->
-<!--            margin: 50px;-->
-<!--        }-->
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            padding: 50px;
+            margin: 50px;
+        }
 
-<!--        th, td {-->
-<!--            border: 1px solid #ddd;-->
-<!--            padding: 8px;-->
-<!--            text-align: left;-->
-<!--        }-->
+        th, td {
+            border: 1px solid #bf00ff;
+            padding: 8px;
+            text-align: left;
+        }
 
-<!--        th {-->
-<!--            background-color: #f2f2f2;-->
-<!--        }-->
+        th {
+            background-color: #c7add5;
+        }
+    </style>
 
-<!--        .role-button {-->
-<!--            padding: 5px 10px;-->
-<!--            cursor: pointer;-->
-<!--        }-->
-<!--    </style>-->
+    <h2>История на успешните логвания</h2>
 
-<!--    <h2>Логове</h2>-->
+    <table>
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>дата</th>
+            <th>час</th>
+            <th>статус</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="log : ${allLogsOrderedByTime}">
+            <td th:text="${log.getUsername()}"></td>
+            <td th:text="${log.getDate()}"></td>
+            <td th:text="${log.getTime()}"></td>
+            <td th:text="${log.getStatus()}"></td>
+        </tr>
+        </tbody>
+    </table>
 
-<!--    <table>-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--            <th>id</th>-->
-<!--            <th>Време на събитието</th>-->
-<!--            <th>Име на метода</th>-->
-<!--            <th>Име на класа</th>-->
-<!--            <th>Стактрейс</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr th:each="log : ${allLogsOrderedByTimestamp}">-->
-<!--            <td th:text="${log.getId()}"></td>-->
-<!--            <td th:text="${log.getTimestamp()}"></td>-->
-<!--            <td th:text="${log.getMethodName()}"></td>-->
-<!--            <td th:text="${log.getClassName()}"></td>-->
-<!--            <td th:text="${log.getStackTrace()}"></td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
-
-<!--</main>-->
-<!--<footer th:replace="~{fragments/commons::footer}"></footer>-->
-<!--</body>-->
-<!--</html>-->
+</main>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

@@ -6,13 +6,17 @@ import com.rms.service.ApplicationUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 
+//@EnableWebSecurity
+//@EnableAspectJAutoProxy
 @Configuration
 public class SecurityConfiguration {
 
@@ -32,12 +36,8 @@ public class SecurityConfiguration {
                                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                         .requestMatchers("/", "/index", "/users/login", "/users/register", "/users/login-error", "/reviews/all", "/api/reviews",
                                                 "/order", "/order/menu", "/order/drink/**", "/order/food/**", "/maintenance", "/error").permitAll() // FIXME remove /order/food/** and /order/drink/**
-                                        .requestMatchers("/views/admins", "/order/drink/**", "/order/food/**", "/maintenance/**", "/users/**", "/order/add/**", "/logs").hasRole(UserRoleEnum.ADMIN.name())
+                                        .requestMatchers("/views/admins", "/order/drink/**", "/order/food/**", "/maintenance/**", "/users/**", "/order/add/**", "/logs/**").hasRole(UserRoleEnum.ADMIN.name())
                                         .requestMatchers("/order/menu", "/order/drink/**", "/order/food/**", "/maintenance").hasRole(UserRoleEnum.USER.name())
-//                                        .requestMatchers("/views/waiters").hasRole(UserRoleEnum.WAITER.name())
-//                                        .requestMatchers("/views/cooks").hasRole(UserRoleEnum.COOK.name())
-//                                        .requestMatchers("/views/bartenders").hasRole(UserRoleEnum.BARTENDER.name())
-//                                        .requestMatchers("/views/clients", "/reviews/add").hasRole(UserRoleEnum.CLIENT.name())
                                         .anyRequest().authenticated()
 
                 )
@@ -45,10 +45,6 @@ public class SecurityConfiguration {
                         (formLogin) ->
                                 formLogin
                                         .loginPage("/users/login")
-//                                        usernameParameter(
-//                                                UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
-//                                        passwordParameter(
-//                                                UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
                                         .usernameParameter("username")
                                         .passwordParameter("password")
                                         .defaultSuccessUrl("/", true)
@@ -82,12 +78,5 @@ public class SecurityConfiguration {
         return new ApplicationUserDetailsService(userRepository);
     }
 
-//    @Bean
-//    public SecurityContextRepository securityContextRepository() {
-//        return new DelegatingSecurityContextRepository(
-//                new RequestAttributeSecurityContextRepository(),
-//                new HttpSessionSecurityContextRepository()
-//        );
-//    }
 
 }

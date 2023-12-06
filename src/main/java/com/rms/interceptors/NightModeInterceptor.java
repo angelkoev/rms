@@ -25,7 +25,7 @@ public class NightModeInterceptor implements HandlerInterceptor {
         return nightMode;
     }
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
 
         String nightModeClass = "night-mode-background";
 

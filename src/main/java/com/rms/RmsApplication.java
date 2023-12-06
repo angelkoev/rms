@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 //@ComponentScan(basePackages = {"com.rms", "com.rms.events"})
+//@ComponentScan(basePackages = "com.rms")
 public class RmsApplication {
 
     public static void main(String[] args) {
