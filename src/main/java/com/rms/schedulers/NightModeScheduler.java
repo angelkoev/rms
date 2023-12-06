@@ -20,7 +20,7 @@ public class NightModeScheduler {
     }
 
     @Scheduled(cron = "0 0 7 * * *") // sec min hours day month dayWeek
-    public void deactivateMaintenance() {
+    public void deactivateNightMode() {
         System.out.println("Scheduled NightMode Stop");
         nightModeInterceptor.NightModeStop();
     }
