@@ -4,22 +4,16 @@ import com.rms.model.entity.LogEntity;
 import com.rms.service.LogService;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.SessionScope;
 
 import java.time.LocalDateTime;
 
 @Aspect
 @Component
-//@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-//@SessionScope
 public class AuthenticationLoggingAspect {
 
     private final LogService logService;
-//    private boolean loggingDone = false;
 
     public AuthenticationLoggingAspect(LogService logService) {
         this.logService = logService;
