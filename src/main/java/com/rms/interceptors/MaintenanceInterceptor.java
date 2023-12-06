@@ -58,7 +58,6 @@ public class MaintenanceInterceptor implements HandlerInterceptor {
                     }
                 }
 
-
             }
             return true;
         }

@@ -20,12 +20,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfiguration {
 
-    //    private final String rememberMeKey;
-//
-//    public SecurityConfiguration(@Value("${rms.remember.me.key}")
-//                                 String rememberMeKey) {
-//        this.rememberMeKey = rememberMeKey;
-//    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -57,13 +51,6 @@ public class SecurityConfiguration {
                                 .invalidateHttpSession(true) // Invalidate the user's session
                                 .deleteCookies("JSESSIONID") // Optionally, delete cookies, e.g., JSESSIONID
                 );
-//                    .rememberMe(
-//                rememberMe -> {
-//                    rememberMe
-//                            .key(rememberMeKey)
-//                            .rememberMeParameter("remember-me")
-//                            .rememberMeCookieName("remember-me");
-//                });
 
         return http.build();
     }

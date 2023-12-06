@@ -15,40 +15,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatabaseInit implements CommandLineRunner {
 
-    private final UserRoleService userRoleService;
-    private final UserService userService;
-    //    private final TableService tableService;
-    private final ReviewService reviewService;
-    private final FoodService foodService;
-    private final DrinkService drinkService;
-    private final OrderService orderService;
-    //    private final DrinkTypeServiceImpl drinkTypeService;
-//    private final FoodTypeServiceImpl foodTypeService;
-    @Autowired
     private final TestDataInit testDataInit;
 
-    public DatabaseInit(UserRoleService userRoleService, UserService userService,
-                        ReviewService reviewService, FoodService foodService, DrinkService drinkService, OrderService orderService, TestDataInit testDataInit) {
-        this.userRoleService = userRoleService;
-        this.userService = userService;
-        this.reviewService = reviewService;
-        this.orderService = orderService;
-        this.foodService = foodService;
-        this.drinkService = drinkService;
+    public DatabaseInit(TestDataInit testDataInit) {
+
         this.testDataInit = testDataInit;
     }
 
     @Override
     public void run(String... args) {
-
-
-//        userRoleService.initUserRoles();
-//        userService.initAdmin();
-//        userService.initUsers();
-//        reviewService.initReviews();
-//        foodService.initFoods();
-//        drinkService.initDrinks();
-//        orderService.initMenuOrder();
 
         testDataInit.initUserRoles();
         testDataInit.initAdmin();

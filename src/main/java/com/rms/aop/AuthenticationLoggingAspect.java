@@ -1,7 +1,7 @@
 package com.rms.aop;
 
-import com.rms.model.entity.AuthenticationLog;
-import com.rms.service.AuthenticationLogService;
+import com.rms.model.entity.LogEntity;
+import com.rms.service.LogService;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,22 +15,22 @@ import java.time.LocalDateTime;
 @Component
 public class AuthenticationLoggingAspect {
 
-    private final AuthenticationLogService authenticationLogService;
+    private final LogService logService;
 
-    public AuthenticationLoggingAspect(AuthenticationLogService authenticationLogService) {
-        this.authenticationLogService = authenticationLogService;
+    public AuthenticationLoggingAspect(LogService logService) {
+        this.logService = logService;
     }
 
     @EventListener
     public void handleAuthenticationSuccess(AuthenticationSuccessEvent successEvent) {
         Authentication authentication = successEvent.getAuthentication();
-        if (authentication != null && authentication instanceof UsernamePasswordAuthenticationToken) {
+        if (authentication instanceof UsernamePasswordAuthenticationToken) {
 
-            AuthenticationLog authenticationLog = new AuthenticationLog();
-            authenticationLog.setUsername(authentication.getName());
-            authenticationLog.setTimestamp(LocalDateTime.now());
-            authenticationLog.setStatus("SUCCESS");
-            authenticationLogService.saveLog(authenticationLog);
+            LogEntity logEntity = new LogEntity();
+            logEntity.setUsername(authentication.getName());
+            logEntity.setTimestamp(LocalDateTime.now());
+            logEntity.setStatus("SUCCESS");
+            logService.saveLog(logEntity);
         }
     }
 }

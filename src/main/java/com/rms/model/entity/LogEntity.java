@@ -1,20 +1,18 @@
 package com.rms.model.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
 
 @Entity
-//@Table(name = "logs")
-public class AuthenticationLog extends BaseEntity {
+public class LogEntity extends BaseEntity {
 
     private String username;
     private LocalDateTime timestamp;
 
     private String status;
 
-    public AuthenticationLog() {
+    public LogEntity() {
 
     }
 
