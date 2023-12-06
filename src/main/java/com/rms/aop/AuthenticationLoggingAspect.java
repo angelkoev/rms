@@ -30,7 +30,6 @@ public class AuthenticationLoggingAspect {
             logEntity.setTimestamp(LocalDateTime.now());
             logEntity.setStatus("SUCCESS");
             logService.saveLog(logEntity);
-//            loggingDone = true;
         }
     }
 
