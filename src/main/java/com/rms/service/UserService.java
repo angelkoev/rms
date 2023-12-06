@@ -109,9 +109,9 @@ public class UserService {
 
     public UserEntity getUserByUsername(String username) {
         UserEntity currentUser = this.userRepository.findByUsername(username).orElse(null);
-        if (currentUser == null) {
-            throw new NoSuchElementException();
-        }
+//        if (currentUser == null) {
+//            throw new NoSuchElementException();
+//        }
         return currentUser;
     }
 
