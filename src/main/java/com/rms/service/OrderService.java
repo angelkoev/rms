@@ -86,11 +86,13 @@ public class OrderService {
     public void addToMenu(DrinkEntity drinkEntity) {
         menu.getDrinks().add(drinkEntity);
         orderRepository.save(menu);
+//        menu = getMenu();
     }
 
     public void addToMenu(FoodEntity foodEntity) {
         menu.getFoods().add(foodEntity);
         orderRepository.save(menu);
+//        menu = getMenu();
     }
 
 //    @CacheEvict(value = "drinksCache", allEntries = true) // MOVED LOGIC TO EVENT

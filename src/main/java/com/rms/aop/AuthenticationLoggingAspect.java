@@ -28,7 +28,7 @@ public class AuthenticationLoggingAspect {
             LogEntity logEntity = new LogEntity();
             logEntity.setUsername(authentication.getName());
             logEntity.setTimestamp(LocalDateTime.now());
-            logEntity.setStatus("SUCCESS");
+            logEntity.setStatus("LOGIN");
             logService.saveLog(logEntity);
         }
     }

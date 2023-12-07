@@ -1,10 +1,12 @@
 package com.rms.model.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "logs")
 public class LogEntity extends BaseEntity {
 
     private String username;
