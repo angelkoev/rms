@@ -41,6 +41,10 @@ public class RegisterDTO {
     public RegisterDTO() {
     }
 
+    public RegisterDTO(String john, String mail, String password, String john1, String doe, String number, String address) {
+
+    }
+
     public Long getId() {
         return id;
     }

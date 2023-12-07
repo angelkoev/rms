@@ -28,7 +28,7 @@ public class OrderService {
     private final DrinkService drinkService;
     private final ModelMapper modelMapper;
     private final ApplicationEventPublisher eventPublisher;
-    private static OrderEntity menu = null;
+//    private static OrderEntity menu = null;
 
     public OrderService(OrderRepository orderRepository, FoodService foodService, DrinkService drinkService, ModelMapper modelMapper, ApplicationEventPublisher eventPublisher) {
         this.orderRepository = orderRepository;
@@ -44,14 +44,14 @@ public class OrderService {
 //    @Cacheable("menuCache")
     public OrderEntity getMenu() {
         System.out.println("CACHE CHECK MENU");
-        menu = orderRepository.findById(1L).orElse(null);
+        OrderEntity menu = orderRepository.findById(1L).orElse(null);
         return menu;
     }
 
     @Cacheable("drinksCache")
     public List<DrinkView> getAllDrinksView() {
         System.out.println("CACHE CHECK DRINKS");
-        List<DrinkEntity> allDrinks = menu.getDrinks();
+        List<DrinkEntity> allDrinks = getMenu().getDrinks();
         List<DrinkView> allDrinksView = allDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
 
         return allDrinksView;
@@ -60,7 +60,7 @@ public class OrderService {
     @Cacheable("foodsCache")
     public List<FoodView> getAllFoodsView() {
         System.out.println("CACHE CHECK FOODS");
-        List<FoodEntity> allFoods = menu.getFoods();
+        List<FoodEntity> allFoods = getMenu().getFoods();
         List<FoodView> allFoodsView = allFoods.stream().map(foodEntity -> modelMapper.map(foodEntity, FoodView.class)).toList();
 
         return allFoodsView;
@@ -80,16 +80,18 @@ public class OrderService {
     }
 
     public boolean isMenuOK() {
-        return menu != null;
+        return getMenu() != null;
     }
 
     public void addToMenu(DrinkEntity drinkEntity) {
+        OrderEntity menu = getMenu();
         menu.getDrinks().add(drinkEntity);
         orderRepository.save(menu);
 //        menu = getMenu();
     }
 
     public void addToMenu(FoodEntity foodEntity) {
+        OrderEntity menu = getMenu();
         menu.getFoods().add(foodEntity);
         orderRepository.save(menu);
 //        menu = getMenu();
