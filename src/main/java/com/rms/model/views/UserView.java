@@ -2,6 +2,7 @@ package com.rms.model.views;
 
 import com.rms.model.entity.UserRoleEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserView {
@@ -14,6 +15,7 @@ public class UserView {
     private List<String> roles;
 
     public UserView() {
+        this.roles = new ArrayList<>();
     }
 
     public String getUsername() {

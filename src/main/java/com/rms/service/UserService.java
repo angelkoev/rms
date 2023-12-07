@@ -108,11 +108,7 @@ public class UserService {
     }
 
     public UserEntity getUserByUsername(String username) {
-        UserEntity currentUser = this.userRepository.findByUsername(username).orElse(null);
-//        if (currentUser == null) {
-//            throw new NoSuchElementException();
-//        }
-        return currentUser;
+        return this.userRepository.findByUsername(username).orElse(null);
     }
 
     private UserEntity mapUser(RegisterDTO registerDTO) {

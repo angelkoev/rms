@@ -51,13 +51,13 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    String register() {
+    public String register() {
 
         return "auth-register";
     }
 
     @PostMapping("/register")
-    String registerNewUser(@Valid RegisterDTO registerDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String registerNewUser(@Valid RegisterDTO registerDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         boolean equalPasswords = registerDTO.getPassword().equals(registerDTO.getConfirmPassword());
 
@@ -78,7 +78,7 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    String showAll(Model model) {
+    public String showAll(Model model) {
 
         List<UserView> allUserViews = userService.getAllUserViews();
         model.addAttribute("allUserViews", allUserViews);

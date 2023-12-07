@@ -50,7 +50,7 @@ class ReviewServiceTest {
         reviewDTO.setScore("4");
         reviewDTO.setContent("valid test content");
 
-        UserEntity userEntity = new UserEntity(); // Initialize with test data
+        UserEntity userEntity = new UserEntity();
         userEntity.setUsername("valid_test_username");
         reviewDTO.setUsername(userEntity.getUsername());
 
@@ -86,7 +86,6 @@ class ReviewServiceTest {
         // Arrange
         ReviewEntity reviewEntity = new ReviewEntity();
         UserEntity userEntity = new UserEntity();
-        String firstName = "test_user";
         reviewEntity.setWrittenBy(userEntity);
         when(reviewRepository.findAllByOrderByPostedOnDesc()).thenReturn(List.of(reviewEntity));
 

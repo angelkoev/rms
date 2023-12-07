@@ -33,7 +33,6 @@ class UserRoleServiceTest {
         UserRoleEntity adminUserRoleEntity = new UserRoleEntity();
         adminUserRoleEntity.setRole(adminRole);
         adminUserRoleEntity.setDescription("The owner of the company");
-
         when(userRoleRepository.findUserRoleEntityByRole(adminRole)).thenReturn(adminUserRoleEntity);
 
         // Act
@@ -47,7 +46,6 @@ class UserRoleServiceTest {
     void testFindUserRoleEntityByRole_NonExistingRole() {
         // Arrange
         UserRoleEnum nonExistingRole = UserRoleEnum.USER;
-
         when(userRoleRepository.findUserRoleEntityByRole(nonExistingRole)).thenReturn(null);
 
         // Act

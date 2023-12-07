@@ -33,7 +33,6 @@ class FoodServiceTest {
         FoodEntity existingFood = new FoodEntity();
         existingFood.setId(1L);
         existingFood.setName("Pizza");
-
         when(foodRepository.findByName("Pizza")).thenReturn(Optional.of(existingFood));
 
         // Act
@@ -60,7 +59,6 @@ class FoodServiceTest {
         // Arrange
         FoodEntity newFood = new FoodEntity();
         newFood.setName("NewFood");
-
         when(foodRepository.findByName("NewFood")).thenReturn(Optional.empty());
 
         // Act
@@ -75,7 +73,6 @@ class FoodServiceTest {
         // Arrange
         FoodEntity existingFood = new FoodEntity();
         existingFood.setName("ExistingFood");
-
         when(foodRepository.findByName("ExistingFood")).thenReturn(Optional.of(existingFood));
 
         // Act and Assert
@@ -118,7 +115,6 @@ class FoodServiceTest {
         Long existingId = 1L;
         FoodEntity existingFood = new FoodEntity();
         existingFood.setId(existingId);
-
         when(foodRepository.findById(existingId)).thenReturn(Optional.of(existingFood));
 
         // Act
@@ -132,7 +128,6 @@ class FoodServiceTest {
     void testFindById_NonExistingId() {
         // Arrange
         Long nonExistingId = 99L;
-
         when(foodRepository.findById(nonExistingId)).thenReturn(Optional.empty());
 
         // Act
@@ -142,5 +137,4 @@ class FoodServiceTest {
         assertNull(result);
     }
 
-    // Additional tests can be added based on specific scenarios and edge cases.
 }

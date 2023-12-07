@@ -79,8 +79,6 @@ class DrinkServiceTest {
 
         // Act and Assert
         assertThrows(IllegalStateException.class, () -> drinkService.addDrink(existingDrink));
-
-        // Verify that save was not called
         verify(drinkRepository, never()).save(any());
     }
 

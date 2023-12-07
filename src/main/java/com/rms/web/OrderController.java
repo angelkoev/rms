@@ -43,7 +43,6 @@ public class OrderController {
 
         if (!isMenuOK) {
             orderService.getMenu();
-            isMenuOK = true;
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -77,9 +76,8 @@ public class OrderController {
     public String deleteDrinkFromOrder(@PathVariable Long id) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
 
-        userService.deleteDrinkFromLastOrder(username, id);
+        userService.deleteDrinkFromLastOrder(authentication.getName(), id);
 
         return "redirect:/order/menu";
     }
@@ -88,9 +86,8 @@ public class OrderController {
     public String addDrinkToOrder(@PathVariable Long id) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
 
-        userService.addDrinkToLastOrder(username, id);
+        userService.addDrinkToLastOrder(authentication.getName(), id);
 
         return "redirect:/order/menu";
     }
@@ -99,9 +96,8 @@ public class OrderController {
     public String addFoodToOrder(@PathVariable Long id) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
 
-        userService.addFoodToLastOrder(username, id);
+        userService.addFoodToLastOrder(authentication.getName(), id);
 
         return "redirect:/order/menu";
     }
@@ -110,9 +106,8 @@ public class OrderController {
     public String deleteFoodFromOrder(@PathVariable Long id) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
 
-        userService.deleteFoodFromLastOrder(username, id);
+        userService.deleteFoodFromLastOrder(authentication.getName(), id);
 
         return "redirect:/order/menu";
     }
