@@ -16,7 +16,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-//@ActiveProfiles("test")
 public class UserControllerTest {
 
     @Autowired
@@ -24,6 +23,29 @@ public class UserControllerTest {
 
     @Autowired
     private UserService userService;
+
+    @Test
+    public void showLoginForm_ShouldReturnLoginPage() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/login"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("auth-login"));
+    }
+
+    @Test
+    public void onFailure_ShouldReturnLoginPageWithError() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/login-error"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("auth-login"))
+                .andExpect(model().attributeExists("errorMessage"));
+    }
+
+    @Test
+    public void register_ShouldReturnRegisterPage() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/register"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("auth-register"));
+    }
+
 //    @Test
 //    void login() throws Exception {
 //        mockMvc.perform(MockMvcRequestBuilders.get("/users/login"))
@@ -39,28 +61,6 @@ public class UserControllerTest {
 //                .andExpect(view().name("auth-register"))
 //                .andExpect(redirectedUrl(null));
 //    }
-
-    @Test
-    void showLoginForm_ShouldReturnLoginPage() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/login"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("auth-login"));
-    }
-
-    @Test
-    void onFailure_ShouldReturnLoginPageWithError() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/login-error"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("auth-login"))
-                .andExpect(model().attributeExists("errorMessage"));
-    }
-
-    @Test
-    void register_ShouldReturnRegisterPage() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/register"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("auth-register"));
-    }
 
 //    @Test
 //    void registerNewUser_ValidUser_ShouldRedirectToHome() throws Exception {

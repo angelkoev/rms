@@ -1,6 +1,7 @@
 package com.rms.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import com.rms.model.AppUserDetails;
 import com.rms.model.entity.UserEntity;
 import com.rms.model.entity.UserRoleEntity;
@@ -19,9 +20,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
 import static org.mockito.Mockito.*;
 
-class ApplicationUserDetailsServiceTest {
+public class ApplicationUserDetailsServiceTest {
 
     @Mock
     private UserRepository userRepository;
@@ -35,7 +37,7 @@ class ApplicationUserDetailsServiceTest {
     }
 
     @Test
-    void testLoadUserByUsername_UserExists() {
+    public void testLoadUserByUsername_UserExists() {
         // Arrange
         String username = "testUser";
         UserEntity userEntity = createUserEntity(username);
@@ -55,7 +57,7 @@ class ApplicationUserDetailsServiceTest {
     }
 
     @Test
-    void testLoadUserByUsername_UserNotFound() {
+    public void testLoadUserByUsername_UserNotFound() {
         // Arrange
         String username = "nonExistingUser";
         when(userRepository.findByUsername(username)).thenReturn(Optional.empty());

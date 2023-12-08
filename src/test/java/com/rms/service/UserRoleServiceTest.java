@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
-class UserRoleServiceTest {
+public class UserRoleServiceTest {
 
     @Mock
     private UserRoleRepository userRoleRepository;
@@ -22,11 +22,12 @@ class UserRoleServiceTest {
     private UserRoleService userRoleService;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
+
     @Test
-    void testFindUserRoleEntityByRole_AdminRoleExists() {
+    public void testFindUserRoleEntityByRole_AdminRoleExists() {
         // Arrange
         UserRoleEnum adminRole = UserRoleEnum.ADMIN;
         UserRoleEntity adminUserRoleEntity = new UserRoleEntity();
@@ -42,7 +43,7 @@ class UserRoleServiceTest {
     }
 
     @Test
-    void testFindUserRoleEntityByRole_NonExistingRole() {
+    public void testFindUserRoleEntityByRole_NonExistingRole() {
         // Arrange
         UserRoleEnum nonExistingRole = UserRoleEnum.USER;
         when(userRoleRepository.findUserRoleEntityByRole(nonExistingRole)).thenReturn(null);

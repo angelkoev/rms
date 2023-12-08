@@ -33,7 +33,7 @@ public class LogServiceTest {
     }
 
     @Test
-    void testSaveLog() {
+    public void testSaveLog() {
         // Arrange
         LogEntity logEntity = new LogEntity();
         logEntity.setUsername("testUser");
@@ -48,7 +48,7 @@ public class LogServiceTest {
     }
 
     @Test
-    void testGetAllLogs() {
+    public void testGetAllLogs() {
         // Arrange
         LogEntity logEntity1 = new LogEntity();
         logEntity1.setUsername("user1");

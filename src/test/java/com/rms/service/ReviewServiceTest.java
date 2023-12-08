@@ -15,12 +15,14 @@ import org.modelmapper.ModelMapper;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+
 import java.util.List;
 import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class ReviewServiceTest {
+public class ReviewServiceTest {
 
     @Mock
     private ReviewRepository reviewRepository;
@@ -31,14 +33,16 @@ class ReviewServiceTest {
     @InjectMocks
     private ReviewService reviewService;
     private Validator validator;
+
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
+
     @Test
-    void testAddReview_ValidDTO() {
+    public void testAddReview_ValidDTO() {
         // Arrange
         ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.setScore("4");
@@ -61,7 +65,7 @@ class ReviewServiceTest {
     }
 
     @Test
-    void testAddReview_InvalidDTO() {
+    public void testAddReview_InvalidDTO() {
         // Arrange
         ReviewDTO invalidReviewDTO = new ReviewDTO();
         invalidReviewDTO.setScore("6");
@@ -76,7 +80,7 @@ class ReviewServiceTest {
     }
 
     @Test
-    void testGetAllReviews() {
+    public void testGetAllReviews() {
         // Arrange
         ReviewEntity reviewEntity = new ReviewEntity();
         UserEntity userEntity = new UserEntity();

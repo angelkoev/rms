@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
@@ -65,16 +64,6 @@ public class UserServiceTest {
         assertNotNull(userDTO);
     }
 
-//    @Test
-//    public void testFindUserByEmail() {
-//        when(userRepositoryMock.findByEmail("john@example.com")).thenReturn(Optional.of(new UserEntity()));
-//        when(modelMapperMock.map(any(), any())).thenReturn(new UserDTO());
-//
-//        UserDTO userDTO = userService.findUserByEmail("john@example.com");
-//
-//        assertNotNull(userDTO);
-//    }
-
     @Test
     public void testRegister() {
         when(modelMapperMock.map(any(), any())).thenReturn(new UserEntity());
@@ -105,25 +94,6 @@ public class UserServiceTest {
         verify(userRepositoryMock, times(1)).save(currentUser);
     }
 
-//    @Test
-//    public void testCheckLastOrderWhenLastOrderIsNotNull() {
-//        // Arrange
-//        String username = "testUser";
-//        UserEntity currentUser = new UserEntity();
-//        currentUser.setUsername(username);
-//        OrderEntity existingOrder = new OrderEntity();
-//        currentUser.setLastOrder(existingOrder);
-//        when(userRepositoryMock.findByUsername(username)).thenReturn(java.util.Optional.of(currentUser));
-//
-//        // Act
-//        userService.checkLastOrder(username);
-//
-//        // Assert
-//        verify(orderServiceMock, never()).createNewLastOrder(currentUser);
-//        verify(orderServiceMock, never()).saveOrder(any(OrderEntity.class));
-//        verify(userRepositoryMock, never()).save(currentUser);
-//    }
-
     @Test
     public void testIsAdminWhenUserHasAdminRole() {
         // Arrange
@@ -141,24 +111,6 @@ public class UserServiceTest {
         // Assert
         assertTrue(isAdmin);
     }
-
-//    @Test
-//    public void testIsAdminWhenUserDoesNotHaveAdminRole() {
-//        // Arrange
-//        String username = "testUser";
-//        UserEntity userWithoutAdminRole = new UserEntity();
-//        userWithoutAdminRole.setUsername(username);
-//        UserRoleEntity userRole = new UserRoleEntity();
-//        userRole.setRole(UserRoleEnum.USER);
-//        userWithoutAdminRole.setRoles(Collections.singleton(userRole));
-//        when(userRepositoryMock.findByUsername(username)).thenReturn(java.util.Optional.of(userWithoutAdminRole));
-//
-//        // Act
-//        boolean isAdmin = userService.isAdmin(username);
-//
-//        // Assert
-//        assertFalse(isAdmin);
-//    }
 
     @Test
     public void testGetAllUserViews() {
@@ -178,6 +130,174 @@ public class UserServiceTest {
         // Assert
         assertEquals(2, allUserViews.size());
     }
+
+    @Test
+    public void testDeleteDrinkFromLastOrder() {
+        // Arrange
+        UserEntity user = createUserWithRoles("user1");
+        DrinkEntity drink = new DrinkEntity();
+        drink.setId(1L);
+        OrderEntity order = new OrderEntity();
+        List<DrinkEntity> drinks = new ArrayList<>();
+        drinks.add(drink);
+        order.setDrinks(drinks);
+        user.setLastOrder(order);
+        when(userRepositoryMock.findByUsername("user1")).thenReturn(Optional.of(user));
+        doNothing().when(orderServiceMock).saveOrder(order);
+
+        // Act
+        userService.deleteDrinkFromLastOrder("user1", 1L);
+
+        // Assert
+        assertTrue(order.getDrinks().isEmpty());
+    }
+
+    @Test
+    public void testDeleteFoodFromLastOrder() {
+        // Arrange
+        UserEntity user = createUserWithRoles("user1");
+        FoodEntity food = new FoodEntity();
+        food.setId(1L);
+        OrderEntity order = new OrderEntity();
+        List<FoodEntity> foods = new ArrayList<>();
+        foods.add(food);
+        order.setFoods(foods);
+        user.setLastOrder(order);
+        when(userRepositoryMock.findByUsername("user1")).thenReturn(Optional.of(user));
+        doNothing().when(orderServiceMock).saveOrder(order);
+
+        // Act
+        userService.deleteFoodFromLastOrder("user1", 1L);
+
+        // Assert
+        assertTrue(order.getFoods().isEmpty());
+    }
+
+    @Test
+    public void testAddFoodToLastOrder() {
+        // Arrange
+        UserEntity user = createUserWithRoles("user1");
+        FoodEntity food = new FoodEntity();
+        food.setId(1L);
+        OrderEntity lastOrder = new OrderEntity();
+        user.setLastOrder(lastOrder);
+        when(userRepositoryMock.findByUsername("user1")).thenReturn(Optional.of(user));
+        when(foodServiceMock.findById(1L)).thenReturn(food);
+
+        // Act
+        userService.addFoodToLastOrder("user1", 1L);
+
+        // Assert
+        assertEquals(1, lastOrder.getFoods().size());
+        assertEquals(food, lastOrder.getFoods().get(0));
+        verify(orderServiceMock, times(1)).saveOrder(lastOrder);
+    }
+
+    @Test
+    public void getAllCurrentOrdersViews() {
+        UserEntity user = createUserWithRoles("user1", UserRoleEnum.ADMIN);
+        FoodEntity food = new FoodEntity();
+        food.setId(1L);
+        food.setPrice(BigDecimal.ONE);
+        OrderEntity order1 = new OrderEntity();
+        order1.setId(2L);
+        order1.setDateTime(LocalDateTime.now());
+        order1.getFoods().add(food);
+        order1.setMadeBy(user);
+        OrderEntity order2 = new OrderEntity();
+        order2.setId(3L);
+        order2.setDateTime(LocalDateTime.now());
+        order2.getFoods().add(food);
+        order2.setMadeBy(user);
+//        user.setLastOrder(order1);
+        user.getOrders().add(order1);
+
+        OrderView orderView = new OrderView();
+        orderView.setTime("0");
+        orderView.setDate("0");
+
+        when(userRepositoryMock.findByUsername("user1")).thenReturn(Optional.of(user));
+        when(foodServiceMock.findById(1L)).thenReturn(food);
+        when(orderRepositoryMock.findOrderEntitiesByMadeBy_UsernameOrderByDateTimeDesc("user1")).thenReturn(List.of(order1, order2));
+        when(orderServiceMock.getAllOrders()).thenReturn(List.of(order1, order2));
+        when(modelMapperMock.map(any(), any())).thenReturn(orderView);
+
+        List<OrderView> allCurrentOrdersViews = userService.getAllCurrentOrdersViews(user.getUsername());
+
+        assertEquals(2, allCurrentOrdersViews.size());
+
+    }
+
+    private UserEntity createUserWithRoles(String username, UserRoleEnum... roles) {
+        UserEntity user = new UserEntity();
+        user.setUsername(username);
+
+        for (UserRoleEnum role : roles) {
+            UserRoleEntity userRoleEntity = new UserRoleEntity();
+            userRoleEntity.setRole(role);
+            user.getRoles().add(userRoleEntity);
+        }
+        return user;
+    }
+
+    private UserView createUserViewWithRoles(String username, String... roles) {
+        UserView user = new UserView();
+        user.setUsername(username);
+
+        for (String role : roles) {
+            user.getRoles().add(role);
+        }
+
+        return user;
+    }
+
+
+//    @Test
+//    public void testFindUserByEmail() {
+//        when(userRepositoryMock.findByEmail("john@example.com")).thenReturn(Optional.of(new UserEntity()));
+//        when(modelMapperMock.map(any(), any())).thenReturn(new UserDTO());
+//
+//        UserDTO userDTO = userService.findUserByEmail("john@example.com");
+//
+//        assertNotNull(userDTO);
+//    }
+
+//    @Test
+//    public void testCheckLastOrderWhenLastOrderIsNotNull() {
+//        // Arrange
+//        String username = "testUser";
+//        UserEntity currentUser = new UserEntity();
+//        currentUser.setUsername(username);
+//        OrderEntity existingOrder = new OrderEntity();
+//        currentUser.setLastOrder(existingOrder);
+//        when(userRepositoryMock.findByUsername(username)).thenReturn(java.util.Optional.of(currentUser));
+//
+//        // Act
+//        userService.checkLastOrder(username);
+//
+//        // Assert
+//        verify(orderServiceMock, never()).createNewLastOrder(currentUser);
+//        verify(orderServiceMock, never()).saveOrder(any(OrderEntity.class));
+//        verify(userRepositoryMock, never()).save(currentUser);
+//    }
+
+//    @Test
+//    public void testIsAdminWhenUserDoesNotHaveAdminRole() {
+//        // Arrange
+//        String username = "testUser";
+//        UserEntity userWithoutAdminRole = new UserEntity();
+//        userWithoutAdminRole.setUsername(username);
+//        UserRoleEntity userRole = new UserRoleEntity();
+//        userRole.setRole(UserRoleEnum.USER);
+//        userWithoutAdminRole.setRoles(Collections.singleton(userRole));
+//        when(userRepositoryMock.findByUsername(username)).thenReturn(java.util.Optional.of(userWithoutAdminRole));
+//
+//        // Act
+//        boolean isAdmin = userService.isAdmin(username);
+//
+//        // Assert
+//        assertFalse(isAdmin);
+//    }
 
 //    @Test
 //    public void testTotalCurrentPrice() {
@@ -224,48 +344,6 @@ public class UserServiceTest {
 //        assertFalse(user.getRoles().isEmpty());
 //    }
 
-    @Test
-    public void testDeleteDrinkFromLastOrder() {
-        // Arrange
-        UserEntity user = createUserWithRoles("user1");
-        DrinkEntity drink = new DrinkEntity();
-        drink.setId(1L);
-        OrderEntity order = new OrderEntity();
-        List<DrinkEntity> drinks = new ArrayList<>();
-        drinks.add(drink);
-        order.setDrinks(drinks);
-        user.setLastOrder(order);
-        when(userRepositoryMock.findByUsername("user1")).thenReturn(Optional.of(user));
-        doNothing().when(orderServiceMock).saveOrder(order);
-
-        // Act
-        userService.deleteDrinkFromLastOrder("user1", 1L);
-
-        // Assert
-        assertTrue(order.getDrinks().isEmpty());
-    }
-
-    @Test
-    public void testDeleteFoodFromLastOrder() {
-        // Arrange
-        UserEntity user = createUserWithRoles("user1");
-        FoodEntity food = new FoodEntity();
-        food.setId(1L);
-        OrderEntity order = new OrderEntity();
-        List<FoodEntity> foods = new ArrayList<>();
-        foods.add(food);
-        order.setFoods(foods);
-        user.setLastOrder(order);
-        when(userRepositoryMock.findByUsername("user1")).thenReturn(Optional.of(user));
-        doNothing().when(orderServiceMock).saveOrder(order);
-
-        // Act
-        userService.deleteFoodFromLastOrder("user1", 1L);
-
-        // Assert
-        assertTrue(order.getFoods().isEmpty());
-    }
-
 //    @Test
 //    public void testAddDrinkToLastOrderWithNullLastOrder() {
 //        // Arrange
@@ -280,62 +358,6 @@ public class UserServiceTest {
 //        assertFalse(user.getLastOrder().getDrinks().isEmpty());
 //    }
 
-
-    @Test
-    void testAddFoodToLastOrder() {
-        // Arrange
-        UserEntity user = createUserWithRoles("user1");
-        FoodEntity food = new FoodEntity();
-        food.setId(1L);
-        OrderEntity lastOrder = new OrderEntity();
-        user.setLastOrder(lastOrder);
-        when(userRepositoryMock.findByUsername("user1")).thenReturn(Optional.of(user));
-        when(foodServiceMock.findById(1L)).thenReturn(food);
-
-        // Act
-        userService.addFoodToLastOrder("user1", 1L);
-
-        // Assert
-        assertEquals(1, lastOrder.getFoods().size());
-        assertEquals(food, lastOrder.getFoods().get(0));
-        verify(orderServiceMock, times(1)).saveOrder(lastOrder);
-    }
-
-    @Test
-    void getAllCurrentOrdersViews() {
-        UserEntity user = createUserWithRoles("user1", UserRoleEnum.ADMIN);
-        FoodEntity food = new FoodEntity();
-        food.setId(1L);
-        food.setPrice(BigDecimal.ONE);
-        OrderEntity order1 = new OrderEntity();
-        order1.setId(2L);
-        order1.setDateTime(LocalDateTime.now());
-        order1.getFoods().add(food);
-        order1.setMadeBy(user);
-        OrderEntity order2 = new OrderEntity();
-        order2.setId(3L);
-        order2.setDateTime(LocalDateTime.now());
-        order2.getFoods().add(food);
-        order2.setMadeBy(user);
-//        user.setLastOrder(order1);
-        user.getOrders().add(order1);
-
-        OrderView orderView = new OrderView();
-        orderView.setTime("0");
-        orderView.setDate("0");
-
-        when(userRepositoryMock.findByUsername("user1")).thenReturn(Optional.of(user));
-        when(foodServiceMock.findById(1L)).thenReturn(food);
-        when(orderRepositoryMock.findOrderEntitiesByMadeBy_UsernameOrderByDateTimeDesc("user1")).thenReturn(List.of(order1, order2));
-        when(orderServiceMock.getAllOrders()).thenReturn(List.of(order1, order2));
-        when(modelMapperMock.map(any(), any())).thenReturn(orderView);
-
-        List<OrderView> allCurrentOrdersViews = userService.getAllCurrentOrdersViews(user.getUsername());
-
-        assertEquals(2, allCurrentOrdersViews.size());
-
-    }
-
 //    @Test
 //    void addAdmin() {
 //        UserEntity user = createUserWithRoles("user1", UserRoleEnum.ADMIN);
@@ -349,28 +371,4 @@ public class UserServiceTest {
 //        doNothing(userService.addAdmin(user.getId()));
 //        verify(userRepositoryMock, times(1)).save(user);
 //    }
-
-        private UserEntity createUserWithRoles(String username, UserRoleEnum... roles) {
-        UserEntity user = new UserEntity();
-        user.setUsername(username);
-
-        for (UserRoleEnum role : roles) {
-            UserRoleEntity userRoleEntity = new UserRoleEntity();
-            userRoleEntity.setRole(role);
-            user.getRoles().add(userRoleEntity);
-        }
-        return user;
-    }
-
-    private UserView createUserViewWithRoles(String username, String... roles) {
-        UserView user = new UserView();
-        user.setUsername(username);
-
-        for (String role : roles) {
-            user.getRoles().add(role);
-        }
-
-        return user;
-    }
-
 }
