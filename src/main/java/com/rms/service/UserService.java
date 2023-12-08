@@ -91,7 +91,6 @@ public class UserService {
     public List<DrinkView> getAllCurrentDrinkViews(String username) {
         UserEntity currentUser = getUserByUsername(username);
 
-
         List<DrinkEntity> currentDrinks = currentUser.getLastOrder().getDrinks();
         return currentDrinks.stream().map(drinkEntity -> modelMapper.map(drinkEntity, DrinkView.class)).toList();
     }

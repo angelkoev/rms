@@ -44,28 +44,18 @@ public class LogControllerTest {
         String viewName = logController.logHistory(modelMock, redirectAttributesMock);
 
         // Assert
-        assertEquals("logs", viewName); // Ensure the correct view name is returned
-
-        // Verify that logService.getAllLogs() was called
+        assertEquals("logs", viewName);
         verify(logServiceMock, times(1)).getAllLogs();
-
-        // Verify that the model attribute was added with the correct name and value
         verify(modelMock, times(1)).addAttribute(eq("allLogsOrderedByTime"), eq(fakeLogs));
-
-        // Verify that no redirect attributes were added
         verify(redirectAttributesMock, never()).addFlashAttribute(anyString(), any());
-
-        // Add more assertions based on the expected behavior of your method
     }
 
     public static List<LogView> createFakeLogViews() {
         List<LogView> fakeLogs = new ArrayList<>();
 
-        // Add some fake log entries
         fakeLogs.add(createLogView("user1", "2023-12-07", "12:30:45", "Success"));
         fakeLogs.add(createLogView("user2", "2023-12-07", "13:15:20", "Failure"));
         fakeLogs.add(createLogView("user3", "2023-12-08", "09:45:10", "Success"));
-        // Add more log entries as needed
 
         return fakeLogs;
     }

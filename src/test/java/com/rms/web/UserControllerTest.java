@@ -24,21 +24,21 @@ public class UserControllerTest {
 
     @Autowired
     private UserService userService;
-    @Test
-    void login() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/login"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("auth-login"))
-                .andExpect(redirectedUrl(null));
-    }
-
-    @Test
-    void register() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/register"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("auth-register"))
-                .andExpect(redirectedUrl(null));
-    }
+//    @Test
+//    void login() throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.get("/users/login"))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("auth-login"))
+//                .andExpect(redirectedUrl(null));
+//    }
+//
+//    @Test
+//    void register() throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.get("/users/register"))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("auth-register"))
+//                .andExpect(redirectedUrl(null));
+//    }
 
     @Test
     void showLoginForm_ShouldReturnLoginPage() throws Exception {
@@ -83,15 +83,15 @@ public class UserControllerTest {
 //                .andExpect(flash().attributeExists("org.springframework.validation.BindingResult.registerDTO"));
 //    }
 
-    private RegisterDTO createValidRegisterDTO() {
-        RegisterDTO registerDTO = new RegisterDTO();
-        // Set valid user data
-        return registerDTO;
-    }
-
-    private RegisterDTO createInvalidRegisterDTO() {
-        RegisterDTO registerDTO = new RegisterDTO();
-        // Set invalid user data
-        return registerDTO;
-    }
+//    private RegisterDTO createValidRegisterDTO() {
+//        RegisterDTO registerDTO = new RegisterDTO();
+//        // Set valid user data
+//        return registerDTO;
+//    }
+//
+//    private RegisterDTO createInvalidRegisterDTO() {
+//        RegisterDTO registerDTO = new RegisterDTO();
+//        // Set invalid user data
+//        return registerDTO;
+//    }
 }

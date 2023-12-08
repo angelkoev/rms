@@ -25,7 +25,6 @@ class UserRoleServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
-
     @Test
     void testFindUserRoleEntityByRole_AdminRoleExists() {
         // Arrange

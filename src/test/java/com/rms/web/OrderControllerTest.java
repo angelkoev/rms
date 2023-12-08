@@ -47,7 +47,6 @@ public class OrderControllerTest {
     @MockBean
     private UserService userService;
 
-
     @MockBean
     private FoodService foodService;
 
@@ -65,17 +64,14 @@ public class OrderControllerTest {
     @Test
     @WithMockUser(username = "testUser", roles = "USER")
     public void testViewAll() throws Exception {
-        // Mock necessary service calls and their return values
         when(orderService.isMenuOK()).thenReturn(true);
 
-        // Mock your other service calls and their return values as needed
         when(userService.getAllCurrentDrinkViews("testUser")).thenReturn(Collections.emptyList());
         when(userService.getAllCurrentFoodViews("testUser")).thenReturn(Collections.emptyList());
         when(userService.totalCurrentPrice("testUser")).thenReturn("100.00");
         when(orderService.getAllDrinksView()).thenReturn(Collections.emptyList());
         when(orderService.getAllFoodsView()).thenReturn(Collections.emptyList());
 
-        // Perform the MVC request and validate the response
         mockMvc.perform(get("/order/menu"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("menu-view"))
@@ -115,7 +111,6 @@ public class OrderControllerTest {
                 .with(csrf()));
 
         // Assert
-//        result.andExpect(status().is4xxClientError());
         result.andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/home"));
     }
@@ -129,7 +124,6 @@ public class OrderControllerTest {
         drinkDTO.setName("Existing Drink");
         drinkDTO.setAddToMenu(true);
 
-        // Mock the necessary service methods
         when(drinkService.isDrinkAlreadyAdded(any(DrinkDTO.class))).thenReturn(true);
 
         // Act

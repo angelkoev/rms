@@ -24,25 +24,19 @@ class ReviewServiceTest {
 
     @Mock
     private ReviewRepository reviewRepository;
-
     @Mock
     private UserService userService;
-
     @Mock
     private ModelMapper modelMapper;
-
     @InjectMocks
     private ReviewService reviewService;
-
     private Validator validator;
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
-
     @Test
     void testAddReview_ValidDTO() {
         // Arrange

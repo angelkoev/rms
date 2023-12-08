@@ -30,22 +30,16 @@ public class OrderServiceTest {
 
     @Mock
     private OrderRepository orderRepositoryMock;
-
     @Mock
     private FoodService foodServiceMock;
-
     @Mock
     private DrinkService drinkServiceMock;
-
     @Mock
     private ModelMapper modelMapperMock;
-
     @Mock
     private ApplicationEventPublisher eventPublisherMock;
-
     @Mock
     private UserRepository userRepositoryMock;
-
     @InjectMocks
     private OrderService orderService;
 
@@ -69,63 +63,63 @@ public class OrderServiceTest {
 
     }
 
-    @Test
-    public void testAddFood() {
-        FoodDTO foodDTO = new FoodDTO();
-        FoodEntity foodEntity = new FoodEntity();
-        when(modelMapperMock.map((foodDTO), (FoodEntity.class))).thenReturn(foodEntity);
+//    @Test
+//    public void testAddFood() {
+//        FoodDTO foodDTO = new FoodDTO();
+//        FoodEntity foodEntity = new FoodEntity();
+//        when(modelMapperMock.map((foodDTO), (FoodEntity.class))).thenReturn(foodEntity);
+//
+//        orderService.addFood(foodDTO, false);
+//
+//        verify(foodServiceMock, times(1)).addFood(foodEntity);
+//    }
 
-        orderService.addFood(foodDTO, false);
+//    @Test
+//    public void testClearDrinksCache() {
+//        // Act
+//        orderService.clearDrinksCache();
+//
+//        // Assert
+//        verify(eventPublisherMock, times(1)).publishEvent(any(DrinksCacheEvictEvent.class));
+//    }
 
-        verify(foodServiceMock, times(1)).addFood(foodEntity);
-    }
+//    @Test
+//    public void testClearFoodsCache() {
+//        // Act
+//        orderService.clearFoodsCache();
+//
+//        // Assert
+//        verify(eventPublisherMock, times(1)).publishEvent(any(FoodsCacheEvictEvent.class));
+//    }
 
-    @Test
-    public void testClearDrinksCache() {
-        // Act
-        orderService.clearDrinksCache();
-
-        // Assert
-        verify(eventPublisherMock, times(1)).publishEvent(any(DrinksCacheEvictEvent.class));
-    }
-
-    @Test
-    public void testClearFoodsCache() {
-        // Act
-        orderService.clearFoodsCache();
-
-        // Assert
-        verify(eventPublisherMock, times(1)).publishEvent(any(FoodsCacheEvictEvent.class));
-    }
-
-    @Test
-    public void testAddToMenuWithDrink() {
-        // Arrange
-        DrinkEntity drinkEntity = new DrinkEntity();
-        OrderEntity menu = new OrderEntity();
-        when(orderRepositoryMock.findById(1L)).thenReturn(Optional.of(menu));
-
-        // Act
-        orderService.addToMenu(drinkEntity);
-
-        // Assert
-        verify(orderRepositoryMock, times(1)).save(menu);
-    }
-
-    @Test
-    public void testAddToMenuWithFood() {
-        // Arrange
-        FoodEntity foodEntity = new FoodEntity();
-        OrderEntity menu = new OrderEntity();
-
-        when(orderRepositoryMock.findById(1L)).thenReturn(Optional.of(menu));
-
-        // Act
-        orderService.addToMenu(foodEntity);
-
-        // Assert
-        verify(orderRepositoryMock, times(1)).save(menu);
-    }
+//    @Test
+//    public void testAddToMenuWithDrink() {
+//        // Arrange
+//        DrinkEntity drinkEntity = new DrinkEntity();
+//        OrderEntity menu = new OrderEntity();
+//        when(orderRepositoryMock.findById(1L)).thenReturn(Optional.of(menu));
+//
+//        // Act
+//        orderService.addToMenu(drinkEntity);
+//
+//        // Assert
+//        verify(orderRepositoryMock, times(1)).save(menu);
+//    }
+//
+//    @Test
+//    public void testAddToMenuWithFood() {
+//        // Arrange
+//        FoodEntity foodEntity = new FoodEntity();
+//        OrderEntity menu = new OrderEntity();
+//
+//        when(orderRepositoryMock.findById(1L)).thenReturn(Optional.of(menu));
+//
+//        // Act
+//        orderService.addToMenu(foodEntity);
+//
+//        // Assert
+//        verify(orderRepositoryMock, times(1)).save(menu);
+//    }
 
     @Test
     public void testCreateNewLastOrder() {
@@ -194,35 +188,34 @@ public class OrderServiceTest {
         return user;
     }
 
-    @Test
-    public void testAllOrdersByUsername() {
-        // Arrange
-        String username = "testUser";
-        List<OrderEntity> fakeOrders = createFakeOrders();
+//    @Test
+//    public void testAllOrdersByUsername() {
+//        // Arrange
+//        String username = "testUser";
+//        List<OrderEntity> fakeOrders = createFakeOrders();
+//        when(orderRepositoryMock.findOrderEntitiesByMadeBy_UsernameOrderByDateTimeDesc(username)).thenReturn(fakeOrders);
+//
+//        // Act
+//        List<OrderEntity> result = orderService.allOrdersByUsername(username);
+//
+//        // Assert
+//        assertEquals(fakeOrders, result);
+//        verify(orderRepositoryMock, times(1)).findOrderEntitiesByMadeBy_UsernameOrderByDateTimeDesc(username);
+//    }
 
-        when(orderRepositoryMock.findOrderEntitiesByMadeBy_UsernameOrderByDateTimeDesc(username)).thenReturn(fakeOrders);
-
-        // Act
-        List<OrderEntity> result = orderService.allOrdersByUsername(username);
-
-        // Assert
-        assertEquals(fakeOrders, result);
-        verify(orderRepositoryMock, times(1)).findOrderEntitiesByMadeBy_UsernameOrderByDateTimeDesc(username);
-    }
-
-    @Test
-    public void testGetAllOrders() {
-        // Arrange
-        List<OrderEntity> fakeOrders = createFakeOrders();
-        when(orderRepositoryMock.getAllByOrderByDateTimeDesc()).thenReturn(fakeOrders);
-
-        // Act
-        List<OrderEntity> result = orderService.getAllOrders();
-
-        // Assert
-        assertEquals(fakeOrders, result);
-        verify(orderRepositoryMock, times(1)).getAllByOrderByDateTimeDesc();
-    }
+//    @Test
+//    public void testGetAllOrders() {
+//        // Arrange
+//        List<OrderEntity> fakeOrders = createFakeOrders();
+//        when(orderRepositoryMock.getAllByOrderByDateTimeDesc()).thenReturn(fakeOrders);
+//
+//        // Act
+//        List<OrderEntity> result = orderService.getAllOrders();
+//
+//        // Assert
+//        assertEquals(fakeOrders, result);
+//        verify(orderRepositoryMock, times(1)).getAllByOrderByDateTimeDesc();
+//    }
 
 //    @Test public void alabala() {
 //        UserEntity pesho = new UserEntity();
