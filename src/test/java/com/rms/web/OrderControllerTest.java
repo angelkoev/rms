@@ -1,6 +1,7 @@
 package com.rms.web;
 
 import com.rms.model.dto.DrinkDTO;
+import com.rms.model.entity.DrinkTypeEnum;
 import com.rms.service.DrinkService;
 import com.rms.service.FoodService;
 import com.rms.service.OrderService;
@@ -20,10 +21,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -86,51 +89,60 @@ public class OrderControllerTest {
                 .andExpect(MockMvcResultMatchers.model().attributeExists("allFoodsView"));
     }
 
-//    @Test
-//    @WithMockUser(username = "adminUser", roles = "ADMIN, USER")
-//    void addNewDrink_ShouldAddDrinkSuccessfully() throws Exception {
-//        // Arrange
-//        DrinkDTO drinkDTO = new DrinkDTO();
-//        drinkDTO.setName("New Drink");
-//        drinkDTO.setAddToMenu(true);
-//
-//        // Mock the necessary service methods
-//        when(drinkService.isDrinkAlreadyAdded(any(DrinkDTO.class))).thenReturn(false);
-//
-//        // Act
-//        ResultActions result = mockMvc.perform(post("/order/add/drink")
-//                .param("name", drinkDTO.getName())
-//                .param("addToMenu", String.valueOf(drinkDTO.isAddToMenu())));
-//
-//        // Assert
-////        result.andExpect(status().is4xxClientError());
-//        result.andExpect(status().is3xxRedirection())
-//                .andExpect(redirectedUrl("/home"));
-//    }
-
-//    @Test
+    @Test
+    @WithMockUser(username = "adminUser", roles = {"ADMIN", "USER"})
 //    @WithMockUser(username = "adminUser", roles = "ADMIN")
-//    void addNewDrink_ShouldRedirectWithErrorWhenDrinkAlreadyAdded() throws Exception {
-//
-//        // Arrange
-//        DrinkDTO drinkDTO = new DrinkDTO();
-//        drinkDTO.setName("Existing Drink");
-//        drinkDTO.setAddToMenu(true);
-//
-//        // Mock the necessary service methods
-//        when(drinkService.isDrinkAlreadyAdded(any(DrinkDTO.class))).thenReturn(true);
-//
-//        // Act
-//        ResultActions result = mockMvc.perform(post("/order/add/drink")
-//                .param("name", drinkDTO.getName())
-//                .param("addToMenu", String.valueOf(drinkDTO.isAddToMenu())));
-//
-//        // Assert
-////        result.andExpect(status().is4xxClientError());
-//        result.andExpect(status().is3xxRedirection())
-//                .andExpect(redirectedUrl("/order/add/drink"));
-//
-//    }
+//    @WithMockUser(username = "adminUser", authorities = {"ROLE_ADMIN", "ROLE_USER"})
+    void addNewDrink_ShouldAddDrinkSuccessfully() throws Exception {
+        // Arrange
+        DrinkDTO drinkDTO = new DrinkDTO();
+        drinkDTO.setName("New Drink");
+        drinkDTO.setType(DrinkTypeEnum.BEER);
+        drinkDTO.setPrice(BigDecimal.ONE);
+        drinkDTO.setVolume(500);
+        drinkDTO.setAddToMenu(true);
+
+        // Mock the necessary service methods
+        when(drinkService.isDrinkAlreadyAdded(any(DrinkDTO.class))).thenReturn(false);
+
+        // Act
+        ResultActions result = mockMvc.perform(post("/order/add/drink")
+                .param("name", drinkDTO.getName())
+                .param("price", drinkDTO.getPrice().toString())
+                .param("volume", String.valueOf(drinkDTO.getVolume()))
+                .param("type", drinkDTO.getType().toString())
+                .param("addToMenu", String.valueOf(drinkDTO.isAddToMenu()))
+                .with(csrf()));
+
+        // Assert
+//        result.andExpect(status().is4xxClientError());
+        result.andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/home"));
+    }
+
+    @Test
+    @WithMockUser(username = "adminUser", roles = "ADMIN")
+    void addNewDrink_ShouldRedirectWithErrorWhenDrinkAlreadyAdded() throws Exception {
+
+        // Arrange
+        DrinkDTO drinkDTO = new DrinkDTO();
+        drinkDTO.setName("Existing Drink");
+        drinkDTO.setAddToMenu(true);
+
+        // Mock the necessary service methods
+        when(drinkService.isDrinkAlreadyAdded(any(DrinkDTO.class))).thenReturn(true);
+
+        // Act
+        ResultActions result = mockMvc.perform(post("/order/add/drink")
+                .param("name", drinkDTO.getName())
+                .param("addToMenu", String.valueOf(drinkDTO.isAddToMenu()))
+                .with(csrf()));
+
+        // Assert
+        result.andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/order/add/drink"));
+
+    }
 
     @Test
     @WithMockUser(username = "testUser", roles = "USER")

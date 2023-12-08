@@ -16,7 +16,6 @@
                               th:action="@{/reviews/add}"
                               th:object="${reviewDTO}">
                             <h3 class="text-center text-info">Моля попълнете:</h3>
-<!--                            <input type="hidden" th:field="*{username}" th:value="${username}" />-->
                             <br>
                             <div class="form-group">
                                 <label for="content" class="text-info">Описание:</label><br>
@@ -26,7 +25,6 @@
                             </div>
                             <small th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
                                    class="text-danger">Content error message</small>
-
 
                             <div class="form-group">
                                 <label for="score" class="text-info">Оценка от 1 до 5:</label><br>

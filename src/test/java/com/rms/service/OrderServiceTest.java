@@ -224,6 +224,15 @@ public class OrderServiceTest {
         verify(orderRepositoryMock, times(1)).getAllByOrderByDateTimeDesc();
     }
 
+//    @Test public void alabala() {
+//        UserEntity pesho = new UserEntity();
+//        pesho.setUsername("pesho");
+//        pesho.setLastOrder(new OrderEntity());
+//        when(userRepositoryMock.findByUsername(pesho.getUsername())).thenReturn(Optional.of(pesho));
+//
+//
+//    }
+
     public static List<OrderEntity> createFakeOrders() {
         List<OrderEntity> fakeOrders = new ArrayList<>();
 
