@@ -11,21 +11,20 @@ public class FoodDTO {
     private String name;
     @NotNull
 //    @Pattern(regexp="^\\d{0,5}(\\.\\d{1,2})?$", message = "Въведената цена не е валидна")
-    @DecimalMin(value = "0.00", inclusive = false, message = "цената трябва да е по-голяма от 0.00")
-    @DecimalMax(value = "99999.99", message = "цената трябва да е по-малка от 99999.99")
+    @DecimalMin(value = "0.00", inclusive = false, message = "Цената трябва да е по-голяма от 0.00")
+    @DecimalMax(value = "99999.99", message = "Цената трябва да е по-малка от 99999.99")
     private BigDecimal price;
 
     @NotNull (message = "Изберете тип на храната:")
     private FoodTypeEnum type;
 
     @NotNull
-    @Min(value = 1, message = "големината на порцията трябва да е по-голяма от 0 гр")
-    @Max(value = 5000, message = "големината на порцията трябва да е по-малка от 5000 гр")
+    @Min(value = 1, message = "Големината на порцията трябва да е по-голяма от 0 гр")
+    @Max(value = 5000, message = "Големината на порцията трябва да е по-малка от 5000 гр")
     private int size;
 
-
     @NotNull
-    @DecimalMin(value = "0.00", message = "Калориите трябва да са повече от 0")
+    @DecimalMin(value = "0.00", inclusive = false, message = "Калориите трябва да са повече от 0.00")
     @DecimalMax(value = "99999.99", message = "Калориите трябва да са под 99999.99")
     private BigDecimal kcal;
 

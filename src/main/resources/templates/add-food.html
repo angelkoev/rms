@@ -61,8 +61,8 @@
                                 <input th:field="*{kcal}"
                                        required
                                        th:errorclass="bg-danger"
-                                       type="text" name="kcal" id="kcal" class="form-control">
-                                <small th:if="${#fields.hasErrors('size')}"
+                                       type="number" step="any" name="kcal" id="kcal" class="form-control">
+                                <small th:if="${#fields.hasErrors('kcal')}"
                                        th:errors="*{kcal}"
                                        class="text-danger">kcal error message</small>
                             </div>

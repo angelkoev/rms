@@ -11,14 +11,14 @@ public class DrinkDTO {
     private String name;
 
     @NotNull
-    @DecimalMin(value = "0.00", inclusive = false, message = "цената трябва да е по-голяма от 0.00")
+    @DecimalMin(value = "0.00", inclusive = false, message = "Цената трябва да е по-голяма от 0.00")
 //    @Pattern(regexp="^\\d{0,5}(\\.\\d{1,2})?$", message = "Въведената цена не е валидна")
-    @DecimalMax(value = "99999.99", message = "цената трябва да е по-малка от 99999.99")
+    @DecimalMax(value = "99999.99", message = "Цената трябва да е по-малка от 99999.99")
     private BigDecimal price;
 
     @NotNull
-    @Min(value = 1, message = "обема на напитката трябва да е по-голям от 0мл")
-    @Max(value = 5000, message = "обема на напитката трябва да е по-малък от 5000мл")
+    @Min(value = 1, message = "Обема на напитката трябва да е по-голям от 0мл")
+    @Max(value = 5000, message = "Обема на напитката трябва да е по-малък от 5000мл")
     private int volume; //in ml
 
     @NotNull (message = "Изберете тип на напитката:")
