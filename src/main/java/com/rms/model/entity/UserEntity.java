@@ -31,7 +31,6 @@ public class UserEntity extends BaseEntity {
     private LocalDate registrationDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
-//    @Column(nullable = false)
     private Set<UserRoleEntity> roles;
 
     @OneToMany(mappedBy = "madeBy", fetch = FetchType.EAGER)

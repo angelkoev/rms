@@ -21,7 +21,7 @@ public class LogController {
     }
 
     @GetMapping("/all")
-    public String logHistory(Model model, RedirectAttributes redirectAttributes) {
+    public String logHistory(Model model) {
 
         List<LogView> allLogsOrderedByTime = logService.getAllLogs();
 

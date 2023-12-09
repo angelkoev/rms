@@ -43,9 +43,9 @@ public class FoodService {
         return foodRepository.findAllBy();
     }
 
-    public Set<FoodEntity> findAllByType(FoodTypeEnum foodTypeEnum) {
-        return foodRepository.findAllByTypeEquals(foodTypeEnum);
-    }
+//    public Set<FoodEntity> findAllByType(FoodTypeEnum foodTypeEnum) {
+//        return foodRepository.findAllByTypeEquals(foodTypeEnum);
+//    }
 
     public FoodEntity findById(Long id) {
         return foodRepository.findById(id).orElse(null);

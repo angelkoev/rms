@@ -20,19 +20,6 @@ public class DrinkEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private DrinkTypeEnum type;
-//    private DrinkType type;
-//    @ManyToOne
-//    @JoinColumn(name = "order_id", nullable = false)
-//    private OrderEntity order;
-//    private int orderId;
-//    @Column(nullable = false)
-//    private int preparationTime;
-//    @Column(nullable = false)
-//    private boolean completed;
-
-//    @Column(nullable = false)
-//    private boolean delivered;
-//    private boolean isPaid; // may be not needed, because Order had the same field
 
     public DrinkEntity() {
     }

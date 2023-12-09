@@ -11,7 +11,6 @@ import java.util.Set;
 @Repository
 public interface DrinkRepository extends JpaRepository<DrinkEntity, Long> {
 
-    //    Set<DrinkEntity> findAllByOrderById (Long id);
     Set<DrinkEntity> findAllBy();
 
     Set<DrinkEntity> findAllByTypeEquals(DrinkTypeEnum drinkTypeEnum);

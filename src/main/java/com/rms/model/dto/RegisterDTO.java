@@ -34,7 +34,6 @@ public class RegisterDTO {
     @NotNull
     private String password;
 
-//    @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
     @NotNull
     private String confirmPassword;
 

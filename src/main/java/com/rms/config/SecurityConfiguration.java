@@ -16,7 +16,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 
 @EnableWebSecurity
-//@EnableAspectJAutoProxy
 @Configuration
 public class SecurityConfiguration {
 

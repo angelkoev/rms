@@ -42,7 +42,6 @@ public class LogService {
                     })
                     .collect(Collectors.toList());
 
-
         return Logs;
     }
 }

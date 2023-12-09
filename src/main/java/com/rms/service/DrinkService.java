@@ -43,9 +43,9 @@ public class DrinkService {
         return drinkRepository.findAllBy();
     }
 
-    public Set<DrinkEntity> findAllByType(DrinkTypeEnum drinkTypeEnum) {
-        return drinkRepository.findAllByTypeEquals(drinkTypeEnum);
-    }
+//    public Set<DrinkEntity> findAllByType(DrinkTypeEnum drinkTypeEnum) {
+//        return drinkRepository.findAllByTypeEquals(drinkTypeEnum);
+//    }
 
     public DrinkEntity findById(Long id) {
         return drinkRepository.findById(id).orElse(null);

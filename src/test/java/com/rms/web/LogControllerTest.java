@@ -41,13 +41,13 @@ public class LogControllerTest {
         when(logServiceMock.getAllLogs()).thenReturn(fakeLogs);
 
         // Act
-        String viewName = logController.logHistory(modelMock, redirectAttributesMock);
+        String viewName = logController.logHistory(modelMock);
 
         // Assert
         assertEquals("logs", viewName);
         verify(logServiceMock, times(1)).getAllLogs();
         verify(modelMock, times(1)).addAttribute(eq("allLogsOrderedByTime"), eq(fakeLogs));
-        verify(redirectAttributesMock, never()).addFlashAttribute(anyString(), any());
+
     }
 
     public static List<LogView> createFakeLogViews() {
