@@ -10,7 +10,8 @@ public class FoodDTO {
     @NotNull
     private String name;
     @NotNull
-    @DecimalMin(value = "0.00", message = "цената трябва да е по-голяма от 0")
+//    @Pattern(regexp="^\\d{0,5}(\\.\\d{1,2})?$", message = "Въведената цена не е валидна")
+    @DecimalMin(value = "0.00", inclusive = false, message = "цената трябва да е по-голяма от 0.00")
     @DecimalMax(value = "99999.99", message = "цената трябва да е по-малка от 99999.99")
     private BigDecimal price;
 

@@ -41,7 +41,7 @@
                                 <input th:field="*{price}"
                                        required
                                        th:errorclass="'is-invalid bg-danger'"
-                                       type="text" name="price" id="price" class="form-control">
+                                       type="number" step="any" name="price" id="price" class="form-control">
                             </div>
                             <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
                                    class="text-danger">Email error message</small>
@@ -50,7 +50,7 @@
                                 <input th:field="*{volume}"
                                        required
                                        th:errorclass="bg-danger"
-                                       type="text" name="volume" id="volume" class="form-control">
+                                       type="number" name="volume" id="volume" class="form-control">
                                 <small th:if="${#fields.hasErrors('volume')}"
                                        th:errors="*{volume}"
                                        class="text-danger">volume error message</small>
