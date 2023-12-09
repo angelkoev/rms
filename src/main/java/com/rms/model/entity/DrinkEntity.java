@@ -16,7 +16,6 @@ public class DrinkEntity extends BaseEntity {
     @Column(nullable = false)
     private int volume; //in ml
 
-    //    @ManyToOne
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private DrinkTypeEnum type;

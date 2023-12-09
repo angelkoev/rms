@@ -353,7 +353,7 @@ public class UserService {
 
             String currentDateTime = orderEntity.getDateTime().toString(); // 2023-12-04T12:17:56.705155
             currentOrderView.setDate(currentDateTime.split("T")[0]);
-            currentOrderView.setTime(currentDateTime.split("T")[1]);
+            currentOrderView.setTime(currentDateTime.split("T")[1].split("\\.")[0]);
 
             return currentOrderView;
         }).toList();
