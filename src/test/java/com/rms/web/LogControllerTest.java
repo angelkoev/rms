@@ -1,12 +1,11 @@
 package com.rms.web;
 
 import com.rms.model.views.LogView;
-import com.rms.service.LogService;
+import com.rms.service.Impl.LogServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -26,7 +25,7 @@ public class LogControllerTest {
     private LogController logController;
 
     @Mock
-    private LogService logServiceMock;
+    private LogServiceImpl logServiceImplMock;
 
     @Mock
     private Model modelMock;
@@ -38,14 +37,14 @@ public class LogControllerTest {
     public void testLogHistory() {
         // Arrange
         List<LogView> fakeLogs = createFakeLogViews();
-        when(logServiceMock.getAllLogs()).thenReturn(fakeLogs);
+        when(logServiceImplMock.getAllLogs()).thenReturn(fakeLogs);
 
         // Act
         String viewName = logController.logHistory(modelMock);
 
         // Assert
         assertEquals("logs", viewName);
-        verify(logServiceMock, times(1)).getAllLogs();
+        verify(logServiceImplMock, times(1)).getAllLogs();
         verify(modelMock, times(1)).addAttribute(eq("allLogsOrderedByTime"), eq(fakeLogs));
 
     }

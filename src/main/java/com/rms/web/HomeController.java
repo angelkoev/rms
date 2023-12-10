@@ -1,7 +1,7 @@
 package com.rms.web;
 
 import com.rms.interceptors.MaintenanceInterceptor;
-import com.rms.service.OrderService;
+import com.rms.service.Impl.OrderServiceImpl;
 import com.rms.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,12 +15,12 @@ public class HomeController {
     private final MaintenanceInterceptor maintenanceInterceptor;
 
     private final UserService userService;
-    private final OrderService orderService;
+    private final OrderServiceImpl orderServiceImpl;
 
-    public HomeController(MaintenanceInterceptor maintenanceInterceptor, UserService userService, OrderService orderService) {
+    public HomeController(MaintenanceInterceptor maintenanceInterceptor, UserService userService, OrderServiceImpl orderServiceImpl) {
         this.maintenanceInterceptor = maintenanceInterceptor;
         this.userService = userService;
-        this.orderService = orderService;
+        this.orderServiceImpl = orderServiceImpl;
     }
 
     @GetMapping("/")
@@ -42,10 +42,10 @@ public class HomeController {
             return "maintenance";
         }
 
-        boolean isMenuOK = orderService.isMenuOK();
+        boolean isMenuOK = orderServiceImpl.isMenuOK();
 
         if (!isMenuOK) {
-            orderService.getMenu();
+            orderServiceImpl.getMenu();
             isMenuOK = true;
         }
 

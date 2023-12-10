@@ -2,9 +2,9 @@ package com.rms.web;
 
 import com.rms.model.dto.DrinkDTO;
 import com.rms.model.entity.DrinkTypeEnum;
-import com.rms.service.DrinkService;
-import com.rms.service.FoodService;
-import com.rms.service.OrderService;
+import com.rms.service.Impl.DrinkServiceImpl;
+import com.rms.service.Impl.FoodServiceImpl;
+import com.rms.service.Impl.OrderServiceImpl;
 import com.rms.service.UserService;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
@@ -13,10 +13,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -41,16 +39,16 @@ public class OrderControllerTest {
     private WebApplicationContext context;
 
     @MockBean
-    private OrderService orderService;
+    private OrderServiceImpl orderServiceImpl;
 
     @MockBean
     private UserService userService;
 
     @MockBean
-    private FoodService foodService;
+    private FoodServiceImpl foodServiceImpl;
 
     @MockBean
-    private DrinkService drinkService;
+    private DrinkServiceImpl drinkServiceImpl;
 
     @Before("")
     public void setup() {
@@ -63,13 +61,13 @@ public class OrderControllerTest {
     @Test
     @WithMockUser(username = "testUser", roles = "USER")
     public void testViewAll() throws Exception {
-        when(orderService.isMenuOK()).thenReturn(true);
+        when(orderServiceImpl.isMenuOK()).thenReturn(true);
 
         when(userService.getAllCurrentDrinkViews("testUser")).thenReturn(Collections.emptyList());
         when(userService.getAllCurrentFoodViews("testUser")).thenReturn(Collections.emptyList());
         when(userService.totalCurrentPrice("testUser")).thenReturn("100.00");
-        when(orderService.getAllDrinksView()).thenReturn(Collections.emptyList());
-        when(orderService.getAllFoodsView()).thenReturn(Collections.emptyList());
+        when(orderServiceImpl.getAllDrinksView()).thenReturn(Collections.emptyList());
+        when(orderServiceImpl.getAllFoodsView()).thenReturn(Collections.emptyList());
 
         mockMvc.perform(get("/order/menu"))
                 .andExpect(status().isOk())
@@ -98,7 +96,7 @@ public class OrderControllerTest {
         drinkDTO.setAddToMenu(true);
 
         // Mock the necessary service methods
-        when(drinkService.isDrinkAlreadyAdded(any(DrinkDTO.class))).thenReturn(false);
+        when(drinkServiceImpl.isDrinkAlreadyAdded(any(DrinkDTO.class))).thenReturn(false);
 
         // Act
         ResultActions result = mockMvc.perform(post("/order/add/drink")
@@ -123,7 +121,7 @@ public class OrderControllerTest {
         drinkDTO.setName("Existing Drink");
         drinkDTO.setAddToMenu(true);
 
-        when(drinkService.isDrinkAlreadyAdded(any(DrinkDTO.class))).thenReturn(true);
+        when(drinkServiceImpl.isDrinkAlreadyAdded(any(DrinkDTO.class))).thenReturn(true);
 
         // Act
         ResultActions result = mockMvc.perform(post("/order/add/drink")

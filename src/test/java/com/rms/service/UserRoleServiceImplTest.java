@@ -3,6 +3,7 @@ package com.rms.service;
 import com.rms.model.entity.UserRoleEntity;
 import com.rms.model.entity.UserRoleEnum;
 import com.rms.repository.UserRoleRepository;
+import com.rms.service.Impl.UserRoleServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,13 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
-public class UserRoleServiceTest {
+public class UserRoleServiceImplTest {
 
     @Mock
     private UserRoleRepository userRoleRepository;
 
     @InjectMocks
-    private UserRoleService userRoleService;
+    private UserRoleServiceImpl userRoleServiceImpl;
 
     @BeforeEach
     public void setUp() {
@@ -36,7 +37,7 @@ public class UserRoleServiceTest {
         when(userRoleRepository.findUserRoleEntityByRole(adminRole)).thenReturn(adminUserRoleEntity);
 
         // Act
-        UserRoleEntity result = userRoleService.findUserRoleEntityByRole(adminRole);
+        UserRoleEntity result = userRoleServiceImpl.findUserRoleEntityByRole(adminRole);
 
         // Assert
         assertEquals(adminUserRoleEntity, result);
@@ -49,7 +50,7 @@ public class UserRoleServiceTest {
         when(userRoleRepository.findUserRoleEntityByRole(nonExistingRole)).thenReturn(null);
 
         // Act
-        UserRoleEntity result = userRoleService.findUserRoleEntityByRole(nonExistingRole);
+        UserRoleEntity result = userRoleServiceImpl.findUserRoleEntityByRole(nonExistingRole);
 
         // Assert
         assertNull(result);

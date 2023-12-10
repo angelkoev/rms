@@ -5,9 +5,9 @@ import com.rms.model.dto.FoodDTO;
 import com.rms.model.views.DrinkView;
 import com.rms.model.views.FoodView;
 import com.rms.model.views.OrderView;
-import com.rms.service.DrinkService;
-import com.rms.service.FoodService;
-import com.rms.service.OrderService;
+import com.rms.service.Impl.DrinkServiceImpl;
+import com.rms.service.Impl.FoodServiceImpl;
+import com.rms.service.Impl.OrderServiceImpl;
 import com.rms.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
@@ -24,25 +24,25 @@ import java.util.List;
 @RequestMapping("/order")
 public class OrderController {
 
-    private final OrderService orderService;
-    private final DrinkService drinkService;
-    private final FoodService foodService;
+    private final OrderServiceImpl orderServiceImpl;
+    private final DrinkServiceImpl drinkServiceImpl;
+    private final FoodServiceImpl foodServiceImpl;
     private final UserService userService;
 
-    public OrderController(OrderService orderService, DrinkService drinkService, FoodService foodService, UserService userService) {
-        this.orderService = orderService;
-        this.drinkService = drinkService;
-        this.foodService = foodService;
+    public OrderController(OrderServiceImpl orderServiceImpl, DrinkServiceImpl drinkServiceImpl, FoodServiceImpl foodServiceImpl, UserService userService) {
+        this.orderServiceImpl = orderServiceImpl;
+        this.drinkServiceImpl = drinkServiceImpl;
+        this.foodServiceImpl = foodServiceImpl;
         this.userService = userService;
     }
 
     @GetMapping("/menu")
     public String viewAll(Model model) {
 
-        boolean isMenuOK = orderService.isMenuOK();
+        boolean isMenuOK = orderServiceImpl.isMenuOK();
 
         if (!isMenuOK) {
-            orderService.getMenu();
+            orderServiceImpl.getMenu();
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -63,10 +63,10 @@ public class OrderController {
         String totalOrderPrice = userService.totalCurrentPrice(username);
         model.addAttribute("totalOrderPrice", totalOrderPrice);
 
-        List<DrinkView> allDrinksView = orderService.getAllDrinksView();
+        List<DrinkView> allDrinksView = orderServiceImpl.getAllDrinksView();
         model.addAttribute("allDrinksView", allDrinksView);
 
-        List<FoodView> allFoodsView = orderService.getAllFoodsView();
+        List<FoodView> allFoodsView = orderServiceImpl.getAllFoodsView();
         model.addAttribute("allFoodsView", allFoodsView);
 
         return "menu-view";
@@ -121,7 +121,7 @@ public class OrderController {
     @PostMapping("/add/drink")
     String addNewDrink(@Valid DrinkDTO drinkDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        boolean alreadyAdded = drinkService.isDrinkAlreadyAdded(drinkDTO);
+        boolean alreadyAdded = drinkServiceImpl.isDrinkAlreadyAdded(drinkDTO);
 
         String infoMessage = "";
         if (bindingResult.hasErrors() || alreadyAdded) {
@@ -134,8 +134,8 @@ public class OrderController {
             return "redirect:/order/add/drink";
         }
 
-        this.orderService.addDrink(drinkDTO, drinkDTO.isAddToMenu());
-        orderService.clearDrinksCache();
+        this.orderServiceImpl.addDrink(drinkDTO, drinkDTO.isAddToMenu());
+        orderServiceImpl.clearDrinksCache();
 
         infoMessage = "Напитката беше добавена успешно!";
         redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
@@ -151,7 +151,7 @@ public class OrderController {
     @PostMapping("/add/food")
     String addNewDrink(@Valid FoodDTO foodDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        boolean alreadyAdded = foodService.isFoodAlreadyAdded(foodDTO);
+        boolean alreadyAdded = foodServiceImpl.isFoodAlreadyAdded(foodDTO);
 
         String infoMessage = "";
         if (bindingResult.hasErrors() || alreadyAdded) {
@@ -164,8 +164,8 @@ public class OrderController {
             return "redirect:/order/add/food";
         }
 
-        this.orderService.addFood(foodDTO, foodDTO.isAddToMenu());
-        orderService.clearFoodsCache();
+        this.orderServiceImpl.addFood(foodDTO, foodDTO.isAddToMenu());
+        orderServiceImpl.clearFoodsCache();
 
         infoMessage = "Храната беше добавена успешно!";
         redirectAttributes.addFlashAttribute("infoMessage", infoMessage);

@@ -1,7 +1,7 @@
 package com.rms.web;
 
 import com.rms.model.dto.ReviewDTO;
-import com.rms.service.ReviewService;
+import com.rms.service.Impl.ReviewServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,10 +17,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/reviews")
 public class ReviewController {
 
-    private final ReviewService reviewService;
+    private final ReviewServiceImpl reviewServiceImpl;
 
-    public ReviewController(ReviewService reviewService) {
-        this.reviewService = reviewService;
+    public ReviewController(ReviewServiceImpl reviewServiceImpl) {
+        this.reviewServiceImpl = reviewServiceImpl;
     }
 
     @GetMapping("/all")
@@ -48,7 +48,7 @@ public class ReviewController {
         String username = authentication.getName();
         reviewDTO.setUsername(username);
 
-        this.reviewService.addReview(reviewDTO);
+        this.reviewServiceImpl.addReview(reviewDTO);
 
         return "redirect:/";
     }

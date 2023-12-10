@@ -3,6 +3,7 @@ package com.rms.service;
 import com.rms.model.entity.LogEntity;
 import com.rms.model.views.LogView;
 import com.rms.repository.LogRepository;
+import com.rms.service.Impl.LogServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -17,7 +18,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class LogServiceTest {
+public class LogServiceImplTest {
     @Mock
     private LogRepository logRepository;
 
@@ -25,7 +26,7 @@ public class LogServiceTest {
     private ModelMapper modelMapper;
 
     @InjectMocks
-    private LogService logService;
+    private LogServiceImpl logServiceImpl;
 
     @BeforeEach
     void setUp() {
@@ -41,7 +42,7 @@ public class LogServiceTest {
         logEntity.setStatus("SUCCESS");
 
         // Act
-        logService.saveLog(logEntity);
+        logServiceImpl.saveLog(logEntity);
 
         // Assert
         verify(logRepository, times(1)).save(logEntity);
@@ -80,7 +81,7 @@ public class LogServiceTest {
         when(modelMapper.map(logEntity2, LogView.class)).thenReturn(logView2);
 
         // Act
-        List<LogView> result = logService.getAllLogs();
+        List<LogView> result = logServiceImpl.getAllLogs();
 
         // Assert
         assertEquals(2, result.size());

@@ -1,7 +1,7 @@
 package com.rms.events;
 
 import com.rms.model.entity.LogEntity;
-import com.rms.service.LogService;
+import com.rms.service.Impl.LogServiceImpl;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.security.core.Authentication;
@@ -12,10 +12,10 @@ import java.time.LocalDateTime;
 @Component
 public class LogoutEventListener implements ApplicationListener<LogoutSuccessEvent> {
 
-    private final LogService logService;
+    private final LogServiceImpl logServiceImpl;
 
-    public LogoutEventListener(LogService logService) {
-        this.logService = logService;
+    public LogoutEventListener(LogServiceImpl logServiceImpl) {
+        this.logServiceImpl = logServiceImpl;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class LogoutEventListener implements ApplicationListener<LogoutSuccessEve
             logEntity.setUsername(authentication.getName());
             logEntity.setTimestamp(LocalDateTime.now());
             logEntity.setStatus("LOGOUT");
-            logService.saveLog(logEntity);
+            logServiceImpl.saveLog(logEntity);
         }
     }
 }

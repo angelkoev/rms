@@ -5,6 +5,7 @@ import com.rms.model.entity.ReviewEntity;
 import com.rms.model.entity.UserEntity;
 import com.rms.model.views.ReviewView;
 import com.rms.repository.ReviewRepository;
+import com.rms.service.Impl.ReviewServiceImpl;
 import jakarta.validation.ConstraintViolation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class ReviewServiceTest {
+public class ReviewServiceImplTest {
 
     @Mock
     private ReviewRepository reviewRepository;
@@ -31,7 +32,7 @@ public class ReviewServiceTest {
     @Mock
     private ModelMapper modelMapper;
     @InjectMocks
-    private ReviewService reviewService;
+    private ReviewServiceImpl reviewServiceImpl;
     private Validator validator;
 
     @BeforeEach
@@ -58,7 +59,7 @@ public class ReviewServiceTest {
         reviewEntity.setWrittenBy(userEntity);
 
         // Act
-        reviewService.addReview(reviewDTO);
+        reviewServiceImpl.addReview(reviewDTO);
 
         // Assert
         verify(reviewRepository, times(1)).save(any());
@@ -91,7 +92,7 @@ public class ReviewServiceTest {
         when(modelMapper.map(any(), eq(ReviewView.class))).thenReturn(reviewView);
 
         // Act
-        List<ReviewView> result = reviewService.getAllReviews();
+        List<ReviewView> result = reviewServiceImpl.getAllReviews();
 
         // Assert
         assertEquals(1, result.size());

@@ -5,9 +5,9 @@ import com.rms.model.entity.DrinkTypeEnum;
 import com.rms.model.entity.FoodTypeEnum;
 import com.rms.model.entity.UserRoleEnum;
 import com.rms.repository.*;
-import com.rms.service.DrinkService;
-import com.rms.service.FoodService;
-import com.rms.service.UserRoleService;
+import com.rms.service.Impl.DrinkServiceImpl;
+import com.rms.service.Impl.FoodServiceImpl;
+import com.rms.service.Impl.UserRoleServiceImpl;
 import com.rms.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,26 +27,26 @@ public class InitialDataInit {
     private final UserRoleRepository userRoleRepository;
     private final ReviewRepository reviewRepository;
     private final UserService userService;
-    private final UserRoleService userRoleService;
+    private final UserRoleServiceImpl userRoleServiceImpl;
     private final PasswordEncoder encoder;
     private final FoodRepository foodRepository;
     private final DrinkRepository drinkRepository;
     private final OrderRepository orderRepository;
-    private final FoodService foodService;
-    private final DrinkService drinkService;
+    private final FoodServiceImpl foodServiceImpl;
+    private final DrinkServiceImpl drinkServiceImpl;
 
-    public InitialDataInit(UserRepository userRepository, UserRoleRepository userRoleRepository, ReviewRepository reviewRepository, UserService userService, UserRoleService userRoleService, PasswordEncoder encoder, FoodRepository foodRepository, DrinkRepository drinkRepository, OrderRepository orderRepository, FoodService foodService, DrinkService drinkService) {
+    public InitialDataInit(UserRepository userRepository, UserRoleRepository userRoleRepository, ReviewRepository reviewRepository, UserService userService, UserRoleServiceImpl userRoleServiceImpl, PasswordEncoder encoder, FoodRepository foodRepository, DrinkRepository drinkRepository, OrderRepository orderRepository, FoodServiceImpl foodServiceImpl, DrinkServiceImpl drinkServiceImpl) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.reviewRepository = reviewRepository;
         this.userService = userService;
-        this.userRoleService = userRoleService;
+        this.userRoleServiceImpl = userRoleServiceImpl;
         this.encoder = encoder;
         this.foodRepository = foodRepository;
         this.drinkRepository = drinkRepository;
         this.orderRepository = orderRepository;
-        this.foodService = foodService;
-        this.drinkService = drinkService;
+        this.foodServiceImpl = foodServiceImpl;
+        this.drinkServiceImpl = drinkServiceImpl;
     }
 
     public void initUserRoles() {
@@ -83,9 +83,9 @@ public class InitialDataInit {
         admin.setAddress("Tabadupkovo");
         admin.setPhone("123456");
         admin.setRegistrationDate(LocalDate.of(1991, 2, 3));
-        UserRoleEntity roleAdmin = userRoleService.findUserRoleEntityByRole(UserRoleEnum.ADMIN);
+        UserRoleEntity roleAdmin = userRoleServiceImpl.findUserRoleEntityByRole(UserRoleEnum.ADMIN);
         admin.getRoles().add(roleAdmin);
-        UserRoleEntity roleUser = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
+        UserRoleEntity roleUser = userRoleServiceImpl.findUserRoleEntityByRole(UserRoleEnum.USER);
         admin.getRoles().add(roleUser);
 
         userRepository.save(admin);
@@ -117,7 +117,7 @@ public class InitialDataInit {
         user.setPhone(username + "_phone");
         user.setRegistrationDate(LocalDate.of(1991, 2, 3));
 
-        UserRoleEntity userRoleUser = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
+        UserRoleEntity userRoleUser = userRoleServiceImpl.findUserRoleEntityByRole(UserRoleEnum.USER);
         user.getRoles().add(userRoleUser);
 
         userRepository.save(user);
@@ -289,8 +289,8 @@ public class InitialDataInit {
         menu.setCompleted(true);
         menu.setPaid(true);
         menu.setDateTime(LocalDateTime.now());
-        Set<FoodEntity> allFoodsInMenu = foodService.findAllBy();
-        Set<DrinkEntity> allDrinksInMenu = drinkService.findAllBy();
+        Set<FoodEntity> allFoodsInMenu = foodServiceImpl.findAllBy();
+        Set<DrinkEntity> allDrinksInMenu = drinkServiceImpl.findAllBy();
         menu.getDrinks().addAll(allDrinksInMenu);
         menu.getFoods().addAll(allFoodsInMenu);
 

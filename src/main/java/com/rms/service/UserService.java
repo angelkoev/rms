@@ -8,6 +8,10 @@ import com.rms.model.views.FoodView;
 import com.rms.model.views.OrderView;
 import com.rms.model.views.UserView;
 import com.rms.repository.UserRepository;
+import com.rms.service.Impl.DrinkServiceImpl;
+import com.rms.service.Impl.FoodServiceImpl;
+import com.rms.service.Impl.OrderServiceImpl;
+import com.rms.service.Impl.UserRoleServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,20 +30,20 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
-    private final UserRoleService userRoleService;
+    private final UserRoleServiceImpl userRoleServiceImpl;
     private final ModelMapper modelMapper;
-    private final OrderService orderService;
-    private final DrinkService drinkService;
-    private final FoodService foodService;
+    private final OrderServiceImpl orderServiceImpl;
+    private final DrinkServiceImpl drinkServiceImpl;
+    private final FoodServiceImpl foodServiceImpl;
 
-    public UserService(UserRepository userRepository, PasswordEncoder encoder, UserRoleService userRoleService, ModelMapper modelMapper, OrderService orderService, DrinkService drinkService, FoodService foodService) {
+    public UserService(UserRepository userRepository, PasswordEncoder encoder, UserRoleServiceImpl userRoleServiceImpl, ModelMapper modelMapper, OrderServiceImpl orderServiceImpl, DrinkServiceImpl drinkServiceImpl, FoodServiceImpl foodServiceImpl) {
         this.userRepository = userRepository;
         this.encoder = encoder;
-        this.userRoleService = userRoleService;
+        this.userRoleServiceImpl = userRoleServiceImpl;
         this.modelMapper = modelMapper;
-        this.orderService = orderService;
-        this.drinkService = drinkService;
-        this.foodService = foodService;
+        this.orderServiceImpl = orderServiceImpl;
+        this.drinkServiceImpl = drinkServiceImpl;
+        this.foodServiceImpl = foodServiceImpl;
     }
 
     public UserDTO findUserByUsername(String username) { // for validation for unique username
@@ -81,8 +85,8 @@ public class UserService {
         UserEntity currentUser = getUserByUsername(username);
 
         if (currentUser.getLastOrder() == null) {
-            OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
-            orderService.saveOrder(newLastOrder);
+            OrderEntity newLastOrder = orderServiceImpl.createNewLastOrder(currentUser);
+            orderServiceImpl.saveOrder(newLastOrder);
             currentUser.setLastOrder(newLastOrder);
             saveUser(currentUser);
         }
@@ -120,7 +124,7 @@ public class UserService {
         user.setPhone(registerDTO.getPhone());
         user.setRegistrationDate(LocalDate.now());
         user.setAddress(registerDTO.getAddress());
-        UserRoleEntity userRole = userRoleService.findUserRoleEntityByRole(UserRoleEnum.USER);
+        UserRoleEntity userRole = userRoleServiceImpl.findUserRoleEntityByRole(UserRoleEnum.USER);
         user.getRoles().add(userRole);
 
         return user;
@@ -203,7 +207,7 @@ public class UserService {
         }
 
         if (isLoggedUserStillAdmin) {
-            UserRoleEntity roleAdmin = userRoleService.findUserRoleEntityByRole(UserRoleEnum.ADMIN);
+            UserRoleEntity roleAdmin = userRoleServiceImpl.findUserRoleEntityByRole(UserRoleEnum.ADMIN);
             currentUser.getRoles().add(roleAdmin);
 
             userRepository.save(currentUser);
@@ -252,7 +256,7 @@ public class UserService {
         if (drinkEntity != null) {
             lastOrder.getDrinks().remove(drinkEntity);
         }
-        orderService.saveOrder(lastOrder);
+        orderServiceImpl.saveOrder(lastOrder);
         saveUser(currentUser);
     }
 
@@ -261,14 +265,14 @@ public class UserService {
         UserEntity currentUser = getUserByUsername(username);
 
         if (currentUser.getLastOrder() == null) {
-            OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
+            OrderEntity newLastOrder = orderServiceImpl.createNewLastOrder(currentUser);
             currentUser.setLastOrder(newLastOrder);
         }
 
-        DrinkEntity currentDrink = drinkService.findById(id);
+        DrinkEntity currentDrink = drinkServiceImpl.findById(id);
         OrderEntity lastOrder = currentUser.getLastOrder();
         lastOrder.getDrinks().add(currentDrink);
-        orderService.saveOrder(lastOrder);
+        orderServiceImpl.saveOrder(lastOrder);
         saveUser(currentUser);
     }
 
@@ -277,14 +281,14 @@ public class UserService {
         UserEntity currentUser = getUserByUsername(username);
 
         if (currentUser.getLastOrder() == null) {
-            OrderEntity newLastOrder = orderService.createNewLastOrder(currentUser);
+            OrderEntity newLastOrder = orderServiceImpl.createNewLastOrder(currentUser);
             currentUser.setLastOrder(newLastOrder);
         }
 
-        FoodEntity currentFood = foodService.findById(id);
+        FoodEntity currentFood = foodServiceImpl.findById(id);
         OrderEntity lastOrder = currentUser.getLastOrder();
         lastOrder.getFoods().add(currentFood);
-        orderService.saveOrder(lastOrder);
+        orderServiceImpl.saveOrder(lastOrder);
         saveUser(currentUser);
     }
 
@@ -299,19 +303,19 @@ public class UserService {
 
         FoodEntity currentFood = lastOrder.getFoods().stream().filter(f -> f.getId().equals(id)).findAny().get();
         lastOrder.getFoods().remove(currentFood);
-        orderService.saveOrder(lastOrder);
+        orderServiceImpl.saveOrder(lastOrder);
         saveUser(currentUser);
     }
 
     public void addNewOrder(String username) {
 
         UserEntity currentUser = getUserByUsername(username);
-        OrderEntity newOrder = orderService.makeNewOrder(currentUser);
+        OrderEntity newOrder = orderServiceImpl.makeNewOrder(currentUser);
         currentUser.getOrders().add(newOrder);
 
         currentUser.getLastOrder().getDrinks().clear();
         currentUser.getLastOrder().getFoods().clear();
-        orderService.saveOrder(currentUser.getLastOrder());
+        orderServiceImpl.saveOrder(currentUser.getLastOrder());
         saveUser(currentUser);
     }
 
@@ -322,9 +326,9 @@ public class UserService {
         List<OrderEntity> orderEntities;
 
         if (isAdmin) {
-            orderEntities = orderService.getAllOrders();
+            orderEntities = orderServiceImpl.getAllOrders();
         } else {
-            orderEntities = orderService.allOrdersByUsername(username);
+            orderEntities = orderServiceImpl.allOrdersByUsername(username);
         }
 
         if (!isAdmin) {

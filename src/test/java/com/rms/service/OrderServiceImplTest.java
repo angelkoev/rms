@@ -1,13 +1,12 @@
 package com.rms.service;
 
-import com.rms.events.DrinksCacheEvictEvent;
-import com.rms.events.FoodsCacheEvictEvent;
 import com.rms.model.dto.DrinkDTO;
-import com.rms.model.dto.FoodDTO;
 import com.rms.model.entity.*;
-import com.rms.model.views.DrinkView;
 import com.rms.repository.OrderRepository;
 import com.rms.repository.UserRepository;
+import com.rms.service.Impl.DrinkServiceImpl;
+import com.rms.service.Impl.FoodServiceImpl;
+import com.rms.service.Impl.OrderServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -26,14 +25,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class OrderServiceTest {
+public class OrderServiceImplTest {
 
     @Mock
     private OrderRepository orderRepositoryMock;
     @Mock
-    private FoodService foodServiceMock;
+    private FoodServiceImpl foodServiceImplMock;
     @Mock
-    private DrinkService drinkServiceMock;
+    private DrinkServiceImpl drinkServiceImplMock;
     @Mock
     private ModelMapper modelMapperMock;
     @Mock
@@ -41,7 +40,7 @@ public class OrderServiceTest {
     @Mock
     private UserRepository userRepositoryMock;
     @InjectMocks
-    private OrderService orderService;
+    private OrderServiceImpl orderServiceImpl;
 
     @BeforeEach
     public void setUp() {
@@ -56,10 +55,10 @@ public class OrderServiceTest {
         when(modelMapperMock.map((drinkDTO), (DrinkEntity.class))).thenReturn(drinkEntity);
 
         // Act
-        orderService.addDrink(drinkDTO, false);
+        orderServiceImpl.addDrink(drinkDTO, false);
 
         // Assert
-        verify(drinkServiceMock, times(1)).addDrink(drinkEntity);
+        verify(drinkServiceImplMock, times(1)).addDrink(drinkEntity);
 
     }
 
@@ -69,7 +68,7 @@ public class OrderServiceTest {
         UserEntity userEntity = new UserEntity();
 
         // Act
-        OrderEntity lastOrder = orderService.createNewLastOrder(userEntity);
+        OrderEntity lastOrder = orderServiceImpl.createNewLastOrder(userEntity);
 
         // Assert
         assertNotNull(lastOrder);
@@ -84,7 +83,7 @@ public class OrderServiceTest {
         when(orderRepositoryMock.findById(1L)).thenReturn(Optional.of(menu));
 
         // Act
-        boolean result = orderService.isMenuOK();
+        boolean result = orderServiceImpl.isMenuOK();
 
         // Assert
         assertTrue(result);
@@ -96,7 +95,7 @@ public class OrderServiceTest {
         when(orderRepositoryMock.findById(1L)).thenReturn(Optional.empty());
 
         // Act
-        boolean result = orderService.isMenuOK();
+        boolean result = orderServiceImpl.isMenuOK();
 
         // Assert
         assertFalse(result);
@@ -115,7 +114,7 @@ public class OrderServiceTest {
         });
 
         // Act
-        OrderEntity result = orderService.makeNewOrder(currentUser);
+        OrderEntity result = orderServiceImpl.makeNewOrder(currentUser);
 
         // Assert
         assertNotNull(result);

@@ -7,6 +7,10 @@ import com.rms.model.views.OrderView;
 import com.rms.model.views.UserView;
 import com.rms.repository.OrderRepository;
 import com.rms.repository.UserRepository;
+import com.rms.service.Impl.DrinkServiceImpl;
+import com.rms.service.Impl.FoodServiceImpl;
+import com.rms.service.Impl.OrderServiceImpl;
+import com.rms.service.Impl.UserRoleServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -32,7 +36,7 @@ public class UserServiceTest {
     private PasswordEncoder passwordEncoderMock;
 
     @Mock
-    private UserRoleService userRoleServiceMock;
+    private UserRoleServiceImpl userRoleServiceImplMock;
     @Mock
     private OrderRepository orderRepositoryMock;
 
@@ -40,11 +44,11 @@ public class UserServiceTest {
     private ModelMapper modelMapperMock;
 
     @Mock
-    private OrderService orderServiceMock;
+    private OrderServiceImpl orderServiceImplMock;
     @Mock
-    private DrinkService drinkServiceMock;
+    private DrinkServiceImpl drinkServiceImplMock;
     @Mock
-    private FoodService foodServiceMock;
+    private FoodServiceImpl foodServiceImplMock;
 
     @InjectMocks
     private UserService userService;
@@ -68,7 +72,7 @@ public class UserServiceTest {
     public void testRegister() {
         when(modelMapperMock.map(any(), any())).thenReturn(new UserEntity());
         when(passwordEncoderMock.encode("password")).thenReturn("encodedPassword");
-        when(userRoleServiceMock.findUserRoleEntityByRole(UserRoleEnum.USER)).thenReturn(new UserRoleEntity());
+        when(userRoleServiceImplMock.findUserRoleEntityByRole(UserRoleEnum.USER)).thenReturn(new UserRoleEntity());
         when(userRepositoryMock.save(any())).thenReturn(new UserEntity());
 
         RegisterDTO registerDTO = new RegisterDTO("john", "john@example.com", "password", "John", "Doe", "123456", "Address");
@@ -83,14 +87,14 @@ public class UserServiceTest {
         currentUser.setUsername(username);
         when(userRepositoryMock.findByUsername(username)).thenReturn(java.util.Optional.of(currentUser));
         OrderEntity newOrder = new OrderEntity();
-        when(orderServiceMock.createNewLastOrder(currentUser)).thenReturn(newOrder);
+        when(orderServiceImplMock.createNewLastOrder(currentUser)).thenReturn(newOrder);
 
         // Act
         userService.checkLastOrder(username);
 
         // Assert
-        verify(orderServiceMock, times(1)).createNewLastOrder(currentUser);
-        verify(orderServiceMock, times(1)).saveOrder(newOrder);
+        verify(orderServiceImplMock, times(1)).createNewLastOrder(currentUser);
+        verify(orderServiceImplMock, times(1)).saveOrder(newOrder);
         verify(userRepositoryMock, times(1)).save(currentUser);
     }
 
@@ -143,7 +147,7 @@ public class UserServiceTest {
         order.setDrinks(drinks);
         user.setLastOrder(order);
         when(userRepositoryMock.findByUsername("user1")).thenReturn(Optional.of(user));
-        doNothing().when(orderServiceMock).saveOrder(order);
+        doNothing().when(orderServiceImplMock).saveOrder(order);
 
         // Act
         userService.deleteDrinkFromLastOrder("user1", 1L);
@@ -164,7 +168,7 @@ public class UserServiceTest {
         order.setFoods(foods);
         user.setLastOrder(order);
         when(userRepositoryMock.findByUsername("user1")).thenReturn(Optional.of(user));
-        doNothing().when(orderServiceMock).saveOrder(order);
+        doNothing().when(orderServiceImplMock).saveOrder(order);
 
         // Act
         userService.deleteFoodFromLastOrder("user1", 1L);
@@ -182,7 +186,7 @@ public class UserServiceTest {
         OrderEntity lastOrder = new OrderEntity();
         user.setLastOrder(lastOrder);
         when(userRepositoryMock.findByUsername("user1")).thenReturn(Optional.of(user));
-        when(foodServiceMock.findById(1L)).thenReturn(food);
+        when(foodServiceImplMock.findById(1L)).thenReturn(food);
 
         // Act
         userService.addFoodToLastOrder("user1", 1L);
@@ -190,7 +194,7 @@ public class UserServiceTest {
         // Assert
         assertEquals(1, lastOrder.getFoods().size());
         assertEquals(food, lastOrder.getFoods().get(0));
-        verify(orderServiceMock, times(1)).saveOrder(lastOrder);
+        verify(orderServiceImplMock, times(1)).saveOrder(lastOrder);
     }
 
     @Test
@@ -217,9 +221,9 @@ public class UserServiceTest {
         orderView.setDate("0");
 
         when(userRepositoryMock.findByUsername("user1")).thenReturn(Optional.of(user));
-        when(foodServiceMock.findById(1L)).thenReturn(food);
+        when(foodServiceImplMock.findById(1L)).thenReturn(food);
         when(orderRepositoryMock.findOrderEntitiesByMadeBy_UsernameOrderByDateTimeDesc("user1")).thenReturn(List.of(order1, order2));
-        when(orderServiceMock.getAllOrders()).thenReturn(List.of(order1, order2));
+        when(orderServiceImplMock.getAllOrders()).thenReturn(List.of(order1, order2));
         when(modelMapperMock.map(any(), any())).thenReturn(orderView);
 
         List<OrderView> allCurrentOrdersViews = userService.getAllCurrentOrdersViews(user.getUsername());

@@ -7,6 +7,7 @@ import com.rms.model.entity.UserEntity;
 import com.rms.model.entity.UserRoleEntity;
 import com.rms.model.entity.UserRoleEnum;
 import com.rms.repository.UserRepository;
+import com.rms.service.Impl.ApplicationUserDetailsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

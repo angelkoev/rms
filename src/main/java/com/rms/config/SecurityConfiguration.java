@@ -2,11 +2,10 @@ package com.rms.config;
 
 import com.rms.model.entity.UserRoleEnum;
 import com.rms.repository.UserRepository;
-import com.rms.service.ApplicationUserDetailsService;
+import com.rms.service.Impl.ApplicationUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;

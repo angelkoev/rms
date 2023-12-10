@@ -1,7 +1,7 @@
 package com.rms.aop;
 
 import com.rms.model.entity.LogEntity;
-import com.rms.service.LogService;
+import com.rms.service.Impl.LogServiceImpl;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.security.core.Authentication;
@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 @Component
 public class AuthenticationLoggingAspect {
 
-    private final LogService logService;
+    private final LogServiceImpl logServiceImpl;
 
-    public AuthenticationLoggingAspect(LogService logService) {
-        this.logService = logService;
+    public AuthenticationLoggingAspect(LogServiceImpl logServiceImpl) {
+        this.logServiceImpl = logServiceImpl;
     }
 
     private int counter = 0;
@@ -29,7 +29,7 @@ public class AuthenticationLoggingAspect {
             logEntity.setUsername(authentication.getName());
             logEntity.setTimestamp(LocalDateTime.now());
             logEntity.setStatus("LOGIN");
-            logService.saveLog(logEntity);
+            logServiceImpl.saveLog(logEntity);
         }
     }
 

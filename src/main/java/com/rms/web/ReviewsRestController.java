@@ -1,10 +1,9 @@
 package com.rms.web;
 
 import com.rms.model.views.ReviewView;
-import com.rms.service.ReviewService;
+import com.rms.service.Impl.ReviewServiceImpl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -13,14 +12,14 @@ import java.util.List;
 @RequestMapping("/api/reviews")
 public class ReviewsRestController {
 
-    private final ReviewService reviewService;
+    private final ReviewServiceImpl reviewServiceImpl;
 
-    public ReviewsRestController(ReviewService reviewService) {
-        this.reviewService = reviewService;
+    public ReviewsRestController(ReviewServiceImpl reviewServiceImpl) {
+        this.reviewServiceImpl = reviewServiceImpl;
     }
 
     @GetMapping
     public List<ReviewView> getAllReviews() {
-        return reviewService.getAllReviews();
+        return reviewServiceImpl.getAllReviews();
     }
 }

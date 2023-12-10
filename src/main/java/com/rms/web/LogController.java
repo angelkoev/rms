@@ -1,12 +1,11 @@
 package com.rms.web;
 
 import com.rms.model.views.LogView;
-import com.rms.service.LogService;
+import com.rms.service.Impl.LogServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -14,16 +13,16 @@ import java.util.List;
 @RequestMapping("/logs")
 public class LogController {
 
-    private final LogService logService;
+    private final LogServiceImpl logServiceImpl;
 
-    public LogController(LogService logService) {
-        this.logService = logService;
+    public LogController(LogServiceImpl logServiceImpl) {
+        this.logServiceImpl = logServiceImpl;
     }
 
     @GetMapping("/all")
     public String logHistory(Model model) {
 
-        List<LogView> allLogsOrderedByTime = logService.getAllLogs();
+        List<LogView> allLogsOrderedByTime = logServiceImpl.getAllLogs();
 
         model.addAttribute("allLogsOrderedByTime", allLogsOrderedByTime);
 
