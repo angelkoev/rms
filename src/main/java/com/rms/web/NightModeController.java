@@ -1,7 +1,7 @@
 package com.rms.web;
 
 import com.rms.interceptors.NightModeInterceptor;
-import com.rms.service.UserService;
+import com.rms.service.Impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +12,7 @@ public class NightModeController {
 
     private final NightModeInterceptor nightModeInterceptor;
 
-    public NightModeController(NightModeInterceptor nightModeInterceptor, UserService userService) {
+    public NightModeController(NightModeInterceptor nightModeInterceptor, UserServiceImpl userServiceImpl) {
         this.nightModeInterceptor = nightModeInterceptor;
     }
 

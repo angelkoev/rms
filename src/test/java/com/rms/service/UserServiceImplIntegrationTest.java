@@ -3,7 +3,7 @@ package com.rms.service;
 import com.rms.model.entity.*;
 import com.rms.model.views.OrderView;
 import com.rms.repository.*;
-import org.junit.jupiter.api.BeforeEach;
+import com.rms.service.Impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +15,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-public class UserServiceIntegrationTest {
+public class UserServiceImplIntegrationTest {
 
     @Autowired
     @InjectMocks
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Autowired
     private UserRepository userRepository;
@@ -109,7 +108,7 @@ public class UserServiceIntegrationTest {
 
         testUssr.getRoles().add(userRoleADMIN);
 
-        List<OrderView> result = userService.getAllCurrentOrdersViews(testUssr.getUsername());
+        List<OrderView> result = userServiceImpl.getAllCurrentOrdersViews(testUssr.getUsername());
 
         assertEquals(1, result.size());
     }

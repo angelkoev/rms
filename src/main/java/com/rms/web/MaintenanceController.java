@@ -1,7 +1,7 @@
 package com.rms.web;
 
 import com.rms.interceptors.MaintenanceInterceptor;
-import com.rms.service.UserService;
+import com.rms.service.Impl.UserServiceImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,17 +13,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MaintenanceController {
 
     private final MaintenanceInterceptor maintenanceInterceptor;
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
-    public MaintenanceController(MaintenanceInterceptor maintenanceInterceptor, UserService userService) {
+    public MaintenanceController(MaintenanceInterceptor maintenanceInterceptor, UserServiceImpl userServiceImpl) {
         this.maintenanceInterceptor = maintenanceInterceptor;
-        this.userService = userService;
+        this.userServiceImpl = userServiceImpl;
     }
 
     @GetMapping("/")
     public String maintenancePage(Authentication authentication, RedirectAttributes redirectAttributes) {
 
-        boolean isAdmin = userService.isAdmin(authentication.getName());
+        boolean isAdmin = userServiceImpl.isAdmin(authentication.getName());
 
         String infoMessage = "";
         if (isAdmin && maintenanceInterceptor.isMaintenanceMode()) {

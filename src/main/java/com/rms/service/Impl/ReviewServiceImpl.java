@@ -6,7 +6,6 @@ import com.rms.model.entity.UserEntity;
 import com.rms.model.views.ReviewView;
 import com.rms.repository.ReviewRepository;
 import com.rms.service.ReviewService;
-import com.rms.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +17,12 @@ import java.util.stream.Collectors;
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
     private final ModelMapper modelMapper;
 
-    public ReviewServiceImpl(ReviewRepository reviewRepository, UserService userService, ModelMapper modelMapper) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository, UserServiceImpl userServiceImpl, ModelMapper modelMapper) {
         this.reviewRepository = reviewRepository;
-        this.userService = userService;
+        this.userServiceImpl = userServiceImpl;
         this.modelMapper = modelMapper;
     }
 
@@ -32,7 +31,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         ReviewEntity review = modelMapper.map(reviewDTO, ReviewEntity.class);
 
-        UserEntity user = userService.findUserEntityByUsername(reviewDTO.getUsername());
+        UserEntity user = userServiceImpl.findUserEntityByUsername(reviewDTO.getUsername());
         review.setWrittenBy(user);
         review.setPostedOn(LocalDate.now());
 

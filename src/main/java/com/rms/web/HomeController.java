@@ -2,7 +2,7 @@ package com.rms.web;
 
 import com.rms.interceptors.MaintenanceInterceptor;
 import com.rms.service.Impl.OrderServiceImpl;
-import com.rms.service.UserService;
+import com.rms.service.Impl.UserServiceImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,12 +14,12 @@ public class HomeController {
 
     private final MaintenanceInterceptor maintenanceInterceptor;
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
     private final OrderServiceImpl orderServiceImpl;
 
-    public HomeController(MaintenanceInterceptor maintenanceInterceptor, UserService userService, OrderServiceImpl orderServiceImpl) {
+    public HomeController(MaintenanceInterceptor maintenanceInterceptor, UserServiceImpl userServiceImpl, OrderServiceImpl orderServiceImpl) {
         this.maintenanceInterceptor = maintenanceInterceptor;
-        this.userService = userService;
+        this.userServiceImpl = userServiceImpl;
         this.orderServiceImpl = orderServiceImpl;
     }
 
@@ -36,7 +36,7 @@ public class HomeController {
     @GetMapping("/home")
     public String home(Authentication authentication) {
 
-        boolean isAdmin = userService.isAdmin(authentication.getName());
+        boolean isAdmin = userServiceImpl.isAdmin(authentication.getName());
 
         if (!isAdmin && maintenanceInterceptor.isMaintenanceMode() ) {
             return "maintenance";

@@ -5,7 +5,7 @@ import com.rms.model.entity.DrinkTypeEnum;
 import com.rms.service.Impl.DrinkServiceImpl;
 import com.rms.service.Impl.FoodServiceImpl;
 import com.rms.service.Impl.OrderServiceImpl;
-import com.rms.service.UserService;
+import com.rms.service.Impl.UserServiceImpl;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class OrderControllerTest {
     private OrderServiceImpl orderServiceImpl;
 
     @MockBean
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @MockBean
     private FoodServiceImpl foodServiceImpl;
@@ -63,9 +63,9 @@ public class OrderControllerTest {
     public void testViewAll() throws Exception {
         when(orderServiceImpl.isMenuOK()).thenReturn(true);
 
-        when(userService.getAllCurrentDrinkViews("testUser")).thenReturn(Collections.emptyList());
-        when(userService.getAllCurrentFoodViews("testUser")).thenReturn(Collections.emptyList());
-        when(userService.totalCurrentPrice("testUser")).thenReturn("100.00");
+        when(userServiceImpl.getAllCurrentDrinkViews("testUser")).thenReturn(Collections.emptyList());
+        when(userServiceImpl.getAllCurrentFoodViews("testUser")).thenReturn(Collections.emptyList());
+        when(userServiceImpl.totalCurrentPrice("testUser")).thenReturn("100.00");
         when(orderServiceImpl.getAllDrinksView()).thenReturn(Collections.emptyList());
         when(orderServiceImpl.getAllFoodsView()).thenReturn(Collections.emptyList());
 

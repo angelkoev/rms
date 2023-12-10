@@ -6,6 +6,7 @@ import com.rms.model.entity.UserEntity;
 import com.rms.model.views.ReviewView;
 import com.rms.repository.ReviewRepository;
 import com.rms.service.Impl.ReviewServiceImpl;
+import com.rms.service.Impl.UserServiceImpl;
 import jakarta.validation.ConstraintViolation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ public class ReviewServiceImplTest {
     @Mock
     private ReviewRepository reviewRepository;
     @Mock
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     @Mock
     private ModelMapper modelMapper;
     @InjectMocks
@@ -53,7 +54,7 @@ public class ReviewServiceImplTest {
         userEntity.setUsername("valid_test_username");
         reviewDTO.setUsername(userEntity.getUsername());
 
-        when(userService.findUserEntityByUsername(any())).thenReturn(userEntity);
+        when(userServiceImpl.findUserEntityByUsername(any())).thenReturn(userEntity);
         ReviewEntity reviewEntity = new ReviewEntity();
         when(modelMapper.map(any(), eq(ReviewEntity.class))).thenReturn(reviewEntity);
         reviewEntity.setWrittenBy(userEntity);

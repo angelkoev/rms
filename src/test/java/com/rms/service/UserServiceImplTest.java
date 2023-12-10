@@ -7,10 +7,7 @@ import com.rms.model.views.OrderView;
 import com.rms.model.views.UserView;
 import com.rms.repository.OrderRepository;
 import com.rms.repository.UserRepository;
-import com.rms.service.Impl.DrinkServiceImpl;
-import com.rms.service.Impl.FoodServiceImpl;
-import com.rms.service.Impl.OrderServiceImpl;
-import com.rms.service.Impl.UserRoleServiceImpl;
+import com.rms.service.Impl.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -27,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class UserServiceTest {
+public class UserServiceImplTest {
 
     @Mock
     private UserRepository userRepositoryMock;
@@ -51,7 +48,7 @@ public class UserServiceTest {
     private FoodServiceImpl foodServiceImplMock;
 
     @InjectMocks
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @BeforeEach
     public void setUp() {
@@ -63,7 +60,7 @@ public class UserServiceTest {
         when(userRepositoryMock.findByUsername("john")).thenReturn(Optional.of(new UserEntity()));
         when(modelMapperMock.map(any(), any())).thenReturn(new UserDTO());
 
-        UserDTO userDTO = userService.findUserByUsername("john");
+        UserDTO userDTO = userServiceImpl.findUserByUsername("john");
 
         assertNotNull(userDTO);
     }
@@ -76,7 +73,7 @@ public class UserServiceTest {
         when(userRepositoryMock.save(any())).thenReturn(new UserEntity());
 
         RegisterDTO registerDTO = new RegisterDTO("john", "john@example.com", "password", "John", "Doe", "123456", "Address");
-        userService.register(registerDTO);
+        userServiceImpl.register(registerDTO);
     }
 
     @Test
@@ -90,7 +87,7 @@ public class UserServiceTest {
         when(orderServiceImplMock.createNewLastOrder(currentUser)).thenReturn(newOrder);
 
         // Act
-        userService.checkLastOrder(username);
+        userServiceImpl.checkLastOrder(username);
 
         // Assert
         verify(orderServiceImplMock, times(1)).createNewLastOrder(currentUser);
@@ -110,7 +107,7 @@ public class UserServiceTest {
         when(userRepositoryMock.findByUsername(username)).thenReturn(java.util.Optional.of(userWithAdminRole));
 
         // Act
-        boolean isAdmin = userService.isAdmin(username);
+        boolean isAdmin = userServiceImpl.isAdmin(username);
 
         // Assert
         assertTrue(isAdmin);
@@ -122,14 +119,14 @@ public class UserServiceTest {
         UserEntity user1 = createUserWithRoles("user1", UserRoleEnum.USER);
         UserEntity user2 = createUserWithRoles("user2", UserRoleEnum.ADMIN, UserRoleEnum.USER);
         List<UserEntity> allUsers = Arrays.asList(user1, user2);
-        when(userService.getAllUsersOrderById()).thenReturn(allUsers);
+        when(userServiceImpl.getAllUsersOrderById()).thenReturn(allUsers);
         UserView userView1 = createUserViewWithRoles("user1", "USER");
         UserView userView2 = createUserViewWithRoles("user2", "ADMIN", "USER");
         when(modelMapperMock.map(user1, UserView.class)).thenReturn(userView1);
         when(modelMapperMock.map(user2, UserView.class)).thenReturn(userView2);
 
         // Act
-        List<UserView> allUserViews = userService.getAllUserViews();
+        List<UserView> allUserViews = userServiceImpl.getAllUserViews();
 
         // Assert
         assertEquals(2, allUserViews.size());
@@ -150,7 +147,7 @@ public class UserServiceTest {
         doNothing().when(orderServiceImplMock).saveOrder(order);
 
         // Act
-        userService.deleteDrinkFromLastOrder("user1", 1L);
+        userServiceImpl.deleteDrinkFromLastOrder("user1", 1L);
 
         // Assert
         assertTrue(order.getDrinks().isEmpty());
@@ -171,7 +168,7 @@ public class UserServiceTest {
         doNothing().when(orderServiceImplMock).saveOrder(order);
 
         // Act
-        userService.deleteFoodFromLastOrder("user1", 1L);
+        userServiceImpl.deleteFoodFromLastOrder("user1", 1L);
 
         // Assert
         assertTrue(order.getFoods().isEmpty());
@@ -189,7 +186,7 @@ public class UserServiceTest {
         when(foodServiceImplMock.findById(1L)).thenReturn(food);
 
         // Act
-        userService.addFoodToLastOrder("user1", 1L);
+        userServiceImpl.addFoodToLastOrder("user1", 1L);
 
         // Assert
         assertEquals(1, lastOrder.getFoods().size());
@@ -226,7 +223,7 @@ public class UserServiceTest {
         when(orderServiceImplMock.getAllOrders()).thenReturn(List.of(order1, order2));
         when(modelMapperMock.map(any(), any())).thenReturn(orderView);
 
-        List<OrderView> allCurrentOrdersViews = userService.getAllCurrentOrdersViews(user.getUsername());
+        List<OrderView> allCurrentOrdersViews = userServiceImpl.getAllCurrentOrdersViews(user.getUsername());
 
         assertEquals(2, allCurrentOrdersViews.size());
 

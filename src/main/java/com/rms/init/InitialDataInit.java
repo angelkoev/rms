@@ -8,7 +8,7 @@ import com.rms.repository.*;
 import com.rms.service.Impl.DrinkServiceImpl;
 import com.rms.service.Impl.FoodServiceImpl;
 import com.rms.service.Impl.UserRoleServiceImpl;
-import com.rms.service.UserService;
+import com.rms.service.Impl.UserServiceImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ public class InitialDataInit {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
     private final ReviewRepository reviewRepository;
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
     private final UserRoleServiceImpl userRoleServiceImpl;
     private final PasswordEncoder encoder;
     private final FoodRepository foodRepository;
@@ -35,11 +35,11 @@ public class InitialDataInit {
     private final FoodServiceImpl foodServiceImpl;
     private final DrinkServiceImpl drinkServiceImpl;
 
-    public InitialDataInit(UserRepository userRepository, UserRoleRepository userRoleRepository, ReviewRepository reviewRepository, UserService userService, UserRoleServiceImpl userRoleServiceImpl, PasswordEncoder encoder, FoodRepository foodRepository, DrinkRepository drinkRepository, OrderRepository orderRepository, FoodServiceImpl foodServiceImpl, DrinkServiceImpl drinkServiceImpl) {
+    public InitialDataInit(UserRepository userRepository, UserRoleRepository userRoleRepository, ReviewRepository reviewRepository, UserServiceImpl userServiceImpl, UserRoleServiceImpl userRoleServiceImpl, PasswordEncoder encoder, FoodRepository foodRepository, DrinkRepository drinkRepository, OrderRepository orderRepository, FoodServiceImpl foodServiceImpl, DrinkServiceImpl drinkServiceImpl) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.reviewRepository = reviewRepository;
-        this.userService = userService;
+        this.userServiceImpl = userServiceImpl;
         this.userRoleServiceImpl = userRoleServiceImpl;
         this.encoder = encoder;
         this.foodRepository = foodRepository;
@@ -131,8 +131,8 @@ public class InitialDataInit {
         Random random = new Random();
         int reviewCount = 10;
         while (reviewCount-- > 0) {
-            Long randomUserId = random.nextLong(userService.usersCount()) + 1;
-            Optional<UserEntity> user = userService.findById(randomUserId);
+            Long randomUserId = random.nextLong(userServiceImpl.usersCount()) + 1;
+            Optional<UserEntity> user = userServiceImpl.findById(randomUserId);
 
             UserEntity userEntity = user.orElse(null);
 

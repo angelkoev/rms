@@ -8,7 +8,7 @@ import com.rms.model.views.OrderView;
 import com.rms.service.Impl.DrinkServiceImpl;
 import com.rms.service.Impl.FoodServiceImpl;
 import com.rms.service.Impl.OrderServiceImpl;
-import com.rms.service.UserService;
+import com.rms.service.Impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,13 +27,13 @@ public class OrderController {
     private final OrderServiceImpl orderServiceImpl;
     private final DrinkServiceImpl drinkServiceImpl;
     private final FoodServiceImpl foodServiceImpl;
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
-    public OrderController(OrderServiceImpl orderServiceImpl, DrinkServiceImpl drinkServiceImpl, FoodServiceImpl foodServiceImpl, UserService userService) {
+    public OrderController(OrderServiceImpl orderServiceImpl, DrinkServiceImpl drinkServiceImpl, FoodServiceImpl foodServiceImpl, UserServiceImpl userServiceImpl) {
         this.orderServiceImpl = orderServiceImpl;
         this.drinkServiceImpl = drinkServiceImpl;
         this.foodServiceImpl = foodServiceImpl;
-        this.userService = userService;
+        this.userServiceImpl = userServiceImpl;
     }
 
     @GetMapping("/menu")
@@ -48,19 +48,19 @@ public class OrderController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        userService.checkLastOrder(username);
+        userServiceImpl.checkLastOrder(username);
 
-        List<DrinkView> allCurrentDrinkViews = userService.getAllCurrentDrinkViews(username);
+        List<DrinkView> allCurrentDrinkViews = userServiceImpl.getAllCurrentDrinkViews(username);
         model.addAttribute("allCurrentDrinkViews", allCurrentDrinkViews);
         model.addAttribute("drinkViewCount", allCurrentDrinkViews.size());
 
-        List<FoodView> allCurrentFoodViews = userService.getAllCurrentFoodViews(username);
+        List<FoodView> allCurrentFoodViews = userServiceImpl.getAllCurrentFoodViews(username);
         model.addAttribute("allCurrentFoodViews", allCurrentFoodViews);
         model.addAttribute("foodViewCount", allCurrentFoodViews.size());
 
         model.addAttribute("totalViewSize", allCurrentDrinkViews.size() + allCurrentFoodViews.size());
 
-        String totalOrderPrice = userService.totalCurrentPrice(username);
+        String totalOrderPrice = userServiceImpl.totalCurrentPrice(username);
         model.addAttribute("totalOrderPrice", totalOrderPrice);
 
         List<DrinkView> allDrinksView = orderServiceImpl.getAllDrinksView();
@@ -77,7 +77,7 @@ public class OrderController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        userService.deleteDrinkFromLastOrder(authentication.getName(), id);
+        userServiceImpl.deleteDrinkFromLastOrder(authentication.getName(), id);
 
         return "redirect:/order/menu";
     }
@@ -87,7 +87,7 @@ public class OrderController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        userService.addDrinkToLastOrder(authentication.getName(), id);
+        userServiceImpl.addDrinkToLastOrder(authentication.getName(), id);
 
         return "redirect:/order/menu";
     }
@@ -97,7 +97,7 @@ public class OrderController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        userService.addFoodToLastOrder(authentication.getName(), id);
+        userServiceImpl.addFoodToLastOrder(authentication.getName(), id);
 
         return "redirect:/order/menu";
     }
@@ -107,7 +107,7 @@ public class OrderController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        userService.deleteFoodFromLastOrder(authentication.getName(), id);
+        userServiceImpl.deleteFoodFromLastOrder(authentication.getName(), id);
 
         return "redirect:/order/menu";
     }
@@ -179,7 +179,7 @@ public class OrderController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        userService.addNewOrder(username);
+        userServiceImpl.addNewOrder(username);
 
         String infoMessage = "Поръчката беше направена успешно!";
         redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
@@ -193,9 +193,9 @@ public class OrderController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        boolean isAdmin = userService.isAdmin(username);
+        boolean isAdmin = userServiceImpl.isAdmin(username);
 
-        boolean userHasOrders = userService.checkIfUserHasOrders(username);
+        boolean userHasOrders = userServiceImpl.checkIfUserHasOrders(username);
 
         if (!userHasOrders && !isAdmin) {
             String infoMessage = "Нямате направени поръчки!";
@@ -203,7 +203,7 @@ public class OrderController {
             return "redirect:/home";
         }
 
-        List<OrderView> filteredOrdersWithZeroAmount = userService.getAllCurrentOrdersViews(username);
+        List<OrderView> filteredOrdersWithZeroAmount = userServiceImpl.getAllCurrentOrdersViews(username);
 
         model.addAttribute("allCurrentOrdersViews", filteredOrdersWithZeroAmount);
 

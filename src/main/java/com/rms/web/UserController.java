@@ -2,16 +2,9 @@ package com.rms.web;
 
 import com.rms.model.dto.LoginDTO;
 import com.rms.model.dto.RegisterDTO;
-import com.rms.model.entity.UserEntity;
-import com.rms.model.entity.UserRoleEntity;
-import com.rms.model.views.FoodView;
-import com.rms.model.views.OrderView;
 import com.rms.model.views.UserView;
-import com.rms.service.UserService;
+import com.rms.service.Impl.UserServiceImpl;
 import jakarta.validation.Valid;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -22,17 +15,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
 
     }
 
@@ -72,7 +64,7 @@ public class UserController {
             return "redirect:/users/register";
         }
 
-        this.userService.register(registerDTO);
+        this.userServiceImpl.register(registerDTO);
 
         return "redirect:/home";
     }
@@ -80,7 +72,7 @@ public class UserController {
     @GetMapping("/all")
     public String showAll(Model model) {
 
-        List<UserView> allUserViews = userService.getAllUserViews();
+        List<UserView> allUserViews = userServiceImpl.getAllUserViews();
         model.addAttribute("allUserViews", allUserViews);
 
         return "allUsers";
@@ -89,9 +81,9 @@ public class UserController {
     @PostMapping("/addAdmin/{id}")
     public String addAdmin(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
 
-        userService.addAdmin(userDetails, id);
+        userServiceImpl.addAdmin(userDetails, id);
 
-        List<UserView> allUserViews = userService.getAllUserViews();
+        List<UserView> allUserViews = userServiceImpl.getAllUserViews();
         model.addAttribute("allUserViews", allUserViews);
 
         return "allUsers";
@@ -100,9 +92,9 @@ public class UserController {
     @PostMapping("/removeAdmin/{id}")
     public String removeAdmin(@PathVariable Long id, Model model) {
 
-        userService.removeAdmin(id);
+        userServiceImpl.removeAdmin(id);
 
-        List<UserView> allUserViews = userService.getAllUserViews();
+        List<UserView> allUserViews = userServiceImpl.getAllUserViews();
         model.addAttribute("allUserViews", allUserViews);
 
         return "allUsers";
